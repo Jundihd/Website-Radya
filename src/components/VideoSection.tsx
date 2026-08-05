@@ -36,7 +36,7 @@ export const VideoSection: React.FC<VideoSectionProps> = ({ language }) => {
         <div className="relative w-full max-w-5xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 bg-black aspect-video">
           <iframe
             className="w-full h-full border-0"
-            src="https://www.youtube.com/embed/aqz-KE-bpKQ?rel=0&modestbranding=1"
+            src="https://www.youtube.com/embed/HK4W_kxK4KE?rel=0&modestbranding=1"
             title={language === 'ID' ? 'Lihat Radya Labs Beraksi' : 'See Radya Labs in Action'}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
