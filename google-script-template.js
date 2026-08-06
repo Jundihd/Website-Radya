@@ -102,13 +102,19 @@ function doPost(e) {
         var emailTarget = recipientEmails[i].trim();
         if (emailTarget) {
           try {
-            MailApp.sendEmail({
-              to: emailTarget,
-              subject: subject,
+            GmailApp.sendEmail(emailTarget, subject, "", {
               htmlBody: htmlBody
             });
-          } catch (singleErr) {
-            Logger.log("Err sending to " + emailTarget + ": " + singleErr.toString());
+          } catch (gmailErr) {
+            try {
+              MailApp.sendEmail({
+                to: emailTarget,
+                subject: subject,
+                htmlBody: htmlBody
+              });
+            } catch (mailErr) {
+              Logger.log("Err sending to " + emailTarget + ": " + mailErr.toString());
+            }
           }
         }
       }
@@ -142,11 +148,18 @@ function doGet(e) {
  */
 function testSendEmail() {
   var testEmail = "amang.udinjundi@gmail.com";
-  MailApp.sendEmail({
-    to: testEmail,
-    subject: "🧪 Tes Notifikasi Email Radya Labs",
-    htmlBody: "<h3 style='color: #1793E8;'>Sistem Notifikasi Email Berhasil Diotorisasi!</h3><p>Email ini mengonfirmasi bahwa Google Apps Script Anda telah diizinkan mengirimkan email notifikasi ke <b>" + testEmail + "</b>.</p>"
-  });
+  try {
+    GmailApp.sendEmail(testEmail, "🧪 Tes Notifikasi Email Radya Labs", "", {
+      htmlBody: "<h3 style='color: #1793E8;'>Sistem Notifikasi Email Berhasil Diotorisasi!</h3><p>Email ini mengonfirmasi bahwa Google Apps Script Anda telah diizinkan mengirimkan email notifikasi ke <b>" + testEmail + "</b>.</p>"
+    });
+  } catch (e) {
+    MailApp.sendEmail({
+      to: testEmail,
+      subject: "🧪 Tes Notifikasi Email Radya Labs",
+      htmlBody: "<h3 style='color: #1793E8;'>Sistem Notifikasi Email Berhasil Diotorisasi!</h3><p>Email ini mengonfirmasi bahwa Google Apps Script Anda telah diizinkan mengirimkan email notifikasi ke <b>" + testEmail + "</b>.</p>"
+    });
+  }
   Logger.log("Email tes berhasil dikirim ke: " + testEmail);
 }
+
 
