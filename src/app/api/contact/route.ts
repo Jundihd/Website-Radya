@@ -24,6 +24,8 @@ export async function POST(request: Request) {
       timeStyle: 'medium',
     });
 
+    const recipientEmail = process.env.NOTIFICATION_EMAIL || 'amang.udinjundi@gmail.com, aloysius.adrian@radyalabs.com';
+
     const payload = {
       timestamp,
       referenceId,
@@ -34,6 +36,7 @@ export async function POST(request: Request) {
       service: service || 'General Inquiry',
       budget: budget || '-',
       message: message || '-',
+      recipientEmail,
     };
 
     console.log('[Contact API] Received submission:', payload);

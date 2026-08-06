@@ -1,7 +1,7 @@
 /**
  * KODE GOOGLE APPS SCRIPT UNTUK INTEGRASI FORM KONSULTASI RADYA LABS & NOTIFIKASI EMAIL
  * 
- * TARGET EMAIL PENERIMA: aloysius.adrian@radyalabs.com
+ * TARGET EMAIL PENERIMA: amang.udinjundi@gmail.com, aloysius.adrian@radyalabs.com
  * 
  * LANGKAH PENYETELAN (SETUP):
  * 1. Buka Google Sheet tempat Anda ingin menerima data formulir konsultasi.
@@ -42,7 +42,7 @@ function doPost(e) {
         "Catatan Proyek / Pertanyaan"
       ];
       sheet.appendRow(headers);
-      
+
       // Styling Header (Bold & Background Biru Radya Labs)
       var headerRange = sheet.getRange(1, 1, 1, headers.length);
       headerRange.setFontWeight("bold");
@@ -69,10 +69,9 @@ function doPost(e) {
     // 1. Tambahkan baris baru di Google Sheet
     sheet.appendRow(row);
 
-    // 2. Kirim Notifikasi Email Otomatis ke aloysius.adrian@radyalabs.com
+    // 2. Kirim Notifikasi Email Otomatis ke masing-masing penerima
     try {
-      var adminEmail = "aloysius.adrian@radyalabs.com";
-      
+      var recipientEmails = ["amang.udinjundi@gmail.com", "aloysius.adrian@radyalabs.com"];
       var subject = "🔔 [Radya Labs] Permintaan Konsultasi Baru (" + (data.referenceId || "RL-NEW") + ") - " + (data.name || "Klien");
       var htmlBody = ""
         + "<div style='font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; shadow: 0 4px 6px rgba(0,0,0,0.05);'>"
@@ -95,15 +94,24 @@ function doPost(e) {
         + "    </table>"
         + "  </div>"
         + "  <div style='background-color: #f8fafc; padding: 16px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0;'>"
-        + "    Email ini dikirimkan otomatis oleh Web Portal Radya Labs kepada <b>" + adminEmail + "</b>."
+        + "    Email ini dikirimkan otomatis oleh Web Portal Radya Labs."
         + "  </div>"
         + "</div>";
 
-      MailApp.sendEmail({
-        to: adminEmail,
-        subject: subject,
-        htmlBody: htmlBody
-      });
+      for (var i = 0; i < recipientEmails.length; i++) {
+        var emailTarget = recipientEmails[i].trim();
+        if (emailTarget) {
+          try {
+            MailApp.sendEmail({
+              to: emailTarget,
+              subject: subject,
+              htmlBody: htmlBody
+            });
+          } catch (singleErr) {
+            Logger.log("Err sending to " + emailTarget + ": " + singleErr.toString());
+          }
+        }
+      }
     } catch (mailErr) {
       Logger.log("Email notification error: " + mailErr.toString());
     }
@@ -124,6 +132,21 @@ function doPost(e) {
 
 function doGet(e) {
   return ContentService
-    .createTextOutput(JSON.stringify({ status: "Google Apps Script Webhook Active - Target Email: aloysius.adrian@radyalabs.com" }))
+    .createTextOutput(JSON.stringify({ status: "Google Apps Script Webhook Active - Target Email: amang.udinjundi@gmail.com, aloysius.adrian@radyalabs.com" }))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
+/**
+ * FUNGSI TES EMAIL (PILIH & JALANKAN FUNGSI INI DI APPS SCRIPT DENGAN MENGKLIK 'RUN')
+ * Ini akan memicu dialog 'Authorization Required' / Izin Akses dari Google secara manual!
+ */
+function testSendEmail() {
+  var testEmail = "amang.udinjundi@gmail.com";
+  MailApp.sendEmail({
+    to: testEmail,
+    subject: "🧪 Tes Notifikasi Email Radya Labs",
+    htmlBody: "<h3 style='color: #1793E8;'>Sistem Notifikasi Email Berhasil Diotorisasi!</h3><p>Email ini mengonfirmasi bahwa Google Apps Script Anda telah diizinkan mengirimkan email notifikasi ke <b>" + testEmail + "</b>.</p>"
+  });
+  Logger.log("Email tes berhasil dikirim ke: " + testEmail);
+}
+
