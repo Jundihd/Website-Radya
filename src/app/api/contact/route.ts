@@ -57,7 +57,7 @@ export async function POST(request: Request) {
         });
 
         const resText = await sheetRes.text();
-        console.log('[Contact API] Sheet Webhook Status:', sheetRes.status, 'Response:', resText.substring(0, 200));
+        console.log('[Contact API] Sheet Webhook Status:', sheetRes.status, 'Response:', resText);
 
         if (sheetRes.ok && !resText.includes('accounts.google.com') && !resText.includes('Halaman Tidak Ditemukan')) {
           sheetSynced = true;
