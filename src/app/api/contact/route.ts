@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -77,16 +84,16 @@ export async function POST(request: Request) {
 
     if (telegramBotToken && telegramChatId) {
       try {
-        const telegramMessage = `🔔 *PERMINTAAN KONSULTASI BARU RADYA LABS*\n\n`
-          + `📌 *No. Referensi:* \`${referenceId}\`\n`
-          + `👤 *Nama Lengkap:* ${name}\n`
-          + `✉️ *Email:* ${email}\n`
-          + `📞 *Telepon / WA:* ${phone || '-'}\n`
-          + `🏢 *Perusahaan:* ${company || '-'}\n`
-          + `⚡ *Kebutuhan Layanan:* ${service || '-'}\n`
-          + `💰 *Estimasi Anggaran:* ${budget || '-'}\n`
-          + `📝 *Catatan Proyek:* ${message || '-'}\n\n`
-          + `⏰ *Waktu:* ${timestamp}`;
+        const telegramMessage = `<b>🔔 PERMINTAAN KONSULTASI BARU RADYA LABS</b>\n\n`
+          + `📌 <b>No. Referensi:</b> <code>${escapeHtml(referenceId)}</code>\n`
+          + `👤 <b>Nama Lengkap:</b> ${escapeHtml(name)}\n`
+          + `✉️ <b>Email:</b> ${escapeHtml(email)}\n`
+          + `📞 <b>Telepon / WA:</b> ${escapeHtml(phone || '-')}\n`
+          + `🏢 <b>Perusahaan:</b> ${escapeHtml(company || '-')}\n`
+          + `⚡ <b>Kebutuhan Layanan:</b> ${escapeHtml(service || '-')}\n`
+          + `💰 <b>Estimasi Anggaran:</b> ${escapeHtml(budget || '-')}\n`
+          + `📝 <b>Catatan Proyek:</b> ${escapeHtml(message || '-')}\n\n`
+          + `⏰ <b>Waktu:</b> ${escapeHtml(timestamp)}`;
 
         const telegramRes = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
           method: 'POST',
@@ -94,13 +101,16 @@ export async function POST(request: Request) {
           body: JSON.stringify({
             chat_id: telegramChatId,
             text: telegramMessage,
-            parse_mode: 'Markdown',
+            parse_mode: 'HTML',
           }),
         });
 
-        if (telegramRes.ok) {
+        const teleData = await telegramRes.json();
+        if (telegramRes.ok && teleData.ok) {
           telegramNotified = true;
           console.log('[Contact API] Sent instant Telegram notification alert!');
+        } else {
+          console.error('[Contact API] Telegram API error response:', teleData);
         }
       } catch (teleErr) {
         console.error('[Contact API] Error sending Telegram alert:', teleErr);
@@ -130,3 +140,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
