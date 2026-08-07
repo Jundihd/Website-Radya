@@ -263,13 +263,21 @@ export const ContactModal: React.FC<ContactModalProps> = ({
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs font-semibold text-slate-700 max-w-md mx-auto mb-6 space-y-2 text-left">
               <div className="flex items-center gap-2 text-emerald-700 font-bold">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span>No. Referensi: {referenceId}</span>
+                <span>{language === 'ID' ? `No. Referensi: ${referenceId}` : `Reference ID: ${referenceId}`}</span>
               </div>
               <div className="flex items-center gap-2 text-slate-600">
-                <span>📧 Notifikasi Email terkirim otomatis ke tim Radya Labs</span>
+                <span>
+                  {language === 'ID'
+                    ? '📧 Notifikasi Email terkirim otomatis ke tim Radya Labs'
+                    : '📧 Email notification sent automatically to Radya Labs team'}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-slate-600">
-                <span>📊 Tersimpan di Google Sheet & Sistem Alert Internal</span>
+                <span>
+                  {language === 'ID'
+                    ? '📊 Tersimpan di Google Sheet & Sistem Alert Internal'
+                    : '📊 Saved to Google Sheet & Internal Alert System'}
+                </span>
               </div>
             </div>
 
@@ -282,7 +290,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all"
                 >
-                  <span>💬 Chat Langsung via WhatsApp</span>
+                  <span>{language === 'ID' ? '💬 Chat Langsung via WhatsApp' : '💬 Direct Chat via WhatsApp'}</span>
                 </a>
               )}
 
@@ -290,7 +298,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 onClick={handleCloseModal}
                 className="w-full sm:w-auto bg-[#0F172A] text-white font-bold text-xs px-8 py-3 rounded-full hover:bg-slate-800 transition-colors"
               >
-                {language === 'ID' ? 'Tutup Modal' : 'Close Modal'}
+                {language === 'ID' ? 'Tutup' : 'Close'}
               </button>
             </div>
           </div>

@@ -77,7 +77,7 @@ export interface InsightArticle {
   title: { ID: string; EN: string };
   summary: { ID: string; EN: string };
   content: { ID: string; EN: string };
-  category: string;
+  category: { ID: string; EN: string } | string;
   date: string;
   readTime: string;
   image: string;

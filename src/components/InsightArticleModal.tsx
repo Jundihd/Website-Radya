@@ -42,33 +42,21 @@ export const InsightArticleModal: React.FC<InsightArticleModalProps> = ({
           />
           <div className="absolute top-4 left-4 flex gap-2">
             <span className="px-3.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-xs font-extrabold text-[#29B6F6] uppercase tracking-wider">
-              {article.category}
+              {typeof article.category === 'object' ? (article.category[language] || article.category.ID) : article.category}
             </span>
           </div>
         </div>
 
         {/* Meta Info */}
-        <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-slate-400 mb-4 pb-4 border-b border-slate-100">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-[#1793E8]" />
-              {article.date}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-[#1793E8]" />
-              {article.readTime}
-            </span>
-          </div>
-
-          <a
-            href={originalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-[#1793E8] text-slate-700 hover:text-white font-bold text-xs transition-colors"
-          >
-            <span>{language === 'ID' ? 'Buka Versi Asli di RadyaLabs.com' : 'Open Original on RadyaLabs.com'}</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+        <div className="flex items-center gap-4 text-xs font-semibold text-slate-400 mb-4 pb-4 border-b border-slate-100">
+          <span className="flex items-center gap-1.5">
+            <Calendar className="w-4 h-4 text-[#1793E8]" />
+            {article.date}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Clock className="w-4 h-4 text-[#1793E8]" />
+            {article.readTime}
+          </span>
         </div>
 
         {/* Title */}
@@ -111,25 +99,14 @@ export const InsightArticleModal: React.FC<InsightArticleModalProps> = ({
 
         {/* Footer Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-slate-100">
-          <span className="text-xs font-bold text-slate-400">Radya Labs Official Blog Engine</span>
+          <span className="text-xs font-bold text-slate-400">Radya Labs Article Engine</span>
           
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <a
-              href={originalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 sm:flex-none px-5 py-2.5 rounded-full bg-white border border-slate-300 text-slate-800 hover:border-[#1793E8] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
-            >
-              <span>{language === 'ID' ? 'Buka Artikel Asli ↗' : 'View Original Article ↗'}</span>
-            </a>
-
-            <button
-              onClick={onClose}
-              className="flex-1 sm:flex-none px-6 py-2.5 rounded-full bg-[#0F172A] hover:bg-slate-800 text-white font-bold text-xs transition-colors"
-            >
-              {language === 'ID' ? 'Tutup Artikel' : 'Close Article'}
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="w-full sm:w-auto px-8 py-2.5 rounded-full bg-[#0F172A] hover:bg-slate-800 text-white font-bold text-xs transition-colors"
+          >
+            {language === 'ID' ? 'Tutup Artikel' : 'Close Article'}
+          </button>
         </div>
 
       </div>

@@ -28,7 +28,7 @@ export async function fetchDirectusCollection<T>(collection: string): Promise<T[
  */
 export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
   try {
-    const endpoint = `${DIRECTUS_CMS_URL}/items/blog?fields=*,translations.*,cover_image.*,category_id.*,tags.tags_id.*&sort=-date_published&limit=9`;
+    const endpoint = `${DIRECTUS_CMS_URL}/items/blog?fields=*,translations.*,cover_image.*,category_id.*,category_id.translations.*,tags.tags_id.*,tags.tags_id.translations.*&sort=-date_published&limit=100`;
     const res = await fetch(endpoint, {
       next: { revalidate: 300 }, // Cache for 5 minutes
     });
@@ -46,6 +46,18 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
 
       const slug = transId.slug || transEn.slug || item.id;
       const originalUrl = `https://radyalabs.com/id/blog/${slug}`;
+
+      // Dynamic Bilingual Category Resolution from Directus Category Translations
+      const catTransId = item.category_id?.translations?.find((t: any) => t.languages_code === 'id') || item.category_id?.translations?.[0];
+      const catTransEn = item.category_id?.translations?.find((t: any) => t.languages_code === 'en') || item.category_id?.translations?.[1] || catTransId;
+
+      const categoryNameId = catTransId?.category_name || item.category_id?.title || item.category_id?.name || 'Berita';
+      const categoryNameEn = catTransEn?.category_name || categoryNameId;
+
+      const category = {
+        ID: categoryNameId,
+        EN: categoryNameEn,
+      };
 
       // Cover Image Resolution
       let image = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80';
@@ -67,11 +79,16 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
         }
       }
 
-      // Extract Tags
+      // Extract Tags from Directus relational tags_id
       const tags: string[] = [];
       if (Array.isArray(item.tags)) {
         item.tags.forEach((t: any) => {
-          if (t.tags_id?.title) tags.push(t.tags_id.title);
+          const tagObj = t.tags_id || t;
+          const tagTransId = tagObj?.translations?.find((tr: any) => tr.languages_code === 'id') || tagObj?.translations?.[0];
+          const tagTitle = tagTransId?.title || tagObj?.title || tagObj?.name || (typeof tagObj === 'string' ? tagObj : null);
+          if (tagTitle && !tags.includes(tagTitle)) {
+            tags.push(tagTitle);
+          }
         });
       }
 
@@ -83,7 +100,7 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
         id: item.id,
         slug,
         originalUrl,
-        category: item.category_id?.title || 'Acara',
+        category,
         date: dateStr,
         readTime: `${readMinutes} min read`,
         image,

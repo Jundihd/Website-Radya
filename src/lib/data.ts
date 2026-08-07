@@ -705,7 +705,7 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
       ID: 'Di era transformasi digital yang melaju cepat, keberhasilan perusahaan enterprise tidak lagi hanya ditentukan oleh skala operasional, tetapi oleh kecepatan dalam mengambil keputusan berbasis data. Penerapan Artificial Intelligence (AI) seperti Intelligent Document Processing (IDP), Large Language Models (LLM), dan Computer Vision kini bukan sekadar tren melainkan kebutuhan mendasar.\n\nDalam artikel ini, Radya Labs membagikan metodologi integrasi AI yang aman (enterprise-grade security), transparan, dan terukur secara finansial (ROI)...',
       EN: 'In an era of rapid digital evolution, enterprise success hinges on decision speed and operational automation. Applying AI techniques such as Intelligent Document Processing (IDP), LLM orchestrations, and Computer Vision is no longer optional.\n\nHere, Radya Labs outlines our enterprise AI framework ensuring zero data leakages, SOC2 compliance, and quantifiable return on investment...'
     },
-    category: 'AI & INNOVATION',
+    category: { ID: 'AI & INOVASI', EN: 'AI & INNOVATION' },
     date: '22 Mei 2026',
     readTime: '5 min read',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80'
@@ -724,7 +724,7 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
       ID: 'Sistem monolitik tradisional sering kali menjadi penghambat utama saat bisnis mengalami lonjakan pengguna secara mendadak. Migrasi ke Cloud Native memungkinkan aplikasi untuk melakukan auto-scaling secara otomatis dalam hitungan detik, menekan biaya server idle hingga 40%, dan meminimalkan resiko downtime...\n\nPelajari langkah-langkah strategi migrasi dari Radya Labs...',
       EN: 'Legacy monolithic backends frequently bottleneck rapid customer growth. Cloud Native migration enables automatic multi-region scaling within seconds, cuts idle cloud spend by 40%, and virtually eliminates deployment downtime...\n\nExplore Radya Labs cloud migration framework...'
     },
-    category: 'CLOUD NATIVE',
+    category: { ID: 'CLOUD NATIVE', EN: 'CLOUD NATIVE' },
     date: '15 Mei 2026',
     readTime: '6 min read',
     image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80'
@@ -743,7 +743,7 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
       ID: 'Kecepatan rilis software yang tinggi tanpa mengorbankan kualitas adalah cawan suci bagi tim engineering enterprise. Melalui penerapan Infrastructure as Code dengan Terraform dan pipeline CI/CD yang terotomatisasi penuh, tim dapat merilis fitur baru puluhan kali sehari secara aman...\n\nBahas panduan teknis bersama para pakar Radya Labs...',
       EN: 'Achieving rapid software delivery without sacrificing stability is the ultimate engineering goal. By leveraging Infrastructure as Code via Terraform and automated CI/CD pipelines, enterprises release updates with high confidence...\n\nRead our technical playbook...'
     },
-    category: 'DEVOPS & INFRA',
+    category: { ID: 'DEVOPS & INFRA', EN: 'DEVOPS & INFRA' },
     date: '08 Mei 2026',
     readTime: '4 min read',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80'
