@@ -204,43 +204,73 @@ export const CASE_STUDIES: CaseStudy[] = [
     client: 'Danone Indonesia',
     logo: 'DANONE',
     image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'AI & AUTOMATION', EN: 'AI & AUTOMATION' },
+    category: { ID: 'CLOUD NATIVE & B2B', EN: 'CLOUD NATIVE & B2B' },
     title: {
-      ID: 'ORDERen — Sistem Pemesanan Terintegrasi Danone',
-      EN: 'ORDERen — Integrated B2B Ordering System for Danone'
+      ID: 'ORDERen — Sistem Pemesanan B2B Terintegrasi Danone',
+      EN: 'ORDERen — Integrated B2B Ordering Platform for Danone'
     },
     summary: {
-      ID: 'Sistem pemesanan terintegrasi untuk ratusan outlet distributor Danone di seluruh Indonesia dengan otomatisasi pemrosesan order.',
-      EN: 'An integrated distributor ordering platform serving hundreds of retail outlets across Indonesia with automated order fulfillment.'
+      ID: 'Sistem pemesanan B2B terintegrasi untuk ratusan outlet distributor Danone di seluruh Indonesia dengan otomatisasi pemrosesan order dan ERP.',
+      EN: 'An integrated distributor B2B ordering platform serving hundreds of retail outlets across Indonesia with automated ERP fulfillment.'
     },
     challenge: {
-      ID: 'Proses pemesanan manual dari ratusan outlet distributor menyebabkan penundaan pengiriman, human error dalam pencatatan stok, serta keterbatasan visibilitas real-time bagi tim supply chain.',
+      ID: 'Proses pemesanan manual dari ratusan outlet distributor menyebabkan penundaan pengiriman, human error dalam pencatatan stok, serta keterbatasan visibilitas real-time.',
       EN: 'Manual ordering workflows across nationwide distributors caused fulfillment lag, stock reconciliation errors, and limited real-time supply chain telemetry.'
     },
     solution: {
-      ID: 'Radya Labs merancang platform ORDERen berbahan dasar cloud native microservices yang memfasilitasi pemesanan multi-channel, otomatisasi validasi stok, dan integrasi langsung ke ERP enterprise.',
+      ID: 'Radya Labs merancang platform ORDERen berbasis cloud native microservices yang memfasilitasi pemesanan multi-channel, otomatisasi validasi stok, dan sinkronisasi ERP.',
       EN: 'Radya Labs architected the cloud-native ORDERen platform supporting multi-channel ordering, automated inventory verification, and seamless enterprise ERP synchronization.'
     },
     metrics: [
       { value: '+40%', label: { ID: 'Efisiensi Operasional', EN: 'Operational Efficiency' } },
       { value: '+30%', label: { ID: 'Pertumbuhan Order', EN: 'Order Volume Growth' } },
-      { value: '100%', label: { ID: 'Akurasi Invetaris', EN: 'Inventory Accuracy' } }
+      { value: '100%', label: { ID: 'Akurasi Inventaris', EN: 'Inventory Accuracy' } }
     ],
-    tags: ['Cloud Native', 'Supply Chain', 'Microservices', 'Enterprise ERP'],
+    tags: ['Cloud Native', 'B2B Microservices', 'Supply Chain', 'Enterprise ERP'],
     industry: 'FMCG & Supply Chain'
+  },
+  {
+    id: 'pusmendik-anbk',
+    client: 'Pusmendik Kemendikbudristek',
+    logo: 'PUSMENDIK',
+    image: 'https://admin.radyalabs.com/assets/1cfa7fe1-685a-47d5-abc8-6dadb524fd3e',
+    category: { ID: 'PUBLIC SECTOR PLATFORM', EN: 'PUBLIC SECTOR PLATFORM' },
+    title: {
+      ID: 'ANBK — Asesmen Nasional Berbasis Komputer Kemendikbudristek',
+      EN: 'ANBK — Computer-Based National Assessment Platform'
+    },
+    summary: {
+      ID: 'Platform ujian nasional berbasis komputer yang memfasilitasi pelaksanaan Asesmen Nasional untuk jutaan siswa SD, SMP, SMA & SMK di Indonesia.',
+      EN: 'Nationwide computer-based assessment platform powering national examinations for millions of elementary to high school students.'
+    },
+    challenge: {
+      ID: 'Peniadaan Ujian Nasional menuntut sistem baru yang mampu menangani jutaan peserta tes serentak dengan kestabilan tinggi tanpa server downtime.',
+      EN: 'The abolition of traditional national exams required a new high-concurrency architecture capable of handling millions of simultaneous test takers.'
+    },
+    solution: {
+      ID: 'Pengembangan aplikasi ANBK berarsitektur distributed cloud yang mengelola proktor, penjadwalan soal, dan sinkronisasi nilai tes secara real-time.',
+      EN: 'Development of the ANBK platform leveraging distributed cloud infrastructure for proctor management, test scheduling, and instant result aggregation.'
+    },
+    metrics: [
+      { value: 'Jutaan', label: { ID: 'Peserta Ujian', EN: 'Test Candidates' } },
+      { value: '100%', label: { ID: 'Sekolah Terhubung', EN: 'Schools Connected' } },
+      { value: '99.99%', label: { ID: 'Ketersediaan Sistem', EN: 'System Availability' } }
+    ],
+    tags: ['High Concurrency', 'Public Sector', 'Distributed Cloud', 'Assessment Tech'],
+    industry: 'Government & Education'
   },
   {
     id: 'nestle-ocr',
     client: 'Nestlé Indonesia',
     logo: 'NESTLÉ',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'AI & OCR', EN: 'AI & OCR' },
+    category: { ID: 'AI & OCR INTELLIGENCE', EN: 'AI & OCR INTELLIGENCE' },
     title: {
-      ID: 'OCR Invoice Automation — Nestlé',
-      EN: 'Automated AI OCR Invoice Engine for Nestlé'
+      ID: 'OCR Invoice Automation — Otomatisasi Dokumen Keuangan Nestlé',
+      EN: 'Automated AI OCR Invoice Processing Engine for Nestlé'
     },
     summary: {
-      ID: 'Solusi OCR berbasis AI untuk memproses puluhan ribu invoice vendor secara otomatis dengan presisi tinggi dan verifikasi instan.',
+      ID: 'Solusi OCR berbasis AI untuk memproses puluhan ribu invoice vendor secara otomatis dengan presisi tinggi dan verifikasi instan ke sistem keuangan.',
       EN: 'AI-driven OCR document intelligence extracting vendor invoice data with high accuracy and instant accounting verification.'
     },
     challenge: {
@@ -248,89 +278,59 @@ export const CASE_STUDIES: CaseStudy[] = [
       EN: 'Nestlé Finance manually verified over 30,000 monthly vendor invoices, resulting in accounting bottlenecks and delayed vendor payments.'
     },
     solution: {
-      ID: 'Pengembangan mesin Intelligent Document Processing (IDP) dengan model Deep Learning OCR yang secara otomatis mengekstrak line items, PPN, dan mencocokkan Purchase Order (PO).',
+      ID: 'Pengembangan mesin Intelligent Document Processing (IDP) dengan model Deep Learning OCR yang secara otomatis mengekstrak line items, PPN, dan pencocokan PO.',
       EN: 'Deployment of an Intelligent Document Processing (IDP) engine powered by deep learning OCR that extracts line items and automatically matches POs.'
     },
     metrics: [
       { value: '90%', label: { ID: 'Lebih Cepat', EN: 'Faster Processing' } },
-      { value: '30,000+', label: { ID: 'Invoice/Bulan', EN: 'Invoices / Month' } },
+      { value: '30,000+', label: { ID: 'Invoice / Bulan', EN: 'Invoices / Month' } },
       { value: '99.2%', label: { ID: 'Akurasi Ekstraksi Data', EN: 'Extraction Accuracy' } }
     ],
-    tags: ['Computer Vision', 'OCR AI', 'Document Intelligence', 'Finance Tech'],
+    tags: ['Computer Vision', 'OCR AI', 'Document Intelligence', 'Finance Automation'],
     industry: 'FMCG & Finance'
   },
   {
-    id: 'binus-si',
-    client: 'BINUS University',
-    logo: 'BINUS',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'SYSTEM DEVELOPMENT', EN: 'SYSTEM DEVELOPMENT' },
+    id: 'ojk-sikepo',
+    client: 'Otoritas Jasa Keuangan (OJK)',
+    logo: 'OJK',
+    image: 'https://admin.radyalabs.com/assets/04735d7c-36e9-4c60-b8bd-0950e1266408',
+    category: { ID: 'FINTECH & REGULATORY', EN: 'FINTECH & REGULATORY' },
     title: {
-      ID: 'Sistem Informasi Akademik Terintegrasi — BINUS',
-      EN: 'Integrated Academic & Campus Operations Platform — BINUS'
+      ID: 'SIKePO — Sistem Informasi Ketentuan Perbankan Online OJK',
+      EN: 'SIKePO — Online Banking Regulatory Information Portal'
     },
     summary: {
-      ID: 'Pengembangan sistem informasi kampus terintegrasi untuk mendukung operasional ratusan ribu mahasiswa dan staf akademik.',
-      EN: 'High-availability unified campus platform powering academic registration, grading, and operations for over 100,000 students.'
+      ID: 'Portal sistem informasi hukum perbankan online yang dikelola OJK untuk akses ketentuan keuangan dan integrasi JDIHN bagi seluruh perbankan nasional.',
+      EN: 'Regulatory information portal managed by OJK presenting online legal provisions, banking compliance search, and JDIHN integration.'
     },
     challenge: {
-      ID: 'Sistem terdahulu mengalami kelambatan ekstrem saat periode KRS (Kartu Rencana Studi) serentak dengan lonjakan trafik hingga 150.000 concurrent user.',
-      EN: 'Legacy academic portals suffered severe downtime during simultaneous registration windows experiencing 150,000 concurrent user spikes.'
+      ID: 'Pencarian ketentuan perbankan yang tersebar membuat pemangku kepentingan industri keuangan kesulitan menemukan landasan hukum terkini secara cepat.',
+      EN: 'Scattered financial regulations made it difficult for banking stakeholders to search updated legal provisions efficiently.'
     },
     solution: {
-      ID: 'Migrasi arsitektur ke Kubernetes Multi-Zone Cloud Native dengan auto-scaling otomatis, caching Redis terdistribusi, dan UI modern.',
-      EN: 'Migration to auto-scaling Kubernetes cluster architecture paired with distributed Redis caching and a responsive modern portal.'
+      ID: 'Pengembangan kanal portal web CMS dan aplikasi mobile SIKePO terintegrasi dengan pencarian taksonomi hukum pintar, riwayat revisi, dan feedback kanal.',
+      EN: 'Development of the SIKePO Web CMS portal & mobile apps equipped with smart legal taxonomy search, revision history, and stakeholder channels.'
     },
     metrics: [
-      { value: '+50%', label: { ID: 'Efisiensi Proses', EN: 'Process Efficiency' } },
-      { value: '+25%', label: { ID: 'Produktivitas Staf', EN: 'Staff Productivity' } },
-      { value: '99.99%', label: { ID: 'Uptime Saat Peak', EN: 'Peak Traffic Uptime' } }
+      { value: '100%', label: { ID: 'Perbankan Nasional', EN: 'National Banks Access' } },
+      { value: 'JDIHN', label: { ID: 'Terintegrasi Resmi', EN: 'Officially Integrated' } },
+      { value: '<1 Detik', label: { ID: 'Pencarian Regulasi', EN: 'Regulation Search' } }
     ],
-    tags: ['Kubernetes', 'High Concurrency', 'Higher Education', 'Cloud Architecture'],
-    industry: 'Education'
-  },
-  {
-    id: 'transfood-app',
-    client: 'Transfood Indonesia',
-    logo: 'TRANSFOOD',
-    image: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'MOBILE SOLUTION', EN: 'MOBILE SOLUTION' },
-    title: {
-      ID: 'Transfood App — Modern Mobile Distribution Platform',
-      EN: 'Transfood App — Modern Mobile Distribution & Logistics'
-    },
-    summary: {
-      ID: 'Aplikasi mobile untuk mengoptimalkan jaringan distribusi kuliner, pemesanan armada, dan monitoring penjualan secara real-time.',
-      EN: 'Mobile ecosystem optimizing culinary distribution, fleet routing, and real-time point-of-sale monitoring.'
-    },
-    challenge: {
-      ID: 'Kurangnya pemantauan pengiriman armada distributor secara langsung menyebabkan inefisiensi rute dan keterlambatan pengiriman bahan baku segar.',
-      EN: 'Lack of live delivery fleet tracking caused routing inefficiencies and delayed fresh ingredient replenishment for retail outlets.'
-    },
-    solution: {
-      ID: 'Aplikasi mobile React Native dengan pelacakan GPS real-time, manajemen pesanan offline-first, dan analisis rekomendasi rute otomatis.',
-      EN: 'Cross-platform mobile app featuring real-time GPS tracking, offline-first order syncing, and route optimization analytics.'
-    },
-    metrics: [
-      { value: '+35%', label: { ID: 'Jangkauan Pasar', EN: 'Market Reach' } },
-      { value: '+20%', label: { ID: 'Penjualan Bulanan', EN: 'Monthly Sales' } },
-      { value: '-28%', label: { ID: 'Waktu Pengiriman', EN: 'Delivery Time' } }
-    ],
-    tags: ['Mobile App', 'Real-time GPS', 'React Native', 'Logistics'],
-    industry: 'Logistics & F&B'
+    tags: ['Fintech Compliance', 'Regulatory CMS', 'Legal Tech', 'Public Sector'],
+    industry: 'Finance & Banking'
   },
   {
     id: 'kataai-jangkau',
     client: 'kata.ai',
     logo: 'KATA.AI',
     image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'AI CHATBOT', EN: 'AI CHATBOT' },
+    category: { ID: 'GENERATIVE AI CHATBOT', EN: 'GENERATIVE AI CHATBOT' },
     title: {
-      ID: 'Jangkau AI — Omnichannel Enterprise Chatbot',
-      EN: 'Jangkau AI — Enterprise Omnichannel AI Conversational Agent'
+      ID: 'Jangkau AI — Omnichannel Enterprise Chatbot Platform',
+      EN: 'Jangkau AI — Enterprise Omnichannel Conversational Agent'
     },
     summary: {
-      ID: 'Platform chatbot AI omnichannel untuk otomatisasi pelayanan pelanggan di WhatsApp, Web, dan Telegram skala enterprise.',
+      ID: 'Platform chatbot AI omnichannel untuk otomatisasi pelayanan pelanggan di WhatsApp, Web, dan Telegram skala enterprise dengan agen AI pintar.',
       EN: 'Enterprise omnichannel conversational agent automating customer engagement across WhatsApp, Web, and Telegram.'
     },
     challenge: {
@@ -343,11 +343,41 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
     metrics: [
       { value: '+60%', label: { ID: 'Resolusi Otomatis', EN: 'Automated Resolution' } },
-      { value: '+45%', label: { ID: 'Kepuasan Pelanggan', EN: 'CSAT Score Improvement' } },
+      { value: '+45%', label: { ID: 'Kepuasan Pelanggan', EN: 'CSAT Score Lift' } },
       { value: '<5 Detik', label: { ID: 'Waktu Respon', EN: 'Average Response Time' } }
     ],
-    tags: ['Conversational AI', 'WhatsApp API', 'Omnichannel', 'NLP'],
+    tags: ['Conversational AI', 'WhatsApp API', 'Omnichannel', 'NLP Automation'],
     industry: 'Technology & Telecom'
+  },
+  {
+    id: 'biofarma-bioaudit',
+    client: 'PT Bio Farma (Persero)',
+    logo: 'BIO FARMA',
+    image: 'https://admin.radyalabs.com/assets/e2cddcab-12f0-4c0d-a329-2b07f1e894c3',
+    category: { ID: 'HEALTHCARE & AUDIT', EN: 'HEALTHCARE & AUDIT' },
+    title: {
+      ID: 'BioAudit — Sistem Audit Internal Terintegrasi Bio Farma',
+      EN: 'BioAudit — Enterprise Internal Audit Management System'
+    },
+    summary: {
+      ID: 'Sistem audit internal paperless terintegrasi untuk perencanaan, pengawasan, dan eksekusi audit sesuai standar IIA pada Holding PT. Bio Farma.',
+      EN: 'Unified paperless internal audit management system covering planning, supervision, and execution compliant with IIA standards.'
+    },
+    challenge: {
+      ID: 'Pengelolaan kertas kerja audit manual memicu pemborosan ATK, kesulitan penelusuran histori audit, serta keterlambatan laporan pengawasan internal.',
+      EN: 'Manual paper-based audit working papers led to archiving friction, lack of centralized tracking, and reporting delays.'
+    },
+    solution: {
+      ID: 'Pengembangan portal BioAudit berbasis standar IIA dengan pengarsipan digital terenkripsi, alur verifikasi multi-tier, dan audit trail otomatis.',
+      EN: 'Development of the BioAudit portal compliant with IIA standards, featuring encrypted working papers, multi-tier approval, and audit trails.'
+    },
+    metrics: [
+      { value: 'Paperless', label: { ID: 'Kertas Kerja Audit', EN: 'Digital Working Papers' } },
+      { value: 'IIA Standard', label: { ID: 'Standar Internasional', EN: 'IIA Standard Compliant' } },
+      { value: '100%', label: { ID: 'Akses Terverifikasi', EN: 'Secure Access Control' } }
+    ],
+    tags: ['Healthcare Pharma', 'Internal Audit', 'ISO / IIA Standard', 'Enterprise System'],
+    industry: 'Healthcare & Life Sciences'
   }
 ];
 
