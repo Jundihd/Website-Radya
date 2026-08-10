@@ -14,8 +14,8 @@ import {
 export const HERO_STATS: StatItem[] = [
   {
     id: 'exp',
-    value: '13+',
-    numberValue: 13,
+    value: '15+',
+    numberValue: 15,
     suffix: '+',
     label: { ID: 'Tahun Pengalaman', EN: 'Years Experience' },
     iconName: 'Award'

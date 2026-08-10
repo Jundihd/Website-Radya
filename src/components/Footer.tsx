@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import { Language } from '@/types';
 import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube, Facebook, ShieldCheck, Globe } from 'lucide-react';
 
@@ -23,21 +24,15 @@ export const Footer: React.FC<FooterProps> = ({
           
           {/* Brand & Address Column */}
           <div className="lg:col-span-2 space-y-6">
-            <a href="#" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-radya p-0.5 flex items-center justify-center shadow-md">
-                <div className="w-full h-full bg-[#0F172A] rounded-[10px] flex items-center justify-center p-1.5">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 text-[#29B6F6]" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold text-2xl tracking-tight text-white flex items-center gap-1">
-                  RADYA<span className="text-[#1793E8]">LABS</span>
-                </span>
-                <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase -mt-1">
-                  CLOUD NATIVE & AI SOLUTIONS PARTNER
-                </span>
+            <a href="#" className="inline-flex items-center group py-1" aria-label="Radya Labs Homepage">
+              <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-colors shadow-inner">
+                <Image
+                  src="/images/logos/radya-logo.png"
+                  alt="Radya Labs - Cloud Native & AI Solutions Partner"
+                  width={210}
+                  height={42}
+                  className="h-9 sm:h-10 w-auto object-contain brightness-105"
+                />
               </div>
             </a>
 

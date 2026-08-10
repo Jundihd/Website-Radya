@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Language } from '@/types';
 import { HERO_STATS } from '@/lib/data';
 import { ArrowRight, Zap, FolderKanban } from 'lucide-react';
@@ -9,10 +10,41 @@ interface HeroSectionProps {
   onOpenContact: () => void;
 }
 
+const HERO_SLIDES = [
+  {
+    id: 1,
+    src: '/images/hero-slide-1.png',
+    alt: 'Radya Labs Project Showcase and Industry Presentation with Kemenparekraf',
+    title: { ID: 'Kolaborasi & Pameran Inovasi Kemenparekraf', EN: 'Innovation Showcase & Industry Partnership' }
+  },
+  {
+    id: 2,
+    src: '/images/hero-slide-2.png',
+    alt: 'Radya Labs ANBK Kemendikbudristek School Computer Lab Visit',
+    title: { ID: 'Platform Asesmen Nasional (ANBK)', EN: 'Nationwide Educational Platform (ANBK)' }
+  },
+  {
+    id: 3,
+    src: '/images/hero-slide-3.png',
+    alt: 'Radya Labs & Alkademi Foundation Guinness World Records Holder',
+    title: { ID: 'Rekor Dunia Generative AI Apps', EN: 'Guinness World Record for GenAI Apps' }
+  },
+];
+
 export const HeroSection: React.FC<HeroSectionProps> = ({
   language,
   onOpenContact,
 }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Automatic slide rotation every 4 seconds (strictly automatic, no manual drag/swipe)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative pt-24 pb-8 md:pt-28 md:pb-10 overflow-hidden bg-[#F8FAFC]">
       {/* Background Decorative Mesh Shapes */}
@@ -21,10 +53,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute -bottom-20 left-1/3 w-80 h-80 bg-[#29B6F6]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Hero Column (6 cols for symmetric 1:1 side-by-side alignment) */}
-          <div className="lg:col-span-6 flex flex-col items-start">
+          {/* Left Hero Column - Main Headline, Value Proposition & Actions */}
+          <div className="lg:col-span-6 flex flex-col items-start justify-center">
             
             {/* Top Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-xs mb-4 hover:border-[#1793E8]/50 transition-colors">
@@ -40,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[48px] lg:leading-[1.15] font-extrabold text-[#0F172A] tracking-tight mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-[46px] lg:leading-[1.18] font-extrabold text-[#0F172A] tracking-tight mb-4">
               {language === 'ID' ? (
                 <>
                   Membangun Solusi Digital{' '}
@@ -55,14 +87,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </h1>
 
             {/* Paragraph */}
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6 max-w-xl font-normal">
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-7 max-w-xl font-normal">
               {language === 'ID'
                 ? 'Radya Labs membantu perusahaan bertransformasi digital dan bertumbuh melalui solusi Cloud Native, AI, dan aplikasi berkualitas tinggi yang siap menghadapi masa depan.'
                 : 'Radya Labs empowers companies to digitally transform and grow through Cloud Native, AI, and future-ready high-quality applications.'}
             </p>
 
             {/* Primary & Secondary Action CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto mb-8">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
               <a
                 href="#layanan"
                 className="bg-gradient-radya text-white font-bold text-sm sm:text-base px-7 py-3.5 rounded-full shadow-lg shadow-[#1793E8]/30 hover:shadow-xl hover:shadow-[#1793E8]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 group"
@@ -80,42 +112,71 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </a>
             </div>
 
-            {/* Stats Counter Row (Fully visible above-the-fold without scroll) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full pt-6 border-t border-slate-200/80">
-              {HERO_STATS.map((stat) => (
-                <div key={stat.id} className="flex flex-col p-3 rounded-2xl bg-white/70 border border-slate-200/60 shadow-xs backdrop-blur-xs">
-                  <span className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight text-gradient-radya">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs font-semibold text-slate-500 mt-0.5">
-                    {stat.label[language]}
-                  </span>
-                </div>
-              ))}
-            </div>
-
           </div>
 
-          {/* Right Hero Column - Real Human Digital Transformation Team Visual (6 cols for symmetric 1:1 side-by-side alignment) */}
+          {/* Right Hero Column - Auto-Rotating Photo Carousel Visual (Enlarged & Vertically Aligned with Left Column) */}
           <div className="lg:col-span-6 relative flex justify-center items-center">
             
             {/* Symmetrical Image Frame Container */}
-            <div className="relative w-full rounded-3xl p-3 bg-gradient-to-br from-white/90 via-slate-50/80 to-[#1793E8]/10 border border-slate-200/80 shadow-2xl backdrop-blur-xl">
+            <div className="relative w-full rounded-3xl p-3 sm:p-4 bg-gradient-to-br from-white/95 via-slate-50/90 to-[#1793E8]/15 border border-slate-200/90 shadow-2xl backdrop-blur-xl">
               
-              {/* Image element */}
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/3] w-full">
-                <img
-                  src="/images/hero-team.png"
-                  alt="Radya Labs Digital Transformation & Solution Consultants"
-                  className="w-full h-full object-cover rounded-2xl hover:scale-102 transition-transform duration-500"
-                />
-                
-                {/* Gradient overlay for contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
+              {/* Carousel Container (Aspect ratio 1024/483 matching the exact photo dimensions 100%) */}
+              <div
+                className="relative rounded-2xl overflow-hidden w-full select-none pointer-events-none shadow-md"
+                style={{ aspectRatio: '1024 / 483' }}
+              >
+                {HERO_SLIDES.map((slide, idx) => {
+                  const isActive = idx === currentSlide;
+                  return (
+                    <div
+                      key={slide.id}
+                      className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                        isActive
+                          ? 'opacity-100 scale-100 z-10'
+                          : 'opacity-0 scale-100 z-0'
+                      }`}
+                    >
+                      {/* Crisp Full-Frame Photo touching edges seamlessly with 0 empty space */}
+                      <Image
+                        src={slide.src}
+                        alt={slide.alt}
+                        fill
+                        unoptimized
+                        quality={100}
+                        priority={idx === 0}
+                        className="object-cover rounded-2xl"
+                      />
+
+                      {/* Subtle Vignette Bottom Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none rounded-2xl" />
+                      
+                      {/* Bottom Caption Badge */}
+                      <div className="absolute bottom-3.5 left-4 right-24 z-20 flex items-center">
+                        <span className="text-xs sm:text-sm font-bold text-white drop-shadow-md truncate">
+                          {slide.title[language]}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Subtle Automatic Progress Dots Indicator */}
+                <div className="absolute bottom-3.5 right-4 z-30 flex items-center gap-1.5 pointer-events-none">
+                  {HERO_SLIDES.map((slide, idx) => (
+                    <span
+                      key={slide.id}
+                      className={`h-1.5 rounded-full transition-all duration-500 ${
+                        idx === currentSlide
+                          ? 'w-6 bg-[#43D3A4] shadow-sm'
+                          : 'w-1.5 bg-white/40'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
 
-              {/* Floating hanging badge: ISO 27001 & SOC2 Compliant */}
-              <div className="absolute -bottom-5 -left-4 sm:-bottom-6 sm:-left-6 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3.5 z-20 animate-float">
+              {/* Floating hanging badge: ISO 27001 & SOC2 Compliant (Positioned Top-Right) */}
+              <div className="absolute -top-4 -right-2 sm:-top-5 sm:-right-4 bg-white/95 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3 z-20 animate-float hover:shadow-2xl transition-shadow">
                 <div className="w-10 h-10 rounded-xl bg-[#43D3A4]/15 flex items-center justify-center text-[#43D3A4] shrink-0">
                   <Zap className="w-5 h-5 fill-[#43D3A4]" />
                 </div>
@@ -130,6 +191,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
         </div>
+
+        {/* Stats Counter Row (Full Width across the bottom of both columns) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4 w-full mt-10 md:mt-12 pt-8 border-t border-slate-200/80">
+          {HERO_STATS.map((stat) => (
+            <div
+              key={stat.id}
+              className="flex flex-col p-4 rounded-2xl bg-white/80 border border-slate-200/70 shadow-xs backdrop-blur-xs hover:border-[#1793E8]/30 hover:shadow-md transition-all duration-200"
+            >
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F172A] tracking-tight text-gradient-radya">
+                {stat.value}
+              </span>
+              <span className="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+                {stat.label[language]}
+              </span>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

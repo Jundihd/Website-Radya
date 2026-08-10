@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import { Language } from '@/types';
 import { CORE_VALUES } from '@/lib/data';
 import {
@@ -94,68 +95,51 @@ export const WhyRadyaLabs: React.FC<WhyRadyaLabsProps> = ({
             </button>
           </div>
 
-          {/* Right Column - Photo Grid & Floating Metric Cards */}
-          <div className="lg:col-span-6 relative">
+          {/* Right Column - Team Activities Collage & Floating Metric Cards */}
+          <div className="lg:col-span-6 relative flex justify-center items-center py-8">
             
-            {/* Asymmetric Photo Grid */}
-            <div className="grid grid-cols-2 gap-4 relative z-10">
-              <div className="space-y-4">
-                <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 h-56 group">
-                  <img
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=80"
-                    alt="Radya Labs Engineering Team"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 h-40 group">
-                  <img
-                    src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&auto=format&fit=crop&q=80"
-                    alt="Client Workshop Presentation"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </div>
+            {/* Background Ambient Glow for Image Depth */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#1793E8]/10 via-[#29B6F6]/10 to-[#43D3A4]/10 rounded-full blur-3xl -z-10 scale-95 pointer-events-none" />
 
-              <div className="space-y-4 pt-8">
-                <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 h-40 group">
-                  <img
-                    src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=80"
-                    alt="AI Architecture Workshop"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 h-56 group">
-                  <img
-                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&auto=format&fit=crop&q=80"
-                    alt="Enterprise Executive Review"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+            {/* Team Collage Visual */}
+            <div className="relative w-full max-w-lg mx-auto group flex justify-center">
+              <div className="relative z-10 transition-transform duration-500 group-hover:scale-[1.02] flex justify-center w-full">
+                <Image
+                  src="/images/about-team-mosaic.png"
+                  alt="Radya Labs Team Activities, Events, and Enterprise Workshops"
+                  width={600}
+                  height={720}
+                  quality={100}
+                  unoptimized
+                  priority
+                  className="w-full max-w-[480px] h-auto object-contain drop-shadow-[0_20px_35px_rgba(15,23,42,0.18)] select-none"
+                />
               </div>
             </div>
 
-            {/* Floating Metric Card Overlay */}
-            <div className="absolute -bottom-6 -left-6 z-20 bg-white p-4 rounded-2xl shadow-xl border border-slate-200 flex items-center gap-3 animate-float">
-              <div className="w-12 h-12 rounded-xl bg-gradient-radya text-white flex items-center justify-center font-black text-lg">
-                13+
+            {/* Floating Metric Card Overlay - 15+ Years Track Record */}
+            <div className="absolute -bottom-2 left-0 sm:-bottom-4 sm:-left-2 z-20 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3 animate-float hover:shadow-2xl transition-shadow">
+              <div className="w-12 h-12 rounded-xl bg-gradient-radya text-white flex items-center justify-center font-black text-lg shadow-md shadow-[#1793E8]/25 shrink-0">
+                15+
               </div>
               <div>
-                <div className="text-xs font-bold text-slate-800">
+                <div className="text-xs font-bold text-slate-900">
                   {language === 'ID' ? 'Tahun Rekam Jejak' : 'Years Track Record'}
                 </div>
-                <div className="text-[11px] text-slate-500">
+                <div className="text-[11px] text-slate-500 font-medium">
                   {language === 'ID' ? 'Sejak 2011 di Bandung, Indonesia' : 'Founded in 2011'}
                 </div>
               </div>
             </div>
 
-            <div className="absolute -top-6 -right-6 z-20 bg-slate-900 text-white p-4 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3 animate-float-reverse">
-              <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+            {/* Floating Metric Card Overlay - 98.5% Satisfaction */}
+            <div className="absolute -top-2 right-0 sm:-top-4 sm:-right-2 z-20 bg-slate-900/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3 animate-float-reverse hover:shadow-2xl transition-shadow">
+              <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 shrink-0">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs font-bold text-white">98.5% Client Satisfaction</div>
-                <div className="text-[11px] text-slate-400">Enterprise SLA Retention</div>
+                <div className="text-xs font-bold text-white tracking-wide">98.5% Client Satisfaction</div>
+                <div className="text-[11px] text-slate-400 font-medium">Enterprise SLA Retention</div>
               </div>
             </div>
 

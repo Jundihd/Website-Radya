@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Language } from '@/types';
 import { SERVICES_LIST, CASE_STUDIES, INDUSTRIES_LIST } from '@/lib/data';
 import { Menu, X, Globe, PhoneCall, Search } from 'lucide-react';
+import Image from 'next/image';
 
 interface NavbarProps {
   language: Language;
@@ -96,23 +97,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
-            {/* Logo */}
-            <a href="#" className="flex items-center gap-3 group">
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-radya p-0.5 flex items-center justify-center shadow-md shadow-[#1793E8]/20 group-hover:scale-105 transition-transform">
-                <div className="w-full h-full bg-[#0F172A] rounded-[10px] flex items-center justify-center p-1.5">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 text-[#29B6F6]" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold text-xl tracking-tight text-[#0F172A] flex items-center gap-1">
-                  RADYA<span className="text-[#1793E8]">LABS</span>
-                </span>
-                <span className="text-[9px] font-semibold tracking-wider text-slate-500 uppercase -mt-1">
-                  CLOUD NATIVE & AI PARTNER
-                </span>
-              </div>
+            {/* Official Radya Labs Logo */}
+            <a href="#" className="flex items-center group py-0.5" aria-label="Radya Labs Homepage">
+              <Image
+                src="/images/logos/radya-logo.png"
+                alt="Radya Labs - Cloud Native & AI Solutions Partner"
+                width={195}
+                height={38}
+                priority
+                className="h-8 sm:h-9 md:h-9.5 w-auto object-contain transition-transform group-hover:scale-105"
+              />
             </a>
 
             {/* Desktop Navigation Menu */}
