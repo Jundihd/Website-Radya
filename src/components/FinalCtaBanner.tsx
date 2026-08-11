@@ -15,15 +15,15 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
   return (
     <section className="py-20 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <div className="rounded-[36px] bg-gradient-to-r from-[#0F172A] via-slate-900 to-[#1793E8] p-10 sm:p-16 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-          
+
           {/* Abstract Cloud Mesh Graphic */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radya opacity-25 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#43D3A4] opacity-20 blur-3xl rounded-full pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl">
-            
+
             {/* Top Pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[#29B6F6] text-xs font-bold uppercase tracking-wider mb-6 border border-white/10">
               <Sparkles className="w-3.5 h-3.5" />
@@ -48,8 +48,8 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
             {/* Paragraph */}
             <p className="text-slate-300 text-base sm:text-xl leading-relaxed mb-10">
               {language === 'ID'
-                ? 'Tim kami siap membantu Anda merancang, mengarsitekturkan, dan mengeksekusi solusi Cloud Native & AI berstandar enterprise.'
-                : 'Our Principal Solution Architects are ready to evaluate your system architecture and draft a customized technical roadmap.'}
+                ? 'Tim kami siap membantu Anda merancang solusi, membangun arsitekturnya, hingga menjalankan solusi Cloud Native & AI yang siap diandalkan untuk skala enterprise.'
+                : 'Our team is ready to help you design solutions, build the architecture, and run reliable enterprise-grade Cloud Native & AI solutions.'}
             </p>
 
             {/* CTA Button */}

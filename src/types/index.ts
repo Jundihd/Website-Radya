@@ -21,6 +21,7 @@ export interface ServiceItem {
 
 export interface CaseStudy {
   id: string;
+  slug?: string;
   client: string;
   logo: string;
   image: string;
@@ -32,6 +33,10 @@ export interface CaseStudy {
   metrics: { value: string; label: { ID: string; EN: string } }[];
   tags: string[];
   industry: string;
+  featuresList?: { name: { ID: string; EN: string }; description: { ID: string; EN: string } }[];
+  deliverables?: string[];
+  screenshots?: string[];
+  backgroundColor?: string;
 }
 
 export interface CoreValue {

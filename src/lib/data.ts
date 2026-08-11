@@ -200,184 +200,868 @@ export const SERVICES_LIST: ServiceItem[] = [
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: 'danone-orderen',
-    client: 'Danone Indonesia',
-    logo: 'DANONE',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'CLOUD NATIVE & B2B', EN: 'CLOUD NATIVE & B2B' },
-    title: {
-      ID: 'ORDERen — Sistem Pemesanan B2B Terintegrasi Danone',
-      EN: 'ORDERen — Integrated B2B Ordering Platform for Danone'
+    "id": "bioaudit",
+    "slug": "bioaudit",
+    "client": "PT Bio Farma (Persero)",
+    "logo": "BIO FARMA",
+    "image": "https://admin.radyalabs.com/assets/e2cddcab-12f0-4c0d-a329-2b07f1e894c3",
+    "category": {
+      "ID": "AUDIT & GOVERNANCE",
+      "EN": "AUDIT & GOVERNANCE"
     },
-    summary: {
-      ID: 'Sistem pemesanan B2B terintegrasi untuk ratusan outlet distributor Danone di seluruh Indonesia dengan otomatisasi pemrosesan order dan ERP.',
-      EN: 'An integrated distributor B2B ordering platform serving hundreds of retail outlets across Indonesia with automated ERP fulfillment.'
+    "title": {
+      "ID": "BioAudit",
+      "EN": "BioAudit"
     },
-    challenge: {
-      ID: 'Proses pemesanan manual dari ratusan outlet distributor menyebabkan penundaan pengiriman, human error dalam pencatatan stok, serta keterbatasan visibilitas real-time.',
-      EN: 'Manual ordering workflows across nationwide distributors caused fulfillment lag, stock reconciliation errors, and limited real-time supply chain telemetry.'
+    "summary": {
+      "ID": "BioAudit untuk Biofarma adalah sistem Audit internal. Aplikasi satu atap dari perencanaan, pengawasan, hingga pelaksanaan audit.",
+      "EN": "BioAudit for Biofarma is an internal Auditing system. The one stop application from planning, supervising, and executing audit."
     },
-    solution: {
-      ID: 'Radya Labs merancang platform ORDERen berbasis cloud native microservices yang memfasilitasi pemesanan multi-channel, otomatisasi validasi stok, dan sinkronisasi ERP.',
-      EN: 'Radya Labs architected the cloud-native ORDERen platform supporting multi-channel ordering, automated inventory verification, and seamless enterprise ERP synchronization.'
+    "challenge": {
+      "ID": "Mengurangi biaya alat tulis kantor dan menghilangkan kesulitan pengelolaan informasi yang ada dalam kerta kerja audit, Alur kerja dan pendelegasian wewenang kerja audit intern dapat dilakukan secara lebih jelas, Data dan informasi audit intern dapat diakses oleh pengguna yang berwenang dari banyak tempat secara online, Laporan audit PI menjadi lebih berkualitas dan dipertanggungjawabkan karena ketersediaan kerta kerja yang lengkap dan dikelola dengan baik",
+      "EN": "Reduce the cost of office stationery and eliminate the difficulty of managing information contained in audit working papers, Workflow and delegation of internal audit work authority can be done more clearly, Internal audit data and information can be accessed by authorized users from many places online, PI audit reports become more qualified and accountable due to the availability of complete and well-managed working papers."
     },
-    metrics: [
-      { value: '+40%', label: { ID: 'Efisiensi Operasional', EN: 'Operational Efficiency' } },
-      { value: '+30%', label: { ID: 'Pertumbuhan Order', EN: 'Order Volume Growth' } },
-      { value: '100%', label: { ID: 'Akurasi Inventaris', EN: 'Inventory Accuracy' } }
+    "solution": {
+      "ID": "Memperhatikan kebutuhan PI akan manajemen audit intern yang lebih baik dan berkualitas serta masalah pengarsipan kertas kerja audit maka kami membutuhkan aplikasi audit manajemen system yang berdasar standar pelaksanaan audit internal yang di pubilkasikan oleh IIA.",
+      "EN": "Considering PI's need for better and quality internal audit management and the issue of audit working paper archiving, we need an audit management system application based on the internal audit implementation standards published by the IIA."
+    },
+    "metrics": [
+      {
+        "value": "+85%",
+        "label": {
+          "ID": "Efisiensi Siklus Audit",
+          "EN": "Audit Cycle Efficiency"
+        }
+      },
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Kepatuhan Regulasi IIA",
+          "EN": "IIA Regulatory Compliance"
+        }
+      },
+      {
+        "value": "Paperless",
+        "label": {
+          "ID": "Sistem Pelaporan",
+          "EN": "Reporting Workflow"
+        }
+      }
     ],
-    tags: ['Cloud Native', 'B2B Microservices', 'Supply Chain', 'Enterprise ERP'],
-    industry: 'FMCG & Supply Chain'
+    "tags": [
+      "Protocol & report",
+      "FRA",
+      "DS",
+      "FS",
+      "URS",
+      "Load Test",
+      "User Manual",
+      "Stress Test"
+    ],
+    "industry": "Healthcare & Pharmaceuticals",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Audit Planning",
+          "EN": "Perencanaan Audit"
+        },
+        "description": {
+          "ID": "Audit planning workflow in BioAudit application",
+          "EN": "Alur kerja perencanaan audit dalam aplikasi BioAudit"
+        }
+      },
+      {
+        "name": {
+          "ID": "Pelaporan Hasil Audits",
+          "EN": "Pelaporan Hasil Audit"
+        },
+        "description": {
+          "ID": "Alur kerja pelaporan audit dalam aplikasi BioAudit berdasarkan temuan pemeriksaan",
+          "EN": "Alur kerja pelaporan audit dalam aplikasi BioAudit berdasarkan temuan pemeriksaan"
+        }
+      },
+      {
+        "name": {
+          "ID": "Follow-up Monitoring of Audit Results",
+          "EN": "Pemantauan Tindak Lanjut Hasil Audit"
+        },
+        "description": {
+          "ID": "The workflow for monitoring follow-up audit results in the BioAudit application based on inspection findings.",
+          "EN": "Alur kerja pemantauan tindak lanjut hasil audit dalam aplikasi BioAudit berdasarkan temuan pemeriksaan"
+        }
+      },
+      {
+        "name": {
+          "ID": "Pelaksanaan Audits",
+          "EN": "Pelaksanaan Audit"
+        },
+        "description": {
+          "ID": "Alur kerja pelaksanaan audit dalam aplikasi BioAudit",
+          "EN": "Alur kerja pelaksanaan audit dalam aplikasi BioAudit"
+        }
+      },
+      {
+        "name": {
+          "ID": "Persiapan Audits",
+          "EN": "Persiapan Audit"
+        },
+        "description": {
+          "ID": "Alur kerja persiapan audit dalam aplikasi BioAudit",
+          "EN": "Alur kerja persiapan audit dalam aplikasi BioAudit"
+        }
+      }
+    ],
+    "deliverables": [
+      "Protocol & report",
+      "FRA",
+      "DS",
+      "FS",
+      "URS",
+      "Load Test",
+      "User Manual",
+      "Stress Test"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/f43f2168-bcf6-4618-bca2-f9c01326fee8",
+      "https://admin.radyalabs.com/assets/15847755-e733-47cb-933b-4cd9b99cc442"
+    ],
+    "backgroundColor": "#156384"
   },
   {
-    id: 'pusmendik-anbk',
-    client: 'Pusmendik Kemendikbudristek',
-    logo: 'PUSMENDIK',
-    image: 'https://admin.radyalabs.com/assets/1cfa7fe1-685a-47d5-abc8-6dadb524fd3e',
-    category: { ID: 'PUBLIC SECTOR PLATFORM', EN: 'PUBLIC SECTOR PLATFORM' },
-    title: {
-      ID: 'ANBK — Asesmen Nasional Berbasis Komputer Kemendikbudristek',
-      EN: 'ANBK — Computer-Based National Assessment Platform'
+    "id": "asesmen-nasional-berbasis-komputer-anbk",
+    "slug": "asesmen-nasional-berbasis-komputer-anbk",
+    "client": "Pusmendik Kemendikbudristek",
+    "logo": "PUSMENDIK",
+    "image": "https://admin.radyalabs.com/assets/1cfa7fe1-685a-47d5-abc8-6dadb524fd3e",
+    "category": {
+      "ID": "PUBLIC SECTOR PLATFORM",
+      "EN": "PUBLIC SECTOR PLATFORM"
     },
-    summary: {
-      ID: 'Platform ujian nasional berbasis komputer yang memfasilitasi pelaksanaan Asesmen Nasional untuk jutaan siswa SD, SMP, SMA & SMK di Indonesia.',
-      EN: 'Nationwide computer-based assessment platform powering national examinations for millions of elementary to high school students.'
+    "title": {
+      "ID": "Asesmen Nasional Berbasis Komputer (ANBK)",
+      "EN": "Asesmen Nasional Berbasis Komputer (ANBK)"
     },
-    challenge: {
-      ID: 'Peniadaan Ujian Nasional menuntut sistem baru yang mampu menangani jutaan peserta tes serentak dengan kestabilan tinggi tanpa server downtime.',
-      EN: 'The abolition of traditional national exams required a new high-concurrency architecture capable of handling millions of simultaneous test takers.'
+    "summary": {
+      "ID": "ANBK merupakan aplikasi yang memungkinkan peserta untuk melakukan asesmen nasional yang diselenggarakan oleh PUSMENDIK dan memungkinkan Admin dari pihak PUSMENDIK untuk mengelola pelaksanaan kegiatan tesnya mulai dari pengelolaan peserta, proktor hingga soal tes beserta jadwalnya.",
+      "EN": "ANBK is an application that allows participants to carry out national assessments organized by PUSMENDIK and allows the Admin from PUSMENDIK to manage the implementation of test activities starting from managing participants, proctors to test questions and their schedules."
     },
-    solution: {
-      ID: 'Pengembangan aplikasi ANBK berarsitektur distributed cloud yang mengelola proktor, penjadwalan soal, dan sinkronisasi nilai tes secara real-time.',
-      EN: 'Development of the ANBK platform leveraging distributed cloud infrastructure for proctor management, test scheduling, and instant result aggregation.'
+    "challenge": {
+      "ID": "Target proyek ANBK adalah dapat digunakan mulai dari pelaksanaan Uji Kesetaraan sampai pelaksanaan AN dari jenjang SMA Sederajat, SMK, Jenjang SMP Sederajat dan Jenjang SD Sederajat pada tahun 2023. Kedepannya ANBK ini akan dikembangkan lagi dengan penambahan fitur-fitur terbaru yang berisi informasi-informasi yang memudahkan pengguna dalam melaksanakan kegiatan tesnya",
+      "EN": "The target of the ANBK project is that it can be used from the implementation of the Equivalency Test to the implementation of AN from SMA and Equivalent, SMK, SMP and Elementary School and Equivalent levels in 2023. In the future, ANBK will be further developed with the addition of the latest features containing information makes it easier for users to carry out their test activities"
     },
-    metrics: [
-      { value: 'Jutaan', label: { ID: 'Peserta Ujian', EN: 'Test Candidates' } },
-      { value: '100%', label: { ID: 'Sekolah Terhubung', EN: 'Schools Connected' } },
-      { value: '99.99%', label: { ID: 'Ketersediaan Sistem', EN: 'System Availability' } }
+    "solution": {
+      "ID": "Dengan adanya proses atau kegiatan ANBK ini, maka diperlukan sebuah aplikasi untuk dapat memaksimalkan peserta dan admin tes ANBK dalam melaksanakan kegiatan tes.",
+      "EN": "With this ANBK process or activity, an application is needed to maximize ANBK test participants and admins in carrying out test activities."
+    },
+    "metrics": [
+      {
+        "value": "3.5M+",
+        "label": {
+          "ID": "Siswa Peserta Ujian",
+          "EN": "Concurrent Students"
+        }
+      },
+      {
+        "value": "99.99%",
+        "label": {
+          "ID": "Ketersediaan Server",
+          "EN": "Server Availability"
+        }
+      },
+      {
+        "value": "100K+",
+        "label": {
+          "ID": "Sekolah Terhubung",
+          "EN": "Connected Schools"
+        }
+      }
     ],
-    tags: ['High Concurrency', 'Public Sector', 'Distributed Cloud', 'Assessment Tech'],
-    industry: 'Government & Education'
+    "tags": [
+      "Load Test",
+      "Kubernetes",
+      "TSD",
+      "Google Cloud Platform (GCP)",
+      "UAT Document",
+      "FSD"
+    ],
+    "industry": "Government & Education",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Web Proktor",
+          "EN": "Proctor Web"
+        },
+        "description": {
+          "ID": "Pengguna aplikasi dengan peran proktor dapat menggunakan aplikasi web ANBK untuk memonitor kegiatan peserta, status peserta, daftar peserta, kelompok tes, laporan pengolahan dan lain sebagainya.",
+          "EN": "Application users with the role of proctor can use the ANBK web application to monitor participant activities, participant status, participant list, test groups, processing reports and so on."
+        }
+      },
+      {
+        "name": {
+          "ID": "Web Helpdesk",
+          "EN": "Helpdesk Web"
+        },
+        "description": {
+          "ID": "Web yang digunakan oleh peran Helpdesk untuk melakukan kegiatan monitoring peserta, pengelolaan proktor dan status tes.activities, proctor management and test status.",
+          "EN": "The website is used by the Helpdesk role to carry out participant monitoring activities, proctor management and test status."
+        }
+      },
+      {
+        "name": {
+          "ID": "Web Admin",
+          "EN": "Admin Web"
+        },
+        "description": {
+          "ID": "Web yang digunakan oleh role Admin untuk melakukan pengelolaan data mulai dari Helpdesk, Proktor, Status Tes, Hak Akses, Peserta, sampai monitoring aktivitas peserta.",
+          "EN": "The website is used by the Admin role to manage data starting from the Helpdesk, Proctor, Test Status, Access Rights, Participants, to monitoring participant activity."
+        }
+      },
+      {
+        "name": {
+          "ID": "Web Siswa",
+          "EN": "Student Web"
+        },
+        "description": {
+          "ID": "Merupakan web utama yang digunakan oleh siswa, dari jenjang SD - SMA dan sederajat untuk melakukan kegiatan konfirmasi data, konfirmasi tes dan pelaksanaan (pengerjaan) tes.",
+          "EN": "It is the main website used by students, from elementary to high school and equivalent levels, to carry out data confirmation activities, test confirmation and test implementation."
+        }
+      }
+    ],
+    "deliverables": [
+      "Load Test",
+      "Kubernetes",
+      "TSD",
+      "Google Cloud Platform (GCP)",
+      "UAT Document",
+      "FSD"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/cb780612-4e97-4a34-8bb7-4992b14c275b"
+    ]
   },
   {
-    id: 'nestle-ocr',
-    client: 'Nestlé Indonesia',
-    logo: 'NESTLÉ',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'AI & OCR INTELLIGENCE', EN: 'AI & OCR INTELLIGENCE' },
-    title: {
-      ID: 'OCR Invoice Automation — Otomatisasi Dokumen Keuangan Nestlé',
-      EN: 'Automated AI OCR Invoice Processing Engine for Nestlé'
+    "id": "sikepo",
+    "slug": "sikepo",
+    "client": "Otoritas Jasa Keuangan (OJK)",
+    "logo": "OJK",
+    "image": "https://admin.radyalabs.com/assets/04735d7c-36e9-4c60-b8bd-0950e1266408",
+    "category": {
+      "ID": "FINTECH & REGULATORY",
+      "EN": "FINTECH & REGULATORY"
     },
-    summary: {
-      ID: 'Solusi OCR berbasis AI untuk memproses puluhan ribu invoice vendor secara otomatis dengan presisi tinggi dan verifikasi instan ke sistem keuangan.',
-      EN: 'AI-driven OCR document intelligence extracting vendor invoice data with high accuracy and instant accounting verification.'
+    "title": {
+      "ID": "SIKePO",
+      "EN": "SIKePO"
     },
-    challenge: {
-      ID: 'Tim keuangan Nestlé harus memproses lebih dari 30.000 invoice fisik dan digital setiap bulan secara manual, memakan waktu hingga ribuan jam kerja.',
-      EN: 'Nestlé Finance manually verified over 30,000 monthly vendor invoices, resulting in accounting bottlenecks and delayed vendor payments.'
+    "summary": {
+      "ID": "Sistem Informasi Ketentuan Perbankan Online (SIKePO) merupakan layanan teknologi informasi yang menyajikan informasi seputar Landasan Hukum dan Ketentuan Terkaitnya mengenai perbankan dan industri jasa keuangan lain yang disajikan secara online oleh OJK (Otoritas Jasa Keuangan).",
+      "EN": "Sistem Informasi Ketentuan Perbankan Online (SIKePO) is a rules and information searching application in regards of Banking and other Financial Institutions issued by OJK. User can search by tag, type, or topic, and the system will show all the rules related."
     },
-    solution: {
-      ID: 'Pengembangan mesin Intelligent Document Processing (IDP) dengan model Deep Learning OCR yang secara otomatis mengekstrak line items, PPN, dan pencocokan PO.',
-      EN: 'Deployment of an Intelligent Document Processing (IDP) engine powered by deep learning OCR that extracts line items and automatically matches POs.'
+    "challenge": {
+      "ID": "Mempunyai kanal portal web CMS, portal web dan mobile apps untuk industri keuangan perbankan dan juga masyarakat umum yang mampu memenuhi kebutuhan latarbelakang di atas.",
+      "EN": "Having a CMS web portal channel, web portal and mobile apps for the banking financial industry and also the general public that is able to meet the background needs above."
     },
-    metrics: [
-      { value: '90%', label: { ID: 'Lebih Cepat', EN: 'Faster Processing' } },
-      { value: '30,000+', label: { ID: 'Invoice / Bulan', EN: 'Invoices / Month' } },
-      { value: '99.2%', label: { ID: 'Akurasi Ekstraksi Data', EN: 'Extraction Accuracy' } }
+    "solution": {
+      "ID": "Membuat kanal portal web CMS untuk stakeholders yang langsung terkelola dan terintegrasi dengan portal web dan mobile apps untuk industri keuangan, perbankan dan juga masyarakat umum.",
+      "EN": "Create a CMS web portal channel for stakeholders that is directly managed and integrated with web portals and mobile apps for the financial industry, banking and the general public."
+    },
+    "metrics": [
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Perbankan Nasional",
+          "EN": "National Banks Access"
+        }
+      },
+      {
+        "value": "JDIHN",
+        "label": {
+          "ID": "Terintegrasi Resmi",
+          "EN": "Officially Integrated"
+        }
+      },
+      {
+        "value": "<1 Detik",
+        "label": {
+          "ID": "Pencarian Regulasi",
+          "EN": "Search Retrieval"
+        }
+      }
     ],
-    tags: ['Computer Vision', 'OCR AI', 'Document Intelligence', 'Finance Automation'],
-    industry: 'FMCG & Finance'
+    "tags": [
+      "FSD",
+      "User Manual",
+      "TSD",
+      "Source Code"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Informasi Perbankan",
+          "EN": "Banking Information"
+        },
+        "description": {
+          "ID": "SIKePO sebagai sarana berbagai informasi dari OJK terhadap perbankan, industri jasa keuangan lain dan masyarakat secara umum.",
+          "EN": "SIKePO is a means of sharing information from OJK regarding banking, other financial services industries and the public in general."
+        }
+      },
+      {
+        "name": {
+          "ID": "Survey",
+          "EN": "Surveys"
+        },
+        "description": {
+          "ID": "Menyediakan link survey terhadap ketentuan - ketentuan jasa keuangan yang OJK sediakan sebagai otoritas.",
+          "EN": "Provides a survey link regarding the financial services provisions that OJK provides as an authority."
+        }
+      },
+      {
+        "name": {
+          "ID": "Layanan informasi Landasan Hukum dan Ketentuan Terkait",
+          "EN": "Information Services Legal Basis and Related Provisions"
+        },
+        "description": {
+          "ID": "SIKePO sebagai sarana untuk mencari landasan hukum serta ketentuan-ketentuan yang berlaku dalam hal jasa keuangan, dalam hal ini SIKePO menyediakan file download untuk memudahkan perbankan, industri jasa keuangan lain dan masyarakat secara umum untuk membaca ketentuan-ketentuan yang terkait yang di butuhkan.",
+          "EN": "SIKePO as a means to find the legal basis and provisions that apply in financial services, in this case SIKePO provides download files to make it easier for banks, other financial services industries and the public in general to read the related provisions that are needed."
+        }
+      }
+    ],
+    "deliverables": [
+      "FSD",
+      "User Manual",
+      "TSD",
+      "Source Code"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/3c2bd21b-1287-41f8-a975-a4f640e09fd9",
+      "https://admin.radyalabs.com/assets/49edef48-249c-4765-ab65-23a418523642"
+    ],
+    "backgroundColor": "#97232E"
   },
   {
-    id: 'ojk-sikepo',
-    client: 'Otoritas Jasa Keuangan (OJK)',
-    logo: 'OJK',
-    image: 'https://admin.radyalabs.com/assets/04735d7c-36e9-4c60-b8bd-0950e1266408',
-    category: { ID: 'FINTECH & REGULATORY', EN: 'FINTECH & REGULATORY' },
-    title: {
-      ID: 'SIKePO — Sistem Informasi Ketentuan Perbankan Online OJK',
-      EN: 'SIKePO — Online Banking Regulatory Information Portal'
+    "id": "muraqaba",
+    "slug": "muraqaba",
+    "client": "Muraqaba",
+    "logo": "MURAQABA",
+    "image": "https://admin.radyalabs.com/assets/740faad5-e53e-4d31-ae48-b039116b24f8",
+    "category": {
+      "ID": "MOBILE APP & STREAMING",
+      "EN": "MOBILE APP & STREAMING"
     },
-    summary: {
-      ID: 'Portal sistem informasi hukum perbankan online yang dikelola OJK untuk akses ketentuan keuangan dan integrasi JDIHN bagi seluruh perbankan nasional.',
-      EN: 'Regulatory information portal managed by OJK presenting online legal provisions, banking compliance search, and JDIHN integration.'
+    "title": {
+      "ID": "Muraqaba",
+      "EN": "Muraqaba"
     },
-    challenge: {
-      ID: 'Pencarian ketentuan perbankan yang tersebar membuat pemangku kepentingan industri keuangan kesulitan menemukan landasan hukum terkini secara cepat.',
-      EN: 'Scattered financial regulations made it difficult for banking stakeholders to search updated legal provisions efficiently.'
+    "summary": {
+      "ID": "Aplikasi meditasi untuk memudahkan setiap orang untuk bermeditasi dengan audio-audio yang menenangkan",
+      "EN": "Meditation app to make it easier for everyone to meditate with calming audios"
     },
-    solution: {
-      ID: 'Pengembangan kanal portal web CMS dan aplikasi mobile SIKePO terintegrasi dengan pencarian taksonomi hukum pintar, riwayat revisi, dan feedback kanal.',
-      EN: 'Development of the SIKePO Web CMS portal & mobile apps equipped with smart legal taxonomy search, revision history, and stakeholder channels.'
+    "challenge": {
+      "ID": "Target utama dari Muraqaba Apps ini ada user Muslim di seluruh dunia, khususnya amerika atau negara dengan muslim yang minoritas maupun mayoritas.",
+      "EN": "The main target of Muraqaba Apps is Muslim users worldwide who need mindfulness and meditation support with soothing audios."
     },
-    metrics: [
-      { value: '100%', label: { ID: 'Perbankan Nasional', EN: 'National Banks Access' } },
-      { value: 'JDIHN', label: { ID: 'Terintegrasi Resmi', EN: 'Officially Integrated' } },
-      { value: '<1 Detik', label: { ID: 'Pencarian Regulasi', EN: 'Regulation Search' } }
+    "solution": {
+      "ID": "Membuat aplikasi meditasi dengan sistem pengkategorian agar user bisa memilih metode meditasi dengan kebutuhan rohani yang ingin dicapai, misalnya menyelesaikan proble stress atau kecemasan berlebih pada jiwa.",
+      "EN": "Creating a dedicated meditation mobile app with categorization systems so users can easily select calming content and premium subscriptions."
+    },
+    "metrics": [
+      {
+        "value": "4.8/5.0",
+        "label": {
+          "ID": "Rating Pengguna",
+          "EN": "App Store Rating"
+        }
+      },
+      {
+        "value": "99.9%",
+        "label": {
+          "ID": "Stabilitas Audio",
+          "EN": "Streaming Uptime"
+        }
+      },
+      {
+        "value": "In-App",
+        "label": {
+          "ID": "Sistem Langganan",
+          "EN": "Subscription System"
+        }
+      }
     ],
-    tags: ['Fintech Compliance', 'Regulatory CMS', 'Legal Tech', 'Public Sector'],
-    industry: 'Finance & Banking'
+    "tags": [
+      "User Manual",
+      "UAT Document"
+    ],
+    "industry": "Health & Wellness",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Features Stories",
+          "EN": "Features Stories"
+        },
+        "description": {
+          "ID": "Kumpulan-kumpulan artikel seputar kontrolisasi diri, manajemen stress dan lainnya untuk dibaca oleh para user",
+          "EN": "A collection of articles about self-control, stress management and others for users to read."
+        }
+      },
+      {
+        "name": {
+          "ID": "Subscribe",
+          "EN": "Subscribe"
+        },
+        "description": {
+          "ID": "Fitur payment jika ingin berlangganan untuk mendengarkan audio selanjutnya dari tim Muraqaba",
+          "EN": "Payment feature if you want to subscribe to listen to the next audio from the Muraqaba team"
+        }
+      },
+      {
+        "name": {
+          "ID": "Series dan Kategori Audio",
+          "EN": "Audio Series and Categories"
+        },
+        "description": {
+          "ID": "Kumpulan kategori dan audio meditasi untuk didengarkan para user ketika membutuhkan waktu penyegaran",
+          "EN": "A collection of categories and meditation audio for users to listen to when they need a moment of refreshment."
+        }
+      }
+    ],
+    "deliverables": [
+      "User Manual",
+      "UAT Document"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/3f5dd77e-caf7-4201-9d0e-fb89aeb121cb"
+    ]
   },
   {
-    id: 'kataai-jangkau',
-    client: 'kata.ai',
-    logo: 'KATA.AI',
-    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1000&auto=format&fit=crop&q=80',
-    category: { ID: 'GENERATIVE AI CHATBOT', EN: 'GENERATIVE AI CHATBOT' },
-    title: {
-      ID: 'Jangkau AI — Omnichannel Enterprise Chatbot Platform',
-      EN: 'Jangkau AI — Enterprise Omnichannel Conversational Agent'
+    "id": "anteraja-aware",
+    "slug": "anteraja-aware",
+    "client": "Anteraja",
+    "logo": "ANTERAJA",
+    "image": "https://admin.radyalabs.com/assets/d2a7384a-c7c5-4ec7-acbb-a34e57dd73b9",
+    "category": {
+      "ID": "LOGISTICS & OPERATIONS",
+      "EN": "LOGISTICS & OPERATIONS"
     },
-    summary: {
-      ID: 'Platform chatbot AI omnichannel untuk otomatisasi pelayanan pelanggan di WhatsApp, Web, dan Telegram skala enterprise dengan agen AI pintar.',
-      EN: 'Enterprise omnichannel conversational agent automating customer engagement across WhatsApp, Web, and Telegram.'
+    "title": {
+      "ID": "Anteraja Aware",
+      "EN": "Anteraja Aware"
     },
-    challenge: {
-      ID: 'Penanganan pertanyaan pelanggan berulang membutuhkan ratusan agen support manual dengan response time hingga beberapa jam.',
-      EN: 'Handling high volumes of repetitive inquiries required massive manual customer support staff with multi-hour queue wait times.'
+    "summary": {
+      "ID": "Anteraja Aware adalah aplikasi internal untuk memantau absensi kurir dan manajemen tugas, melihat status Airway Bill, dan melihat laporan pengiriman di semua lokasi Anteraja",
+      "EN": "Anteraja Aware is an internal application to monitor courier absences and task management, view Airway Bill status, and view delivery report in all of Anteraja location"
     },
-    solution: {
-      ID: 'Integrasi mesin NLU kata.ai dengan arsitektur backend Radya Labs untuk otomatisasi tiket, routing agen, dan penyelesaian masalah instan.',
-      EN: 'Integration of NLU engines with Radya Labs robust microservices backend to automate ticketing, live handoff, and immediate query resolution.'
+    "challenge": {
+      "ID": "Aplikasi mobile Anteraja ditargetkan selesai proses developmentnya selama 3 bulan dan untuk target penggunanya yang diutamakan adalah para Kurir pengantar parcel (Satria) Anteraja.",
+      "EN": "The Anteraja mobile application is targeted to complete the development process within 3 months and the target users are primarily Anteraja parcel delivery couriers (Satria)."
     },
-    metrics: [
-      { value: '+60%', label: { ID: 'Resolusi Otomatis', EN: 'Automated Resolution' } },
-      { value: '+45%', label: { ID: 'Kepuasan Pelanggan', EN: 'CSAT Score Lift' } },
-      { value: '<5 Detik', label: { ID: 'Waktu Respon', EN: 'Average Response Time' } }
+    "solution": {
+      "ID": "Pembangunan aplikasi mobile Anteraja Aware akan memberikan solusi kepada Pengguna sehingga lebih memudahkan untuk diakses di smartphone-nya.",
+      "EN": "The development of the Anteraja Aware mobile application will provide a solution to users so that it is easier to access on their smartphones."
+    },
+    "metrics": [
+      {
+        "value": "3 Bulan",
+        "label": {
+          "ID": "Waktu Go-Live Cepat",
+          "EN": "Rapid Go-Live"
+        }
+      },
+      {
+        "value": "10K+",
+        "label": {
+          "ID": "Kurir Satria Aktif",
+          "EN": "Daily Active Couriers"
+        }
+      },
+      {
+        "value": "-45%",
+        "label": {
+          "ID": "Pending AWB Alert",
+          "EN": "Pending Parcel Lag"
+        }
+      }
     ],
-    tags: ['Conversational AI', 'WhatsApp API', 'Omnichannel', 'NLP Automation'],
-    industry: 'Technology & Telecom'
+    "tags": [
+      "Source Code",
+      "User Manual",
+      "FSD"
+    ],
+    "industry": "Logistics & Supply Chain",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Dashboard Report",
+          "EN": "Dashboard Report"
+        },
+        "description": {
+          "ID": "Fitur ini berfungsi menampilkan informasi laporan terkait data parcel Pickup, InTransit, delivery, Undefined, Anomali, return, Cancel dan Alert Per harinya",
+          "EN": "This feature functions to display report information related to Pickup, InTransit, Delivery, Undefined, Anomaly, Return, Cancel and Alert package data per day."
+        }
+      },
+      {
+        "name": {
+          "ID": "Pending AWB",
+          "EN": "Pending AWB"
+        },
+        "description": {
+          "ID": "Fitur ini berfungsi untuk membantu melakukan pencatatan data parcel yang Pending",
+          "EN": "Pending This feature functions to help record data on parcels that are pending."
+        }
+      },
+      {
+        "name": {
+          "ID": "Pemantauan Absen",
+          "EN": "Monitoring Absen"
+        },
+        "description": {
+          "ID": "Fitur ini berfungsi untuk memonitoring data absen satria perharinya",
+          "EN": "This feature functions to monitor Satria's daily absence data."
+        }
+      },
+      {
+        "name": {
+          "ID": "Manajemen Tugas",
+          "EN": "Task Management"
+        },
+        "description": {
+          "ID": "Fitur ini berfungsi untuk menampilkan task list harian serta dapat memudahkan untuk Satri menyelesaikan task hariannya.",
+          "EN": "This feature functions to display a daily task list and can make it easier for Satri to complete his daily tasks."
+        }
+      }
+    ],
+    "deliverables": [
+      "Source Code",
+      "User Manual",
+      "FSD"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/8b78a2cf-d0f4-41cc-9e80-7fb85de9065c",
+      "https://admin.radyalabs.com/assets/b1eff1e8-4a8c-45fb-8c28-3460e435379d"
+    ]
   },
   {
-    id: 'biofarma-bioaudit',
-    client: 'PT Bio Farma (Persero)',
-    logo: 'BIO FARMA',
-    image: 'https://admin.radyalabs.com/assets/e2cddcab-12f0-4c0d-a329-2b07f1e894c3',
-    category: { ID: 'HEALTHCARE & AUDIT', EN: 'HEALTHCARE & AUDIT' },
-    title: {
-      ID: 'BioAudit — Sistem Audit Internal Terintegrasi Bio Farma',
-      EN: 'BioAudit — Enterprise Internal Audit Management System'
+    "id": "tokoparts-ec-sites",
+    "slug": "tokoparts-ec-sites",
+    "client": "Tokoparts",
+    "logo": "TOKOPARTS",
+    "image": "https://admin.radyalabs.com/assets/5741b455-8e2b-4f0f-abec-2b6e90e90d54",
+    "category": {
+      "ID": "E-COMMERCE & CMS",
+      "EN": "E-COMMERCE & CMS"
     },
-    summary: {
-      ID: 'Sistem audit internal paperless terintegrasi untuk perencanaan, pengawasan, dan eksekusi audit sesuai standar IIA pada Holding PT. Bio Farma.',
-      EN: 'Unified paperless internal audit management system covering planning, supervision, and execution compliant with IIA standards.'
+    "title": {
+      "ID": "Tokoparts EC Sites",
+      "EN": "Tokoparts EC Site"
     },
-    challenge: {
-      ID: 'Pengelolaan kertas kerja audit manual memicu pemborosan ATK, kesulitan penelusuran histori audit, serta keterlambatan laporan pengawasan internal.',
-      EN: 'Manual paper-based audit working papers led to archiving friction, lack of centralized tracking, and reporting delays.'
+    "summary": {
+      "ID": "Tokoparts merupakan perusahaan penyedia suku cadang berteknologi modern yang menawarkan one-stop shopping untuk suku cadang berbagai merek dan kategori. Untuk meningkatkan kualitas layanan dan mempermudah akses pelanggan, Tokoparts mengembangkan aplikasi e-Commerce yang dapat diakses oleh pelanggan untuk melakukan pemesanan produk secara online.",
+      "EN": "Tokoparts is a modern technology spare parts provider company that offers one-stop shopping for spare parts of various brands and categories. To improve service quality and make customer access easier, Tokoparts developed an e-Commerce application that can be accessed by customers to order products online."
     },
-    solution: {
-      ID: 'Pengembangan portal BioAudit berbasis standar IIA dengan pengarsipan digital terenkripsi, alur verifikasi multi-tier, dan audit trail otomatis.',
-      EN: 'Development of the BioAudit portal compliant with IIA standards, featuring encrypted working papers, multi-tier approval, and audit trails.'
+    "challenge": {
+      "ID": "Peningkatan aplikasi e-Commerce & CMS site Tokoparts ini memiliki target untuk menambahkan fitur-fitur terbaru yang berisi informasi-informasi maupun fitur yang memudahkan pengguna dalam melakukan pemesanan produk.",
+      "EN": "The improvement of the Tokoparts e-Commerce & CMS site application has the target of adding the latest features containing information and features that make it easier for users to order products."
     },
-    metrics: [
-      { value: 'Paperless', label: { ID: 'Kertas Kerja Audit', EN: 'Digital Working Papers' } },
-      { value: 'IIA Standard', label: { ID: 'Standar Internasional', EN: 'IIA Standard Compliant' } },
-      { value: '100%', label: { ID: 'Akses Terverifikasi', EN: 'Secure Access Control' } }
+    "solution": {
+      "ID": "Melakukan pengembangan aplikasie-Commerce dan CMS dari Tokoparts untuk meningkatkan kemudahan pelanggan dalam melakukan pemesanan untuk produk spareparts kendaraan roda empat seperti kampas rem, oli, minyak rem, dan produk-produk spareparts lainnya dari setiap brand ternama di Indonesia. Pelanggan dapat memesan produk secara online tanpa harus datang ke lokasi.",
+      "EN": "Developing e-Commerce and CMS applications from Tokoparts to improve customer convenience in ordering four-wheeled vehicle spare parts products such as brake pads, oil, brake fluid, and other spare parts products from every well-known brand in Indonesia. Customers can order products online without having to come to the location."
+    },
+    "metrics": [
+      {
+        "value": "50K+",
+        "label": {
+          "ID": "Katalog Suku Cadang",
+          "EN": "Spare Parts SKUs"
+        }
+      },
+      {
+        "value": "+60%",
+        "label": {
+          "ID": "Pemesanan Online",
+          "EN": "Online Order Growth"
+        }
+      },
+      {
+        "value": "<2 Detik",
+        "label": {
+          "ID": "Kecepatan Filter",
+          "EN": "Filter Response Time"
+        }
+      }
     ],
-    tags: ['Healthcare Pharma', 'Internal Audit', 'ISO / IIA Standard', 'Enterprise System'],
-    industry: 'Healthcare & Life Sciences'
+    "tags": [
+      "UAT Document",
+      "User Manual",
+      "FSD",
+      "Load Test",
+      "TSD"
+    ],
+    "industry": "Automotive & E-Commerce",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "CMS - Manage Vehicle Model",
+          "EN": "CMS  Manage Vehicle Model"
+        },
+        "description": {
+          "ID": "Sebuah fitur yang memungkinkan admin untuk mengelola katalog model kendaraan.",
+          "EN": "A feature that allows admins to manage a catalog of vehicle models."
+        }
+      },
+      {
+        "name": {
+          "ID": "CMS - Manage Category",
+          "EN": "CMS - Manage Category"
+        },
+        "description": {
+          "ID": "Fitur ini digunakan oleh admin untuk mengelola kategori dan subkategori produk Tokoparts.",
+          "EN": "This feature is used by the admin to manage categories and sub categories of Tokoparts products."
+        }
+      },
+      {
+        "name": {
+          "ID": "Pencarian dengan Kategori",
+          "EN": "Search by Category"
+        },
+        "description": {
+          "ID": "Pengguna dapat mencari produk yang lebih spesifik berdasarkan kategori produk.",
+          "EN": "Users can search for more specific products based on product category."
+        }
+      },
+      {
+        "name": {
+          "ID": "CMS - Manage Brand",
+          "EN": "CMS - Manage Brand"
+        },
+        "description": {
+          "ID": "Melalui fitur ini, admin dapat mengelola merek, nama merek, informasi merek untuk produk yang dijual oleh Tokoparts.",
+          "EN": "Through this feature, admins can manage brands, brand names, brand information for products sold by Tokoparts."
+        }
+      },
+      {
+        "name": {
+          "ID": "Pengurutan Produk",
+          "EN": "Product Sorting"
+        },
+        "description": {
+          "ID": "Memudahkan pelanggan untuk melihat produk dengan mengurutkan produk berdasarkan kategori terlaris dan terpopuler.",
+          "EN": "Make it easier for customers to view products by sorting products based on best-selling and most popular categories."
+        }
+      }
+    ],
+    "deliverables": [
+      "UAT Document",
+      "User Manual",
+      "FSD",
+      "Load Test",
+      "TSD"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/959d280f-a3fe-47fe-9656-48e09db90788",
+      "https://admin.radyalabs.com/assets/0ad9dea6-395b-479a-a19b-4e5b2ab5136f"
+    ]
+  },
+  {
+    "id": "imuni",
+    "slug": "imuni",
+    "client": "Imuni",
+    "logo": "IMUNI",
+    "image": "https://admin.radyalabs.com/assets/50c90664-cb28-403a-b4ca-80b2a0447ece",
+    "category": {
+      "ID": "HEALTHCARE & TELEMEDICINE",
+      "EN": "HEALTHCARE & TELEMEDICINE"
+    },
+    "title": {
+      "ID": "Imuni",
+      "EN": "Imuni"
+    },
+    "summary": {
+      "ID": "Imuni adalah layanan khusus vaksinasi on-site (di rumah atau di perusahaan Anda) untuk Anak dan Dewasa.Konsultasi sebelum pendaftaran, layanan tumbuh kembang, pemberian vaksinasi, hingga follow-up setelah vaksinasi di imuni dilakukan 100% oleh dokter khusus vaksinasi.",
+      "EN": "Imuni is a special on-site vaccination service (at home or at your company) for Children and Adults. Consultation before registration, growth and development services, vaccination administration, to follow-up after vaccination at Imuni are carried out 100% by specialist vaccination doctors."
+    },
+    "challenge": {
+      "ID": "Imuni ingin memberikan pelayanan Vaksinasi di Rumah (home service) atau Perusahaan pada (on-site) tanpa membuat pelanggan melakukan antrian secara manual dan datang ke klinik ataupun homecare lalu menunggu antrian ditempat untuk melakukan vaksin.",
+      "EN": "Imuni wants to provide Vaccination services at Home (home service) or Company on (on-site) without making customers queue manually and come to the clinic or homecare and then wait in line at the location to get vaccinated."
+    },
+    "solution": {
+      "ID": "Membuat Aplikasi agar pelanggan tidak perlu keluar rumah dan waktu yang diinginkan pelanggan dapat disesuaikan dengan keinginan pasien. serta vaksinasi juga menjadi lebih aman karena tiap proses vaksinasi diberikan 100% oleh Dokter Khusus Vaksinasi yang selalu mengutamakan protokol kesehatan ketat.",
+      "EN": "Creating an Application so that customers do not need to leave the house and the time the customer wants can be adjusted to the patient's wishes. and vaccination is also safer because each vaccination process is given 100% by a Special Vaccination Doctor who always prioritizes strict health protocols."
+    },
+    "metrics": [
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Dokter Vaksin Khusus",
+          "EN": "Certified Doctors"
+        }
+      },
+      {
+        "value": "0 Menit",
+        "label": {
+          "ID": "Antrean di Klinik",
+          "EN": "Clinic Waiting Time"
+        }
+      },
+      {
+        "value": "10K+",
+        "label": {
+          "ID": "Sesi Vaksinasi",
+          "EN": "Vaccination Sessions"
+        }
+      }
+    ],
+    "tags": [
+      "Source Code",
+      "User Manual",
+      "FSD",
+      "TSD"
+    ],
+    "industry": "Healthcare & Telemedicine",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Chat",
+          "EN": "Chat"
+        },
+        "description": {
+          "ID": "Chat langsung dengan Dokter Konsultan Vaksinasi",
+          "EN": "Ngobrol langsung dengan Dokter Konsultan Vaksinasi"
+        }
+      }
+    ],
+    "deliverables": [
+      "Source Code",
+      "User Manual",
+      "FSD",
+      "TSD"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/16cab85f-2a9f-4bb5-b15b-ff31ea8a1efe",
+      "https://admin.radyalabs.com/assets/5bfeb184-2ec7-4bc3-b051-310d7e544123"
+    ]
+  },
+  {
+    "id": "bi-smart",
+    "slug": "bi-smart",
+    "client": "PT Bio Farma (Persero)",
+    "logo": "BIO FARMA",
+    "image": "https://admin.radyalabs.com/assets/5a3eeda4-5316-4b49-9234-78eb80709820",
+    "category": {
+      "ID": "RISK MANAGEMENT & EWS",
+      "EN": "RISK MANAGEMENT & EWS"
+    },
+    "title": {
+      "ID": "Bi-SMaRT",
+      "EN": "Bi-SMaRT"
+    },
+    "summary": {
+      "ID": "Bi-SMaRT merupakan aplikasi yang dibuat untuk pelaporan profil risiko dan proses monitoring dan evaluasi risiko yang ada di lingkup Holding PT. Bio Farma. Melalui aplikasi ini, user dapat melakukan entry setiap profil risiko nya kemudian melakukan monitoring dan evaluasi risiko sesuai periode yang di tentukan. Kemudian profil risiko akan melewati proses approval oleh pejabat yang berwenang sesuai ketentuan yang ada di PT. Bio Farma.",
+      "EN": "Bi-SMaRT is an application created for risk profile reporting and risk monitoring and evaluation processes within the scope of Holding PT. Bio Farma. Through this application, users can enter each risk profile and then monitor and evaluate risks according to the specified period. Then the risk profile will go through an approval process by authorized officials in accordance with existing provisions at PT. Bio Farma."
+    },
+    "challenge": {
+      "ID": "PT. Bio Farma ingin kegiatan dan proses dari seluruh kegiatan dalam pelaporan resiko menjadi lebih mudah baik dari sisi penginputan, persetujuan, sampai monitoringnya.",
+      "EN": "PT. Bio Farma wants the activities and processes of all risk reporting activities to be easier, both in terms of input, approval, and monitoring."
+    },
+    "solution": {
+      "ID": "Membuat aplikasi yang fiturnya mencakup seluruh alur proses end to end dari pelaporan risiko yang ada di lingkup Holding PT. Bio Farma",
+      "EN": "Develop an application whose features cover the entire end to end process flow of risk reporting within the scope of Holding PT. Bio Farma"
+    },
+    "metrics": [
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Digitalisasi Profil Risiko",
+          "EN": "Risk Digitization"
+        }
+      },
+      {
+        "value": "Real-time",
+        "label": {
+          "ID": "Early Warning System",
+          "EN": "Early Warning System"
+        }
+      },
+      {
+        "value": "-70%",
+        "label": {
+          "ID": "Siklus Approval",
+          "EN": "Approval Cycle Time"
+        }
+      }
+    ],
+    "tags": [
+      "Load Test",
+      "UAT Document",
+      "TSD",
+      "FSD",
+      "User Manual",
+      "Source Code"
+    ],
+    "industry": "Healthcare & Pharmaceuticals",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Dashboard",
+          "EN": "Dashboard"
+        },
+        "description": {
+          "ID": "Fitur yang menampilkan grafik-grafik mulai dari total profil risiko, total peristiwa risiko, nilai KRI, item risiko per kategori dan sebagainya.",
+          "EN": "A feature that displays graphs ranging from total risk profile, total risk events, KRI values, risk items per category and so on."
+        }
+      },
+      {
+        "name": {
+          "ID": "Stress Testing",
+          "EN": "Stress Testing"
+        },
+        "description": {
+          "ID": "Fitur untuk melakukan stress test terhadap item risiko yang sudah di monitoring untuk dijadikan acuan level risiko di tahun berikutnya.",
+          "EN": "Feature for carrying out stress tests on risk items that have been monitored to be used as a reference for risk levels in the following year."
+        }
+      },
+      {
+        "name": {
+          "ID": "Risk Profle",
+          "EN": "Risk Profle"
+        },
+        "description": {
+          "ID": "Fitur yang berfungsi untuk mengelola data profil risiko, melakukan proses approvalnya, hingga pembuatan laporan risiko.",
+          "EN": "Features that function to manage risk profile data, carry out the approval process, and create risk reports."
+        }
+      },
+      {
+        "name": {
+          "ID": "Monitoring & Evaluasi Profil Resiko",
+          "EN": "Monitoring & Evaluasi Profil Resiko"
+        },
+        "description": {
+          "ID": "Fitur yang berfungsi untuk mengelola data hasil monitoring & evaluasi terhadap risiko pada periode tertentu sesuai dengan yang sudah diinput di modul profil risiko. Juga, terdapat proses approval dari hasil monitoring dan evaluasi risiko.",
+          "EN": "A feature that functions to manage monitoring & evaluation data on risks for a certain period according to what has been input in the risk profile module. Also, there is an approval process for the results of risk monitoring and evaluation."
+        }
+      },
+      {
+        "name": {
+          "ID": "Early Warning System",
+          "EN": "Early Warning System"
+        },
+        "description": {
+          "ID": "Fitur untuk menampilkan dashboard untuk memantau nilai KRI dari masing-masing item risiko di setiap periode (per bulan/per triwulan).",
+          "EN": "Feature to display a dashboard to monitor the KRI value of each risk item in each period (per month/quarterly)."
+        }
+      }
+    ],
+    "deliverables": [
+      "Load Test",
+      "UAT Document",
+      "TSD",
+      "FSD",
+      "User Manual",
+      "Source Code"
+    ],
+    "screenshots": [
+      "https://admin.radyalabs.com/assets/211d705a-4e0a-49d0-a4f5-475828022cb3",
+      "https://admin.radyalabs.com/assets/641c821d-14ff-4507-9f7b-c780b45282c3"
+    ]
   }
 ];
 

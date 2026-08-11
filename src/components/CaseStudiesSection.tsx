@@ -1,12 +1,13 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Language, CaseStudy } from '@/types';
 import { CASE_STUDIES } from '@/lib/data';
 import {
   Briefcase,
   ArrowRight,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Globe
 } from 'lucide-react';
 
 interface CaseStudiesSectionProps {
@@ -20,8 +21,32 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   onSelectCaseStudy,
   onOpenContact,
 }) => {
+  const [studies, setStudies] = useState<CaseStudy[]>(CASE_STUDIES);
+  const [isLiveCms, setIsLiveCms] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const total = CASE_STUDIES.length;
+  const total = studies.length;
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadCmsPortfolios() {
+      try {
+        const res = await fetch('/api/cms');
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && data.portfolios && data.portfolios.length > 0) {
+            setStudies(data.portfolios);
+            setIsLiveCms(data.isLive ?? true);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load CMS portfolios:', err);
+      }
+    }
+    loadCmsPortfolios();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -82,7 +107,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
             ref={scrollContainerRef}
             className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4 px-1"
           >
-            {CASE_STUDIES.map((study) => {
+            {studies.map((study) => {
               const categoryText = typeof study.category === 'object' ? (study.category[language] || study.category.ID) : study.category;
 
               return (

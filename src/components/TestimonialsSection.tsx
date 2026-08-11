@@ -1,71 +1,37 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Language } from '@/types';
 import { TESTIMONIALS } from '@/lib/data';
-import { Star, Quote, ChevronLeft, ChevronRight, Award } from 'lucide-react';
+import { Star, Quote, Award } from 'lucide-react';
 
 interface TestimonialsSectionProps {
   language: Language;
 }
 
 export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ language }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === TESTIMONIALS.length - 1 ? 0 : prev + 1));
-  };
-
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider mb-4">
-              <Award className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'TESTIMONI KLIEN' : 'CLIENT TESTIMONIALS'}</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight">
-              {language === 'ID'
-                ? 'Kepercayaan Mereka Adalah Semangat Bagi Kami'
-                : 'Trusted by Leaders Driving Transformation'}
-            </h2>
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider mb-4">
+            <Award className="w-3.5 h-3.5" />
+            <span>{language === 'ID' ? 'TESTIMONI KLIEN' : 'CLIENT TESTIMONIALS'}</span>
           </div>
-
-          {/* Carousel Arrows */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrev}
-              className="p-3 rounded-full border border-slate-200 hover:bg-slate-100 text-slate-700 transition-colors"
-              aria-label="Previous Testimonial"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="p-3 rounded-full bg-[#0F172A] text-white hover:bg-slate-800 transition-colors"
-              aria-label="Next Testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight">
+            {language === 'ID'
+              ? 'Kepercayaan Mereka Adalah Semangat Bagi Kami'
+              : 'Trusted by Leaders Driving Transformation'}
+          </h2>
         </div>
 
         {/* Testimonials Grid Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t, idx) => (
+          {TESTIMONIALS.map((t) => (
             <div
               key={t.id}
-              className={`p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
-                idx === activeIndex
-                  ? 'bg-gradient-to-b from-slate-50 to-white border-[#1793E8]/50 shadow-xl ring-2 ring-[#1793E8]/20 scale-[1.02]'
-                  : 'bg-white border-slate-200/80 hover:border-slate-300 shadow-xs'
-              }`}
+              className="p-8 rounded-3xl border border-slate-200/80 bg-white hover:border-[#1793E8]/50 hover:shadow-xl hover:-translate-y-1.5 hover:ring-2 hover:ring-[#1793E8]/20 transition-all duration-300 flex flex-col justify-between group shadow-xs"
             >
               <div>
                 {/* Rating & Quote Icon */}
@@ -75,7 +41,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ langua
                       <Star key={i} className="w-4 h-4 fill-amber-400" />
                     ))}
                   </div>
-                  <Quote className="w-8 h-8 text-[#1793E8]/20" />
+                  <Quote className="w-8 h-8 text-[#1793E8]/20 group-hover:text-[#1793E8]/40 transition-colors" />
                 </div>
 
                 {/* Quote Text */}
@@ -89,7 +55,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ langua
                 <img
                   src={t.avatar}
                   alt={t.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md group-hover:border-[#1793E8]/40 transition-colors"
                 />
                 <div>
                   <h4 className="text-base font-extrabold text-[#0F172A]">
