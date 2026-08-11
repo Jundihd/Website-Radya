@@ -29,7 +29,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  // Close lightbox on Escape key
+  // Lock background body scroll ONLY when modal is actively open
+  useEffect(() => {
+    if (study) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow || 'unset';
+      };
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [study]);
+
+  // Close lightbox or modal on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -46,12 +59,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
   if (!study) return null;
 
-  const mockupImage = study.screenshots && study.screenshots.length > 0 ? study.screenshots[0] : null;
+  const heroImages = study.images && study.images.length > 0 ? study.images : (study.image ? [study.image] : []);
+  const extraScreenshots = study.screenshots && study.screenshots.length > 0 ? study.screenshots : [];
+  const allScreenshots = Array.from(new Set([...heroImages, ...extraScreenshots]));
 
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 border border-slate-100 max-h-[92vh] overflow-y-auto">
+      <div
+        onClick={onClose}
+        className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 overscroll-contain cursor-pointer"
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 border border-slate-100 max-h-[92vh] overflow-y-auto overscroll-contain cursor-default"
+        >
           <button
             onClick={onClose}
             className="absolute top-5 right-5 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors z-10"
@@ -162,53 +183,58 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
             </div>
           </div>
 
-          {/* Screenshot / Mockup Preview (Single Card with Zoom Action) */}
-          {mockupImage && (
+          {/* Screenshots / Mockups Preview Grid */}
+          {allScreenshots.length > 0 && (
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                   <ImageIcon className="w-4 h-4 text-[#1793E8]" />
-                  <span>{language === 'ID' ? 'Mockup & Tangkapan Layar Aplikasi:' : 'Application Mockup & Screenshot:'}</span>
+                  <span>
+                    {language === 'ID'
+                      ? `Mockup & Tangkapan Layar Aplikasi (${allScreenshots.length} Foto):`
+                      : `Application Mockups & Screenshots (${allScreenshots.length} Photos):`}
+                  </span>
                 </h4>
-                <button
-                  type="button"
-                  onClick={() => setPreviewImage(mockupImage)}
-                  className="text-[11px] text-[#1793E8] hover:text-[#1376ba] font-bold flex items-center gap-1 group cursor-pointer transition-colors"
-                >
-                  <ZoomIn className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                  <span>{language === 'ID' ? 'Perbesar Foto' : 'Click to Enlarge'}</span>
-                </button>
+                <span className="text-[11px] text-[#1793E8] font-bold flex items-center gap-1">
+                  <ZoomIn className="w-3.5 h-3.5" />
+                  <span>{language === 'ID' ? 'Klik foto untuk memperbesar' : 'Click photo to enlarge'}</span>
+                </span>
               </div>
 
-              <div
-                onClick={() => setPreviewImage(mockupImage)}
-                className="group relative rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-950 cursor-pointer h-60 sm:h-72 transition-all duration-300 hover:border-[#1793E8] hover:shadow-xl"
-              >
-                <img
-                  src={mockupImage}
-                  alt={`${study.title[language]} Mockup`}
-                  className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-20 transition-opacity" />
+              <div className={`grid gap-4 ${allScreenshots.length === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'}`}>
+                {allScreenshots.map((imgSrc, imgIdx) => (
+                  <div
+                    key={imgSrc + imgIdx}
+                    onClick={() => setPreviewImage(imgSrc)}
+                    className="group relative rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-950 cursor-pointer h-52 sm:h-60 transition-all duration-300 hover:border-[#1793E8] hover:shadow-xl"
+                  >
+                    <img
+                      src={imgSrc}
+                      alt={`${study.title[language]} Mockup ${imgIdx + 1}`}
+                      className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-20 transition-opacity" />
 
-                {/* Hover Action Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-slate-950/40 backdrop-blur-[2px]">
-                  <div className="px-5 py-2.5 rounded-full bg-white text-slate-900 text-xs font-extrabold flex items-center gap-2 shadow-2xl transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                    <Maximize2 className="w-4 h-4 text-[#1793E8]" />
-                    <span>{language === 'ID' ? 'Klik untuk Melihat Foto Penuh' : 'Click to View Full Photo'}</span>
+                    {/* Hover Action Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-slate-950/40 backdrop-blur-[2px]">
+                      <div className="px-4 py-2 rounded-full bg-white text-slate-900 text-xs font-extrabold flex items-center gap-1.5 shadow-2xl transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <Maximize2 className="w-3.5 h-3.5 text-[#1793E8]" />
+                        <span>{language === 'ID' ? 'Lihat Foto Penuh' : 'View Full Photo'}</span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Pill */}
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between pointer-events-none">
+                      <span className="text-[10px] font-bold text-white bg-slate-900/85 px-2.5 py-0.5 rounded-full backdrop-blur-md border border-white/10 truncate max-w-[70%]">
+                        {study.title[language]} ({imgIdx + 1}/{allScreenshots.length})
+                      </span>
+                      <span className="text-[9px] font-bold text-[#29B6F6] bg-slate-900/85 px-2 py-0.5 rounded-full backdrop-blur-md border border-white/10 flex items-center gap-1 shrink-0">
+                        <ZoomIn className="w-3 h-3" />
+                        <span>{language === 'ID' ? 'Perbesar' : 'Enlarge'}</span>
+                      </span>
+                    </div>
                   </div>
-                </div>
-
-                {/* Bottom Pill */}
-                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between pointer-events-none">
-                  <span className="text-[11px] font-bold text-white bg-slate-900/80 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
-                    {study.title[language]}
-                  </span>
-                  <span className="text-[10px] font-bold text-[#29B6F6] bg-slate-900/80 px-2.5 py-1 rounded-full backdrop-blur-md border border-white/10 flex items-center gap-1">
-                    <ZoomIn className="w-3 h-3" />
-                    <span>{language === 'ID' ? 'Lihat Penuh' : 'Full View'}</span>
-                  </span>
-                </div>
+                ))}
               </div>
             </div>
           )}

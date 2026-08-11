@@ -200,30 +200,1355 @@ export const SERVICES_LIST: ServiceItem[] = [
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    "id": "anbk",
+    "slug": "anbk",
+    "client": "Pusmendik Kemendikbudristek",
+    "logo": "KEMENDIKBUD",
+    "image": "/images/portfolio/anbk-1.png",
+    "images": [
+      "/images/portfolio/anbk-1.png",
+      "/images/portfolio/anbk-admin.png",
+      "/images/portfolio/anbk-login.png",
+      "/images/portfolio/anbk-soal.png"
+    ],
+    "category": {
+      "ID": "PUBLIC SECTOR PLATFORM",
+      "EN": "PUBLIC SECTOR PLATFORM"
+    },
+    "title": {
+      "ID": "Asesmen Nasional Berbasis Komputer (ANBK)",
+      "EN": "National Computer-Based Assessment (ANBK)"
+    },
+    "summary": {
+      "ID": "ANBK merupakan platform asesmen online berskala nasional oleh Pusmendik Kemendikbudristek untuk mengelola ujian jutaan siswa SD, SMP, SMA/SMK dengan keandalan tinggi dan arsitektur cloud native.",
+      "EN": "ANBK is a nationwide online assessment platform by Pusmendik Kemendikbudristek to manage examinations for millions of elementary, junior high, and high school students with high reliability and cloud-native architecture."
+    },
+    "challenge": {
+      "ID": "Menangani beban jutaan peserta ujian serentak di seluruh Indonesia tanpa gangguan koneksi, menjamin keamanan integritas soal ujian, serta menyediakan dashboard pelaporan proktor real-time.",
+      "EN": "Handling millions of concurrent exam participants across Indonesia without downtime, ensuring examination data integrity, and providing real-time proctor reporting dashboards."
+    },
+    "solution": {
+      "ID": "Membangun arsitektur microservices berbasis Google Cloud Platform dan Kubernetes dengan auto-scaling otomatis, sistem sinkronisasi soal cerdas, dan antarmuka CBT responsif.",
+      "EN": "Building a microservices architecture on Google Cloud Platform and Kubernetes with dynamic auto-scaling, intelligent test synchronization, and responsive CBT interface."
+    },
+    "metrics": [
+      {
+        "value": "99.99%",
+        "label": {
+          "ID": "Performa Uptime",
+          "EN": "System Performance"
+        }
+      },
+      {
+        "value": "~3 Juta",
+        "label": {
+          "ID": "Siswa Peserta Ujian",
+          "EN": "Exam Participants"
+        }
+      },
+      {
+        "value": "14 Ujian",
+        "label": {
+          "ID": "Rollout Ujian Nasional",
+          "EN": "Nationwide Rollouts"
+        }
+      }
+    ],
+    "tags": [
+      "Kubernetes",
+      "GCP",
+      "High Concurrency",
+      "Online Assessment",
+      "Education Tech"
+    ],
+    "industry": "Government & Education",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "CBT Student Engine",
+          "EN": "CBT Student Engine"
+        },
+        "description": {
+          "ID": "Antarmuka ujian interaktif dengan enkripsi lembar jawaban dan countdown otomatis.",
+          "EN": "Interactive test taking interface with encrypted answer sheets and auto countdown."
+        }
+      },
+      {
+        "name": {
+          "ID": "Admin & Proctor Dashboard",
+          "EN": "Admin & Proctor Dashboard"
+        },
+        "description": {
+          "ID": "Pusat kendali helpdesk, status peserta online, dan verifikasi kehadiran.",
+          "EN": "Helpdesk control center, real-time online participant telemetry, and attendance verification."
+        }
+      },
+      {
+        "name": {
+          "ID": "National Assessment Analytics",
+          "EN": "National Assessment Analytics"
+        },
+        "description": {
+          "ID": "Pengolahan statistik hasil tes kesetaraan dan asesmen nasional secara otomatis.",
+          "EN": "Automated statistical processing of national equivalency and competency assessments."
+        }
+      }
+    ],
+    "deliverables": [
+      "Cloud Architecture",
+      "CBT Engine",
+      "Proctor Dashboard",
+      "Security Hardening",
+      "Load Testing Report"
+    ],
+    "screenshots": [
+      "/images/portfolio/anbk-cms-mockup.png"
+    ]
+  },
+  {
+    "id": "pama-copilot",
+    "slug": "pama-copilot",
+    "client": "PT Pamapersada Nusantara (Astra)",
+    "logo": "PAMA ASTRA",
+    "image": "/images/portfolio/pama-1.png",
+    "images": [
+      "/images/portfolio/pama-1.png",
+      "/images/portfolio/pama-2.png",
+      "/images/portfolio/pama-3.png"
+    ],
+    "category": {
+      "ID": "ENTERPRISE AI COPILOT",
+      "EN": "ENTERPRISE AI COPILOT"
+    },
+    "title": {
+      "ID": "PAMA Enterprise AI Copilot",
+      "EN": "PAMA Enterprise AI Copilot"
+    },
+    "summary": {
+      "ID": "Aplikasi AI enterprise yang menghubungkan analis operasional dengan data operasional pertambangan, menyajikan visualisasi data interaktif, dan mempercepat pemahaman SOP hingga 80%.",
+      "EN": "An enterprise AI application connecting operations analysts with mining operational data, providing interactive data visualizations, and accelerating SOP understanding by up to 80%."
+    },
+    "challenge": {
+      "ID": "Kompleksitas volume data operasional alat berat dan ratusan dokumen SOP pertambangan yang membutuhkan waktu lama jika dianalisis secara manual oleh tim analis lapangan.",
+      "EN": "High complexity of heavy machinery operational telemetry and extensive mining SOP documentation that was time-consuming to analyze manually."
+    },
+    "solution": {
+      "ID": "Mengembangkan asisten AI cerdas berbasis LLM dengan Retrieval-Augmented Generation (RAG), pemrosesan data real-time, dan dashboard visualisasi produktivitas alat berat.",
+      "EN": "Developing an intelligent LLM copilot using Retrieval-Augmented Generation (RAG), real-time telemetry processing, and equipment productivity visualization dashboards."
+    },
+    "metrics": [
+      {
+        "value": "80%",
+        "label": {
+          "ID": "Lebih Cepat Analisis Data",
+          "EN": "Faster Data Analysis"
+        }
+      },
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "Virtual Analyst Siaga",
+          "EN": "Virtual Analyst Standby"
+        }
+      },
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Digitalisasi Knowledge SOP",
+          "EN": "SOP Knowledge Automation"
+        }
+      }
+    ],
+    "tags": [
+      "Generative AI",
+      "LLM",
+      "RAG",
+      "Knowledge Management",
+      "Mining Analytics"
+    ],
+    "industry": "Mining & Energy Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Conversational Analyst",
+          "EN": "Conversational Analyst"
+        },
+        "description": {
+          "ID": "Tanya-jawab interaktif seputar metrik produktivitas dan status distrik tambang.",
+          "EN": "Interactive conversational queries on productivity metrics and district mining statuses."
+        }
+      },
+      {
+        "name": {
+          "ID": "Interactive Data Charts",
+          "EN": "Interactive Data Charts"
+        },
+        "description": {
+          "ID": "Pembuatan grafik status review, approval, dan indeks performa peralatan otomatis.",
+          "EN": "Automated generation of review statuses, approvals, and equipment index charts."
+        }
+      },
+      {
+        "name": {
+          "ID": "SOP Assistant",
+          "EN": "SOP Assistant"
+        },
+        "description": {
+          "ID": "Pencarian aturan keselamatan kerja dan prosedur operasional standar secara instan.",
+          "EN": "Instant lookup for mining safety regulations and standard operational procedures."
+        }
+      }
+    ],
+    "deliverables": [
+      "LLM Architecture",
+      "RAG Vector Pipeline",
+      "Chat UI & Visualization",
+      "Enterprise Security Integration"
+    ],
+    "screenshots": [
+      "/images/portfolio/pama-1.png",
+      "/images/portfolio/pama-2.png",
+      "/images/portfolio/pama-3.png"
+    ]
+  },
+  {
+    "id": "komatsu-demand-forecasting",
+    "slug": "komatsu-demand-forecasting",
+    "client": "Komatsu Indonesia",
+    "logo": "KOMATSU",
+    "image": "/images/portfolio/komatsu-1.png",
+    "images": [
+      "/images/portfolio/komatsu-1.png"
+    ],
+    "category": {
+      "ID": "PREDICTIVE ML & DATA",
+      "EN": "PREDICTIVE ML & DATA"
+    },
+    "title": {
+      "ID": "Komatsu Parts Demand Forecasting",
+      "EN": "Komatsu Parts Demand Forecasting"
+    },
+    "summary": {
+      "ID": "Model Machine Learning prediktif untuk meramalkan kebutuhan suku cadang alat berat Komatsu berdasarkan data historis penjualan, korelasi harga batubara, dan siklus perawatan.",
+      "EN": "Predictive Machine Learning model forecasting heavy machinery spare parts demand based on historical sales data, coal price correlations, and maintenance cycles."
+    },
+    "challenge": {
+      "ID": "Fluktuasi permintaan suku cadang alat berat yang dipengaruhi oleh komoditas energi, membutuhkan prediksi akurat untuk mencegah kehabisan stok maupun penumpukan inventaris.",
+      "EN": "Heavy machinery spare parts demand fluctuations driven by energy commodity trends, requiring accurate forecasting to prevent stockouts and excess inventory."
+    },
+    "solution": {
+      "ID": "Membangun pipeline pelatihan data frekuensi rendah dan tinggi, algoritma ML regresi canggih, serta dashboard visualisasi korelasi tren permintaan dan harga komoditas.",
+      "EN": "Building low and high-frequency training data pipelines, advanced ML regression algorithms, and visualization dashboards correlating demand trends with commodity indices."
+    },
+    "metrics": [
+      {
+        "value": "Multi-Freq",
+        "label": {
+          "ID": "Data Pipeline Otomatis",
+          "EN": "Automated Data Pipeline"
+        }
+      },
+      {
+        "value": "Real-time",
+        "label": {
+          "ID": "Korelasi Tren Pasar",
+          "EN": "Market Trend Correlation"
+        }
+      },
+      {
+        "value": "Akurat",
+        "label": {
+          "ID": "Prediksi Suku Cadang",
+          "EN": "Predictive Forecast Model"
+        }
+      }
+    ],
+    "tags": [
+      "Machine Learning",
+      "Data Pipelining",
+      "Demand Forecasting",
+      "Heavy Equipment"
+    ],
+    "industry": "Heavy Equipment & Manufacturing",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Predictive Engine",
+          "EN": "Predictive Engine"
+        },
+        "description": {
+          "ID": "Model estimasi jumlah pesanan dan nilai total suku cadang per periode.",
+          "EN": "Estimation engine for order volume and spare parts valuation per forecast period."
+        }
+      },
+      {
+        "name": {
+          "ID": "Commodity Correlation Analysis",
+          "EN": "Commodity Correlation Analysis"
+        },
+        "description": {
+          "ID": "Analisis korelasi antara harga komoditas batubara dengan laju konsumsi spare part.",
+          "EN": "Correlation analysis linking coal commodity prices to spare parts consumption trends."
+        }
+      }
+    ],
+    "deliverables": [
+      "ML Model Weights",
+      "Data Pipeline Scripts",
+      "Interactive Dashboard",
+      "Evaluation Report"
+    ],
+    "screenshots": [
+      "/images/portfolio/komatsu-1.png"
+    ]
+  },
+  {
+    "id": "sawit-weighbridge-ai",
+    "slug": "sawit-weighbridge-ai",
+    "client": "Palm Oil Enterprise",
+    "logo": "PALM INDUSTRY",
+    "image": "/images/portfolio/sawit-1.jpg",
+    "images": [
+      "/images/portfolio/sawit-1.jpg",
+      "/images/portfolio/sawit-2.jpg",
+      "/images/portfolio/sawit-3.png"
+    ],
+    "category": {
+      "ID": "COMPUTER VISION AI",
+      "EN": "COMPUTER VISION AI"
+    },
+    "title": {
+      "ID": "AI Weighbridge Computer Vision",
+      "EN": "AI Weighbridge Computer Vision"
+    },
+    "summary": {
+      "ID": "Sistem Computer Vision berbasis CCTV cerdas untuk mendeteksi truk, orang, dan anomali pada jembatan timbang kelapa sawit secara real-time dengan akurasi di atas 90%.",
+      "EN": "An intelligent CCTV Computer Vision system detecting trucks, personnel, and anomalies on palm oil weighbridges in real time with over 90% accuracy."
+    },
+    "challenge": {
+      "ID": "Pencegahan manipulasi penimbangan muatan sawit, antrean panjang di pos timbang, dan perlunya pengawasan terpusat tanpa penambahan personel fisik di lapangan.",
+      "EN": "Preventing weighbridge tampering during palm oil payload weighing, reducing truck queues, and enabling centralized remote monitoring without adding on-site personnel."
+    },
+    "solution": {
+      "ID": "Mengintegrasikan model Object Detection berbasis edge AI dengan kamera CCTV, menghasilkan deteksi muatan dan kendaraan di bawah 3 detik per frame secara otomatis.",
+      "EN": "Integrating edge AI object detection models with CCTV cameras to achieve vehicle and payload recognition in under 3 seconds per frame automatically."
+    },
+    "metrics": [
+      {
+        "value": ">90%",
+        "label": {
+          "ID": "Akurasi Deteksi CCTV",
+          "EN": "CCTV Detection Accuracy"
+        }
+      },
+      {
+        "value": "<3 dtk",
+        "label": {
+          "ID": "Latensi Pemrosesan Frame",
+          "EN": "Processing Latency/Frame"
+        }
+      },
+      {
+        "value": "Real-time",
+        "label": {
+          "ID": "Monitoring Jembatan Timbang",
+          "EN": "Remote Weighbridge Telemetry"
+        }
+      }
+    ],
+    "tags": [
+      "Computer Vision",
+      "Object Detection",
+      "Edge AI",
+      "CCTV Stream",
+      "AgriTech"
+    ],
+    "industry": "Agriculture & Palm Oil",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Vehicle & Cargo Detection",
+          "EN": "Vehicle & Cargo Detection"
+        },
+        "description": {
+          "ID": "Identifikasi posisi truk sawit tepat di area platform penimbangan.",
+          "EN": "Real-time identification of palm truck alignment on the weigh platform."
+        }
+      },
+      {
+        "name": {
+          "ID": "Anomaly & Person Alert",
+          "EN": "Anomaly & Person Alert"
+        },
+        "description": {
+          "ID": "Peringatan dini terhadap objek asing atau orang di area terlarang saat penimbangan.",
+          "EN": "Instant alert triggers when personnel or foreign objects enter the restricted zone."
+        }
+      }
+    ],
+    "deliverables": [
+      "Computer Vision Model",
+      "Edge Stream Pipeline",
+      "Real-time Alert Dashboard",
+      "Deployment Setup"
+    ],
+    "screenshots": [
+      "/images/portfolio/sawit-1.jpg",
+      "/images/portfolio/sawit-2.jpg",
+      "/images/portfolio/sawit-3.png"
+    ]
+  },
+  {
+    "id": "kemnaker-skilla",
+    "slug": "kemnaker-skilla",
+    "client": "Kementerian Ketenagakerjaan RI",
+    "logo": "KEMNAKER",
+    "image": "/images/portfolio/skilla-1.png",
+    "images": [
+      "/images/portfolio/skilla-1.png"
+    ],
+    "category": {
+      "ID": "PUBLIC SERVICE CHATBOT",
+      "EN": "PUBLIC SERVICE CHATBOT"
+    },
+    "title": {
+      "ID": "Kemnaker Skilla (AI Virtual Assistant)",
+      "EN": "Kemnaker Skilla (AI Virtual Assistant)"
+    },
+    "summary": {
+      "ID": "Asisten virtual cerdas Kemnaker RI untuk melayani pertanyaan masyarakat seputar program pelatihan kerja, balai latihan (BLK), dan layanan ketenagakerjaan secara interaktif.",
+      "EN": "An intelligent virtual assistant for Kemnaker RI providing conversational public services regarding vocational training, job training centers, and labor services."
+    },
+    "challenge": {
+      "ID": "Tingginya volume pertanyaan publik mengenai pendaftaran pelatihan vokasi dan layanan ketenagakerjaan yang melebihi kapasitas helpdesk manual.",
+      "EN": "High volume of public inquiries regarding vocational training registration and labor services overwhelming manual helpdesk teams."
+    },
+    "solution": {
+      "ID": "Membangun chatbot NLU dengan percakapan natural berbahasa Indonesia yang terhubung dengan basis pengetahuan pusat bantuan Kemnaker.",
+      "EN": "Developing an Indonesian NLU chatbot connected directly with Kemnaker official knowledge base for 24/7 automated assistance."
+    },
+    "metrics": [
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "Layanan Publik Otomatis",
+          "EN": "Automated Public Service"
+        }
+      },
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Pemahaman Bahasa Natural",
+          "EN": "Natural Language NLU"
+        }
+      },
+      {
+        "value": "Nasional",
+        "label": {
+          "ID": "Cakupan Informasi Pelatihan",
+          "EN": "National Training Reach"
+        }
+      }
+    ],
+    "tags": [
+      "Chatbot AI",
+      "NLU",
+      "Virtual Assistant",
+      "Public Service",
+      "Kemnaker"
+    ],
+    "industry": "Government & Public Affairs",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Training Recommendation",
+          "EN": "Training Recommendation"
+        },
+        "description": {
+          "ID": "Panduan pencarian dan pendaftaran program pelatihan kerja sesuai minat.",
+          "EN": "Guidance on finding and registering for vocational training courses."
+        }
+      },
+      {
+        "name": {
+          "ID": "Interactive FAQ",
+          "EN": "Interactive FAQ"
+        },
+        "description": {
+          "ID": "Jawaban instan untuk prosedur ketenagakerjaan dan regulasi tenaga kerja.",
+          "EN": "Instant automated answers for labor regulations and administrative workflows."
+        }
+      }
+    ],
+    "deliverables": [
+      "NLU Intent Engine",
+      "Web Chat Widget",
+      "Knowledge Base Sync",
+      "Analytics Dashboard"
+    ],
+    "screenshots": [
+      "/images/portfolio/skilla-1.png"
+    ]
+  },
+  {
+    "id": "kemendagri-rita",
+    "slug": "kemendagri-rita",
+    "client": "Kementerian Dalam Negeri RI",
+    "logo": "KEMENDAGRI",
+    "image": "/images/portfolio/rita-1.png",
+    "images": [
+      "/images/portfolio/rita-1.png"
+    ],
+    "category": {
+      "ID": "HR & HELPDESK AI",
+      "EN": "HR & HELPDESK AI"
+    },
+    "title": {
+      "ID": "Kemendagri Rita (AI Virtual Assistant)",
+      "EN": "Kemendagri Rita (AI Virtual Assistant)"
+    },
+    "summary": {
+      "ID": "Virtual assistant kepegawaian untuk membantu ASN dan pegawai Kemendagri mengelola pengajuan cuti, absensi, serta informasi administrasi kepegawaian melalui Facebook & portal internal.",
+      "EN": "An HR virtual assistant helping Kemendagri civil servants manage leave requests, attendance, and administrative inquiries via Facebook and internal portals."
+    },
+    "challenge": {
+      "ID": "Penyampaian informasi kepegawaian dan proses pengajuan cuti puluhan ribu ASN yang tersebar di berbagai biro yang sebelumnya membutuhkan waktu birokrasi manual.",
+      "EN": "Disseminating HR information and managing leave applications for thousands of civil servants spread across multiple bureaus efficiently."
+    },
+    "solution": {
+      "ID": "Mengembangkan asisten cerdas multi-channel yang terintegrasi dengan database kepegawaian internal dan verifikasi hak cuti otomatis.",
+      "EN": "Developing a multi-channel intelligent assistant integrated with internal HR databases for automated leave tracking and policy inquiries."
+    },
+    "metrics": [
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "Helpdesk Cuti & Pegawai",
+          "EN": "HR Leave Helpdesk"
+        }
+      },
+      {
+        "value": "Multi-Channel",
+        "label": {
+          "ID": "Facebook & Portal Web",
+          "EN": "Facebook & Web Portal"
+        }
+      },
+      {
+        "value": "Instan",
+        "label": {
+          "ID": "Penyampaian Info Kepegawaian",
+          "EN": "Instant HR Updates"
+        }
+      }
+    ],
+    "tags": [
+      "HR Tech",
+      "Virtual Assistant",
+      "Kemendagri",
+      "Public Sector HR",
+      "Chatbot"
+    ],
+    "industry": "Government & Public Affairs",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Leave & Attendance Bot",
+          "EN": "Leave & Attendance Bot"
+        },
+        "description": {
+          "ID": "Pengecekan kuota cuti tahunan dan panduan pengajuan izin dinas.",
+          "EN": "Leave quota verification and official duty absence guidance."
+        }
+      },
+      {
+        "name": {
+          "ID": "Internal HR Directory",
+          "EN": "Internal HR Directory"
+        },
+        "description": {
+          "ID": "Pencarian kontak dan regulasi kepegawaian ASN terpadu.",
+          "EN": "Centralized directory for civil service HR regulations and contacts."
+        }
+      }
+    ],
+    "deliverables": [
+      "Chatbot Integration",
+      "HR Database Connector",
+      "Facebook Messenger Webhook",
+      "User Manual"
+    ],
+    "screenshots": [
+      "/images/portfolio/rita-1.png"
+    ]
+  },
+  {
+    "id": "kemenparekraf-vita",
+    "slug": "kemenparekraf-vita",
+    "client": "Kemenparekraf RI",
+    "logo": "KEMENPAREKRAF",
+    "image": "/images/portfolio/vita-1.png",
+    "images": [
+      "/images/portfolio/vita-1.png"
+    ],
+    "category": {
+      "ID": "EVENT & GRANT CHATBOT",
+      "EN": "EVENT & GRANT CHATBOT"
+    },
+    "title": {
+      "ID": "Kemenparekraf Vita (AI Virtual Assistant)",
+      "EN": "Kemenparekraf Vita (AI Virtual Assistant)"
+    },
+    "summary": {
+      "ID": "Asisten virtual interaktif Kemenparekraf RI untuk memberikan informasi mengenai program Bantuan Pemerintah (BanPer), inisiatif Nyatakan.id, serta panduan proposal event.",
+      "EN": "An interactive virtual assistant for Kemenparekraf RI providing information regarding Government Aid (BanPer), Nyatakan.id initiatives, and event proposal guidelines."
+    },
+    "challenge": {
+      "ID": "Ribuan pelaku ekonomi kreatif dan komunitas pariwisata membutuhkan panduan persyaratan bantuan pemerintah dan jadwal event secara cepat dan akurat.",
+      "EN": "Thousands of creative economy and tourism stakeholders requiring fast, accurate guidance on grant requirements and event submission timelines."
+    },
+    "solution": {
+      "ID": "Membangun chatbot interaktif yang memberikan panduan langkah demi langkah pengajuan proposal, cek eligibility, dan jadwal pembukaan program hibah.",
+      "EN": "Building an interactive chatbot offering step-by-step proposal submission guidance, eligibility checking, and grant program schedule alerts."
+    },
+    "metrics": [
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Panduan Hibah & BanPer",
+          "EN": "Gov Aid Guide Coverage"
+        }
+      },
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "FAQ & Timeline Proposal",
+          "EN": "Proposal FAQ Timeline"
+        }
+      },
+      {
+        "value": "Interaktif",
+        "label": {
+          "ID": "Layanan Komunitas Kreatif",
+          "EN": "Creative Community Help"
+        }
+      }
+    ],
+    "tags": [
+      "Tourism Tech",
+      "Creative Economy",
+      "Kemenparekraf",
+      "Chatbot",
+      "Grant Management"
+    ],
+    "industry": "Tourism & Creative Economy",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Grant Eligibility Checker",
+          "EN": "Grant Eligibility Checker"
+        },
+        "description": {
+          "ID": "Pengecekan syarat penerima bantuan pemerintah sektor pariwisata.",
+          "EN": "Verification of eligibility criteria for tourism & creative grants."
+        }
+      },
+      {
+        "name": {
+          "ID": "Nyatakan.id Event Guide",
+          "EN": "Nyatakan.id Event Guide"
+        },
+        "description": {
+          "ID": "Panduan pengajuan event kreatif dan monitoring status kurasi.",
+          "EN": "Creative event submission instructions and curation status checks."
+        }
+      }
+    ],
+    "deliverables": [
+      "Virtual Assistant Engine",
+      "Eligibility Logic",
+      "Web Chat Widget",
+      "Knowledge Base"
+    ],
+    "screenshots": [
+      "/images/portfolio/vita-1.png"
+    ]
+  },
+  {
+    "id": "mnc-benefit",
+    "slug": "mnc-benefit",
+    "client": "MNC Bank",
+    "logo": "MNC BANK",
+    "image": "/images/portfolio/mnc-benefit-1.png",
+    "images": [
+      "/images/portfolio/mnc-benefit-1.png"
+    ],
+    "category": {
+      "ID": "EMPLOYEE BENEFIT & LENDING",
+      "EN": "EMPLOYEE BENEFIT & LENDING"
+    },
+    "title": {
+      "ID": "MNC Bank PunyaBenefit",
+      "EN": "MNC Bank PunyaBenefit"
+    },
+    "summary": {
+      "ID": "Program employee benefit digital end-to-end bagi nasabah korporasi MNC Bank dengan fitur persetujuan multi-layer dari HR perusahaan hingga analis bank, BI checking, dan monitoring cicilan.",
+      "EN": "An end-to-end digital employee benefit platform for MNC Bank corporate clients featuring multi-layer approval from company HR to bank credit analysts, BI checking, and installment monitoring."
+    },
+    "challenge": {
+      "ID": "Proses pengajuan pinjaman karyawan manual yang memakan waktu lama, verifikasi HR yang lambat, dan risiko kredit yang sulit dipantau secara real-time.",
+      "EN": "Manual employee loan submission workflows causing slow HR verification and difficulties in real-time credit risk monitoring."
+    },
+    "solution": {
+      "ID": "Membangun platform portal HR dan aplikasi mobile pengajuan pinjaman dengan credit scoring otomatis, integrasi BI checking, dan manajemen limit terpusat.",
+      "EN": "Developing an HR portal and mobile loan application with automated credit scoring, BI checking integration, and centralized credit limit controls."
+    },
+    "metrics": [
+      {
+        "value": "Multilayer",
+        "label": {
+          "ID": "Persetujuan HR & Analis Bank",
+          "EN": "Multilayer Approval"
+        }
+      },
+      {
+        "value": "Otomatis",
+        "label": {
+          "ID": "Pemeriksaan BI Checking",
+          "EN": "Automated BI Checking"
+        }
+      },
+      {
+        "value": "Real-time",
+        "label": {
+          "ID": "Monitoring Angsuran",
+          "EN": "Installment Monitoring"
+        }
+      }
+    ],
+    "tags": [
+      "FinTech",
+      "Lending",
+      "Credit Scoring",
+      "HR Benefits",
+      "Banking"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "HR Approval Portal",
+          "EN": "HR Approval Portal"
+        },
+        "description": {
+          "ID": "Verifikasi status kepegawaian dan persetujuan plafon pinjaman karyawan.",
+          "EN": "Employee status verification and loan ceiling authorization portal."
+        }
+      },
+      {
+        "name": {
+          "ID": "Automated Credit Assessment",
+          "EN": "Automated Credit Assessment"
+        },
+        "description": {
+          "ID": "Penilaian kelayakan kredit dan sinkronisasi data riwayat angsuran.",
+          "EN": "Automated credit eligibility scoring and payment history synchronization."
+        }
+      }
+    ],
+    "deliverables": [
+      "Admin HR Portal",
+      "Mobile App",
+      "Credit Scoring API",
+      "BI Checking Integration"
+    ],
+    "screenshots": [
+      "/images/portfolio/mnc-benefit-1.png"
+    ]
+  },
+  {
+    "id": "mnc-rumah",
+    "slug": "mnc-rumah",
+    "client": "MNC Bank",
+    "logo": "MNC BANK",
+    "image": "/images/portfolio/mnc-rumah-1.png",
+    "images": [
+      "/images/portfolio/mnc-rumah-1.png"
+    ],
+    "category": {
+      "ID": "AR MORTGAGE SIMULATOR",
+      "EN": "AR MORTGAGE SIMULATOR"
+    },
+    "title": {
+      "ID": "MNC Bank PunyaRumah",
+      "EN": "MNC Bank PunyaRumah"
+    },
+    "summary": {
+      "ID": "Aplikasi pencarian properti dan simulasi KPR interaktif dengan teknologi Augmented Reality (AR) untuk memindai properti di sekitar pengguna serta pengajuan KPR digital instan.",
+      "EN": "An interactive property discovery and mortgage simulation mobile app utilizing Augmented Reality (AR) to scan nearby properties and submit instant digital mortgage applications."
+    },
+    "challenge": {
+      "ID": "Memberikan pengalaman pencarian rumah yang inovatif dan memudahkan nasabah menghitung simulasi cicilan KPR sesuai kemampuan finansial.",
+      "EN": "Delivering an innovative property hunting experience and helping customers calculate realistic mortgage simulations seamlessly."
+    },
+    "solution": {
+      "ID": "Mengintegrasikan peta lokasi berbasis GPS dengan kamera Augmented Reality dan kalkulator cicilan KPR yang langsung terhubung ke sistem pengajuan KPR MNC Bank.",
+      "EN": "Integrating GPS property mapping with Augmented Reality camera scanning and mortgage calculators linked directly into MNC Bank loan origination."
+    },
+    "metrics": [
+      {
+        "value": "Augmented",
+        "label": {
+          "ID": "Pencarian Properti AR",
+          "EN": "AR Property Scanning"
+        }
+      },
+      {
+        "value": "Instan",
+        "label": {
+          "ID": "Simulasi Perhitungan KPR",
+          "EN": "Mortgage Calculator"
+        }
+      },
+      {
+        "value": "Paperless",
+        "label": {
+          "ID": "Pengajuan KPR Digital",
+          "EN": "Digital Loan Submission"
+        }
+      }
+    ],
+    "tags": [
+      "Augmented Reality",
+      "Mortgage",
+      "FinTech",
+      "Real Estate Tech",
+      "Mobile App"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "AR Property Radar",
+          "EN": "AR Property Radar"
+        },
+        "description": {
+          "ID": "Sorot kamera smartphone ke lingkungan sekitar untuk melihat properti yang dijual.",
+          "EN": "Point your smartphone camera to discover nearby properties available for sale."
+        }
+      },
+      {
+        "name": {
+          "ID": "Mortgage Simulator",
+          "EN": "Mortgage Simulator"
+        },
+        "description": {
+          "ID": "Simulasi uang muka, tenor, dan angsuran bulanan secara real-time.",
+          "EN": "Real-time down payment, tenure, and monthly installment calculation."
+        }
+      }
+    ],
+    "deliverables": [
+      "AR Engine Integration",
+      "Mobile App (iOS/Android)",
+      "Loan Application Backend",
+      "Maps Integration"
+    ],
+    "screenshots": [
+      "/images/portfolio/mnc-rumah-1.png"
+    ]
+  },
+  {
+    "id": "mnc-rekening",
+    "slug": "mnc-rekening",
+    "client": "MNC Bank",
+    "logo": "MNC BANK",
+    "image": "/images/portfolio/mnc-rekening-1.png",
+    "images": [
+      "/images/portfolio/mnc-rekening-1.png"
+    ],
+    "category": {
+      "ID": "DIGITAL ONBOARDING & E-KYC",
+      "EN": "DIGITAL ONBOARDING & E-KYC"
+    },
+    "title": {
+      "ID": "MNC Bank PunyaRekening",
+      "EN": "MNC Bank PunyaRekening"
+    },
+    "summary": {
+      "ID": "Solusi pembukaan rekening tabungan MNC Bank secara digital dengan pengisian formulir instan, penjadwalan janji temu e-KYC bersama Account Executive, dan pelacakan status pembukaan rekening.",
+      "EN": "A digital account opening platform for MNC Bank enabling quick form completion, e-KYC video appointment scheduling with Account Executives, and application progress tracking."
+    },
+    "challenge": {
+      "ID": "Menghilangkan keharusan nasabah datang ke kantor cabang fisik untuk pembukaan rekening awal dengan tetap mematuhi regulasi ketat KYC perbankan.",
+      "EN": "Eliminating the need for customers to visit brick-and-mortar branches for initial account opening while adhering to strict banking KYC compliance."
+    },
+    "solution": {
+      "ID": "Membangun alur kerja pendaftaran digital yang terstruktur, verifikasi dokumen identitas, dan kalender penjadwalan verifikasi tatap muka digital.",
+      "EN": "Building structured digital onboarding workflows, document verification pipelines, and digital video KYC scheduling calendars."
+    },
+    "metrics": [
+      {
+        "value": "100% Online",
+        "label": {
+          "ID": "Buka Rekening Digital",
+          "EN": "Digital Account Opening"
+        }
+      },
+      {
+        "value": "e-KYC",
+        "label": {
+          "ID": "Janji Temu Account Exec",
+          "EN": "e-KYC Appointment Flow"
+        }
+      },
+      {
+        "value": "Terpantau",
+        "label": {
+          "ID": "Tracking Status Pengajuan",
+          "EN": "Application Status Tracker"
+        }
+      }
+    ],
+    "tags": [
+      "Digital Onboarding",
+      "e-KYC",
+      "Mobile Banking",
+      "FinTech"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Digital Registration Form",
+          "EN": "Digital Registration Form"
+        },
+        "description": {
+          "ID": "Pengisian data pribadi dan upload dokumen identitas aman.",
+          "EN": "Secure identity document upload and personal detail submissions."
+        }
+      },
+      {
+        "name": {
+          "ID": "KYC Appointment Scheduler",
+          "EN": "KYC Appointment Scheduler"
+        },
+        "description": {
+          "ID": "Penjadwalan waktu verifikasi langsung dengan petugas bank.",
+          "EN": "Direct verification appointment scheduling with bank representatives."
+        }
+      }
+    ],
+    "deliverables": [
+      "Onboarding Mobile App",
+      "AE Dashboard",
+      "Document Verification Service"
+    ],
+    "screenshots": [
+      "/images/portfolio/mnc-rekening-1.png"
+    ]
+  },
+  {
+    "id": "mnc-celengan",
+    "slug": "mnc-celengan",
+    "client": "MNC Bank",
+    "logo": "MNC BANK",
+    "image": "/images/portfolio/mnc-celengan-1.png",
+    "images": [
+      "/images/portfolio/mnc-celengan-1.png"
+    ],
+    "category": {
+      "ID": "GAMIFIED SAVINGS PLATFORM",
+      "EN": "GAMIFIED SAVINGS PLATFORM"
+    },
+    "title": {
+      "ID": "MNC Bank PunyaCelengan",
+      "EN": "MNC Bank PunyaCelengan"
+    },
+    "summary": {
+      "ID": "Platform edukasi finansial dan tabungan gamifikasi untuk anak-anak dengan sistem penugasan harian oleh orang tua, virtual account terpisah, dan reward menabung interaktif.",
+      "EN": "A gamified savings and financial education platform for children featuring parental chore assignments, dedicated virtual accounts, and interactive saving rewards."
+    },
+    "challenge": {
+      "ID": "Mengajarkan konsep nilai uang, kerja keras, dan menabung kepada anak-anak generasi digital secara menyenangkan dan aman di bawah pengawasan orang tua.",
+      "EN": "Teaching the value of money, chores, and savings habits to digital-native children in a fun and secure environment under parental supervision."
+    },
+    "solution": {
+      "ID": "Mengembangkan aplikasi ramah anak dengan karakter animasi, daftar tugas berhadiah uang saku ke tabungan anak, dan dashboard kontrol orang tua.",
+      "EN": "Developing a kid-friendly mobile interface with gamified chore completion quests crediting allowance into kids' savings accounts under parental control."
+    },
+    "metrics": [
+      {
+        "value": "Gamifikasi",
+        "label": {
+          "ID": "Edukasi Finansial Anak",
+          "EN": "Financial Gamification"
+        }
+      },
+      {
+        "value": "Virtual",
+        "label": {
+          "ID": "Virtual Account Khusus",
+          "EN": "Dedicated Virtual Account"
+        }
+      },
+      {
+        "value": "Misi & Reward",
+        "label": {
+          "ID": "Tugas Harian dari Orang Tua",
+          "EN": "Chore Reward System"
+        }
+      }
+    ],
+    "tags": [
+      "Gamification",
+      "Kids FinTech",
+      "Savings App",
+      "Family Banking"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Parent-Child Task Board",
+          "EN": "Parent-Child Task Board"
+        },
+        "description": {
+          "ID": "Pemberian tugas rumah dan reward saldo tabungan otomatis saat tugas selesai.",
+          "EN": "Chore assignment with automated allowance payout upon task approval."
+        }
+      },
+      {
+        "name": {
+          "ID": "Target Menabung Interaktif",
+          "EN": "Interactive Savings Target"
+        },
+        "description": {
+          "ID": "Visualisasi progres pencapaian impian barang yang ingin dibeli anak.",
+          "EN": "Goal-based visual progress tracking for children saving up for dream items."
+        }
+      }
+    ],
+    "deliverables": [
+      "Kids UI/UX App",
+      "Parent Management Dashboard",
+      "Virtual Account Core Connector"
+    ],
+    "screenshots": [
+      "/images/portfolio/mnc-celengan-1.png"
+    ]
+  },
+  {
+    "id": "sikepo",
+    "slug": "sikepo",
+    "client": "Otoritas Jasa Keuangan (OJK)",
+    "logo": "OJK",
+    "image": "/images/portfolio/sikepo-main.jpg",
+    "images": [
+      "/images/portfolio/sikepo-main.jpg",
+      "/images/portfolio/sikepo-1.jpg"
+    ],
+    "category": {
+      "ID": "FINTECH & REGULATORY PORTAL",
+      "EN": "FINTECH & REGULATORY PORTAL"
+    },
+    "title": {
+      "ID": "OJK SIKePO (Ketentuan Perbankan)",
+      "EN": "OJK SIKePO (Banking Regulations)"
+    },
+    "summary": {
+      "ID": "Sistem Informasi Ketentuan Perbankan Online (SIKePO) merupakan portal dan aplikasi mobile pencarian landasan hukum, surat edaran, dan regulasi industri perbankan yang diterbitkan OJK.",
+      "EN": "Sistem Informasi Ketentuan Perbankan Online (SIKePO) is a mobile app and legal portal for searching banking regulations, circular letters, and compliance rules issued by OJK."
+    },
+    "challenge": {
+      "ID": "Banyaknya kodifikasi ketentuan perbankan yang tersebar dalam dokumen PDF dan perlunya platform pencarian cepat berbasis topik, jenis aturan, dan kata kunci bagi praktisi perbankan.",
+      "EN": "Vast volume of banking regulations scattered across PDFs requiring a fast, indexed search engine by topic, regulation category, and keywords for industry professionals."
+    },
+    "solution": {
+      "ID": "Membangun portal web dan aplikasi mobile lintas platform dengan mesin pengindeksan dokumen hukum, filter statistik regulasi, dan notifikasi aturan perbankan terbaru.",
+      "EN": "Developing cross-platform mobile apps and web portals with legal text indexing engines, regulatory statistics filters, and instant push updates for new banking rules."
+    },
+    "metrics": [
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Regulasi Perbankan Terindeks",
+          "EN": "Indexed Banking Rules"
+        }
+      },
+      {
+        "value": "<1 dtk",
+        "label": {
+          "ID": "Kecepatan Pencarian Aturan",
+          "EN": "Search Query Speed"
+        }
+      },
+      {
+        "value": "JDIHN",
+        "label": {
+          "ID": "Standar Dokumentasi Hukum",
+          "EN": "Legal Tech Standard"
+        }
+      }
+    ],
+    "tags": [
+      "RegTech",
+      "LegalTech",
+      "OJK",
+      "Search Portal",
+      "Mobile App"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Smart Legal Search",
+          "EN": "Smart Legal Search"
+        },
+        "description": {
+          "ID": "Pencarian cepat berdasarkan nomor PBI/POJK, tahun, kata kunci, dan kategori lembaga keuangan.",
+          "EN": "Fast queries by regulation number, year, keyword, and institution type."
+        }
+      },
+      {
+        "name": {
+          "ID": "Statistik Regulasi",
+          "EN": "Regulation Statistics"
+        },
+        "description": {
+          "ID": "Visualisasi grafik jumlah ketentuan terbaru yang diterbitkan per sektor.",
+          "EN": "Visual charts analyzing regulatory trends issued per banking sector."
+        }
+      }
+    ],
+    "deliverables": [
+      "Mobile Apps (iOS/Android)",
+      "CMS Web Portal",
+      "Search Indexing API",
+      "Maintenance Support"
+    ],
+    "screenshots": [
+      "/images/portfolio/sikepo-cms-mockup.png"
+    ]
+  },
+  {
+    "id": "koperasi-digital",
+    "slug": "koperasi-digital",
+    "client": "Platform Koperasi Indonesia",
+    "logo": "KOPERASI DIGITAL",
+    "image": "/images/portfolio/koperasi-1.jpg",
+    "images": [
+      "/images/portfolio/koperasi-1.jpg",
+      "/images/portfolio/koperasi-2.jpg"
+    ],
+    "category": {
+      "ID": "COOPERATIVE FINTECH",
+      "EN": "COOPERATIVE FINTECH"
+    },
+    "title": {
+      "ID": "Platform Koperasi Digital",
+      "EN": "Digital Cooperative Platform"
+    },
+    "summary": {
+      "ID": "Platform digital mobile untuk memodernisasi operasional koperasi, memungkinkan anggota membuka rekening, simpanan berjangka, pinjaman, dan melacak bagi hasil SHU otomatis.",
+      "EN": "A mobile digital platform modernizing cooperative operations, allowing members to open accounts, subscribe to time deposits, apply for loans, and track SHU profit-sharing automatically."
+    },
+    "challenge": {
+      "ID": "Pembukuan manual dan antrean administrasi fisik yang memperlambat ekspansi anggota koperasi dan transparansi bagi hasil simpan pinjam.",
+      "EN": "Manual bookkeeping and in-person paperwork slowing down member expansion and transparency in cooperative lending & profit sharing."
+    },
+    "solution": {
+      "ID": "Membangun aplikasi mobile lengkap dengan simulasi imbal jasa simpanan, pengajuan pinjaman online, penghitungan SHU otomatis, dan pelaporan keuangan real-time.",
+      "EN": "Building a full-featured mobile app with deposit yield calculators, online loan submissions, automated dividend (SHU) tracking, and real-time bookkeeping."
+    },
+    "metrics": [
+      {
+        "value": "Otomatis",
+        "label": {
+          "ID": "Perhitungan SHU & Bagi Hasil",
+          "EN": "Automated SHU Dividend"
+        }
+      },
+      {
+        "value": "Paperless",
+        "label": {
+          "ID": "Simpanan & Pinjaman Digital",
+          "EN": "Paperless Lending & Savings"
+        }
+      },
+      {
+        "value": "Reward",
+        "label": {
+          "ID": "Poin Loyalitas Anggota",
+          "EN": "Member Loyalty Points"
+        }
+      }
+    ],
+    "tags": [
+      "Cooperative FinTech",
+      "Lending",
+      "Time Deposits",
+      "Loyalty Points",
+      "Bookkeeping"
+    ],
+    "industry": "Cooperative & Microfinance",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Digital Member Onboarding",
+          "EN": "Digital Member Onboarding"
+        },
+        "description": {
+          "ID": "Registrasi dan verifikasi data anggota koperasi secara online tanpa formulir fisik.",
+          "EN": "Online member onboarding and identity verification without paperwork."
+        }
+      },
+      {
+        "name": {
+          "ID": "Savings & Loan Simulator",
+          "EN": "Savings & Loan Simulator"
+        },
+        "description": {
+          "ID": "Kalkulator imbal jasa simpanan berjangka dan pengajuan pinjaman cepat.",
+          "EN": "Time-deposit yield calculator and rapid loan disbursement application."
+        }
+      }
+    ],
+    "deliverables": [
+      "Member Mobile App",
+      "Cooperative Admin Portal",
+      "SHU Ledger Engine",
+      "Reporting Suite"
+    ],
+    "screenshots": [
+      "/images/portfolio/koperasi-1.jpg",
+      "/images/portfolio/koperasi-2.jpg"
+    ]
+  },
+  {
+    "id": "dbs-live-more",
+    "slug": "dbs-live-more",
+    "client": "Bank DBS",
+    "logo": "DBS BANK",
+    "image": "/images/portfolio/dbs-1.jpg",
+    "images": [
+      "/images/portfolio/dbs-1.jpg",
+      "/images/portfolio/dbs-2.jpg",
+      "/images/portfolio/dbs-3.png"
+    ],
+    "category": {
+      "ID": "CAMPAIGN MICROSITE",
+      "EN": "CAMPAIGN MICROSITE"
+    },
+    "title": {
+      "ID": "DBS Live More Society",
+      "EN": "DBS Live More Society"
+    },
+    "summary": {
+      "ID": "Microsite interaktif untuk kampanye pemuda Bank DBS bertajuk Live Smart, Live Kind, and Live Awesome yang mendorong partisipasi aksi sosial, daur ulang, dan literasi finansial.",
+      "EN": "An interactive campaign microsite for Bank DBS youth initiative #Live Smart, Live Kind, and Live Awesome promoting sustainability, recycling, and financial literacy."
+    },
+    "challenge": {
+      "ID": "Membangun platform kampanye digital berkinerja tinggi yang mampu menangani lonjakan pengunjung saat event promosi dan festival pemuda berskala besar.",
+      "EN": "Building a high-performance digital campaign portal capable of handling visitor surges during promotional festivals and sustainability campaigns."
+    },
+    "solution": {
+      "ID": "Mengembangkan web portal modern dan responsif dengan integrasi formulir partisipasi online, artikel edukasi gaya hidup, dan pelacakan target donasi.",
+      "EN": "Developing a modern responsive web portal with online pledge submissions, lifestyle educational articles, and campaign milestone tracking."
+    },
+    "metrics": [
+      {
+        "value": "Youth",
+        "label": {
+          "ID": "Platform Kampanye Interaktif",
+          "EN": "Interactive Youth Campaign"
+        }
+      },
+      {
+        "value": "High-Traffic",
+        "label": {
+          "ID": "Arsitektur Web Skalabel",
+          "EN": "Scalable Web Architecture"
+        }
+      },
+      {
+        "value": "Komunitas",
+        "label": {
+          "ID": "Keterlibatan Generasi Muda",
+          "EN": "Digital Community Reach"
+        }
+      }
+    ],
+    "tags": [
+      "Microsite",
+      "Campaign Portal",
+      "Bank DBS",
+      "Responsive Web",
+      "Sustainability"
+    ],
+    "industry": "Banking & Financial Services",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Campaign Pledge Tracker",
+          "EN": "Campaign Pledge Tracker"
+        },
+        "description": {
+          "ID": "Penghitungan dukungan partisipasi aksi hijau dan daur ulang secara real-time.",
+          "EN": "Real-time tally of community environmental pledge commitments."
+        }
+      },
+      {
+        "name": {
+          "ID": "Content & Event Hub",
+          "EN": "Content & Event Hub"
+        },
+        "description": {
+          "ID": "Katalog artikel inspiratif dan pendaftaran tiket festival pemuda.",
+          "EN": "Inspirational article hub and youth festival ticket registration."
+        }
+      }
+    ],
+    "deliverables": [
+      "Responsive Web Microsite",
+      "CMS Backend",
+      "Event Registration Engine",
+      "Traffic Optimization"
+    ],
+    "screenshots": [
+      "/images/portfolio/dbs-1.jpg",
+      "/images/portfolio/dbs-2.jpg",
+      "/images/portfolio/dbs-3.png"
+    ]
+  },
+  {
     "id": "bioaudit",
     "slug": "bioaudit",
     "client": "PT Bio Farma (Persero)",
     "logo": "BIO FARMA",
-    "image": "https://admin.radyalabs.com/assets/e2cddcab-12f0-4c0d-a329-2b07f1e894c3",
+    "image": "/images/portfolio/bioaudit-1.jpg",
+    "images": [
+      "/images/portfolio/bioaudit-1.jpg"
+    ],
     "category": {
-      "ID": "AUDIT & GOVERNANCE",
-      "EN": "AUDIT & GOVERNANCE"
+      "ID": "INTERNAL AUDIT SYSTEM",
+      "EN": "INTERNAL AUDIT SYSTEM"
     },
     "title": {
       "ID": "BioAudit",
       "EN": "BioAudit"
     },
     "summary": {
-      "ID": "BioAudit untuk Biofarma adalah sistem Audit internal. Aplikasi satu atap dari perencanaan, pengawasan, hingga pelaksanaan audit.",
-      "EN": "BioAudit for Biofarma is an internal Auditing system. The one stop application from planning, supervising, and executing audit."
+      "ID": "Sistem audit internal holding PT Bio Farma yang mendigitalkan seluruh siklus audit secara paperless mulai dari perencanaan, kertas kerja audit, pengawasan, hingga pelaporan sesuai standar IIA.",
+      "EN": "PT Bio Farma internal auditing system digitizing the complete audit cycle paperless from planning, audit working papers, supervision, to reporting aligned with IIA standards."
     },
     "challenge": {
-      "ID": "Mengurangi biaya alat tulis kantor dan menghilangkan kesulitan pengelolaan informasi yang ada dalam kerta kerja audit, Alur kerja dan pendelegasian wewenang kerja audit intern dapat dilakukan secara lebih jelas, Data dan informasi audit intern dapat diakses oleh pengguna yang berwenang dari banyak tempat secara online, Laporan audit PI menjadi lebih berkualitas dan dipertanggungjawabkan karena ketersediaan kerta kerja yang lengkap dan dikelola dengan baik",
-      "EN": "Reduce the cost of office stationery and eliminate the difficulty of managing information contained in audit working papers, Workflow and delegation of internal audit work authority can be done more clearly, Internal audit data and information can be accessed by authorized users from many places online, PI audit reports become more qualified and accountable due to the availability of complete and well-managed working papers."
+      "ID": "Biaya alat tulis kantor yang tinggi, kesulitan pengarsipan kertas kerja fisik, dan kebutuhan pendelegasian wewenang audit internal yang transparan di lingkup holding farmasi.",
+      "EN": "High physical stationery costs, paper archiving challenges, and the need for clear internal audit authority delegation across the pharmaceutical holding."
     },
     "solution": {
-      "ID": "Memperhatikan kebutuhan PI akan manajemen audit intern yang lebih baik dan berkualitas serta masalah pengarsipan kertas kerja audit maka kami membutuhkan aplikasi audit manajemen system yang berdasar standar pelaksanaan audit internal yang di pubilkasikan oleh IIA.",
-      "EN": "Considering PI's need for better and quality internal audit management and the issue of audit working paper archiving, we need an audit management system application based on the internal audit implementation standards published by the IIA."
+      "ID": "Mengembangkan sistem audit manajemen terenkripsi berbasis standar pelaksanaan audit internal internasional IIA dengan akses multi-entitas terpusat.",
+      "EN": "Developing an encrypted audit management system adhering to international IIA internal audit standards with centralized multi-entity access."
     },
     "metrics": [
       {
@@ -243,622 +1568,142 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         "value": "Paperless",
         "label": {
-          "ID": "Sistem Pelaporan",
-          "EN": "Reporting Workflow"
+          "ID": "Kertas Kerja Terenkripsi",
+          "EN": "Encrypted Working Papers"
         }
       }
     ],
     "tags": [
-      "Protocol & report",
-      "FRA",
-      "DS",
-      "FS",
-      "URS",
-      "Load Test",
-      "User Manual",
-      "Stress Test"
+      "Internal Audit",
+      "Governance",
+      "IIA Standards",
+      "Bio Farma",
+      "HealthTech"
     ],
     "industry": "Healthcare & Pharmaceuticals",
     "featuresList": [
       {
         "name": {
-          "ID": "Audit Planning",
-          "EN": "Perencanaan Audit"
+          "ID": "Audit Working Papers (KKA)",
+          "EN": "Audit Working Papers (KKA)"
         },
         "description": {
-          "ID": "Audit planning workflow in BioAudit application",
-          "EN": "Alur kerja perencanaan audit dalam aplikasi BioAudit"
+          "ID": "Pembuatan dan pengarsipan kertas kerja audit digital dengan audit trail lengkap.",
+          "EN": "Digital audit working papers creation with tamper-proof audit trails."
         }
       },
       {
         "name": {
-          "ID": "Pelaporan Hasil Audits",
-          "EN": "Pelaporan Hasil Audit"
+          "ID": "Approval Delegation Matrix",
+          "EN": "Approval Delegation Matrix"
         },
         "description": {
-          "ID": "Alur kerja pelaporan audit dalam aplikasi BioAudit berdasarkan temuan pemeriksaan",
-          "EN": "Alur kerja pelaporan audit dalam aplikasi BioAudit berdasarkan temuan pemeriksaan"
-        }
-      },
-      {
-        "name": {
-          "ID": "Follow-up Monitoring of Audit Results",
-          "EN": "Pemantauan Tindak Lanjut Hasil Audit"
-        },
-        "description": {
-          "ID": "The workflow for monitoring follow-up audit results in the BioAudit application based on inspection findings.",
-          "EN": "Alur kerja pemantauan tindak lanjut hasil audit dalam aplikasi BioAudit berdasarkan temuan pemeriksaan"
-        }
-      },
-      {
-        "name": {
-          "ID": "Pelaksanaan Audits",
-          "EN": "Pelaksanaan Audit"
-        },
-        "description": {
-          "ID": "Alur kerja pelaksanaan audit dalam aplikasi BioAudit",
-          "EN": "Alur kerja pelaksanaan audit dalam aplikasi BioAudit"
-        }
-      },
-      {
-        "name": {
-          "ID": "Persiapan Audits",
-          "EN": "Persiapan Audit"
-        },
-        "description": {
-          "ID": "Alur kerja persiapan audit dalam aplikasi BioAudit",
-          "EN": "Alur kerja persiapan audit dalam aplikasi BioAudit"
+          "ID": "Alur persetujuan temuan audit berjenjang sesuai kewenangan pimpinan.",
+          "EN": "Multi-tiered audit finding sign-off workflows matching leadership mandates."
         }
       }
     ],
     "deliverables": [
-      "Protocol & report",
-      "FRA",
-      "DS",
-      "FS",
-      "URS",
-      "Load Test",
-      "User Manual",
-      "Stress Test"
+      "Audit Management Engine",
+      "Report Generation Module",
+      "Document Archiving System",
+      "Security Hardening"
     ],
     "screenshots": [
-      "https://admin.radyalabs.com/assets/f43f2168-bcf6-4618-bca2-f9c01326fee8",
-      "https://admin.radyalabs.com/assets/15847755-e733-47cb-933b-4cd9b99cc442"
-    ],
-    "backgroundColor": "#156384"
-  },
-  {
-    "id": "asesmen-nasional-berbasis-komputer-anbk",
-    "slug": "asesmen-nasional-berbasis-komputer-anbk",
-    "client": "Pusmendik Kemendikbudristek",
-    "logo": "PUSMENDIK",
-    "image": "https://admin.radyalabs.com/assets/1cfa7fe1-685a-47d5-abc8-6dadb524fd3e",
-    "category": {
-      "ID": "PUBLIC SECTOR PLATFORM",
-      "EN": "PUBLIC SECTOR PLATFORM"
-    },
-    "title": {
-      "ID": "Asesmen Nasional Berbasis Komputer (ANBK)",
-      "EN": "Asesmen Nasional Berbasis Komputer (ANBK)"
-    },
-    "summary": {
-      "ID": "ANBK merupakan aplikasi yang memungkinkan peserta untuk melakukan asesmen nasional yang diselenggarakan oleh PUSMENDIK dan memungkinkan Admin dari pihak PUSMENDIK untuk mengelola pelaksanaan kegiatan tesnya mulai dari pengelolaan peserta, proktor hingga soal tes beserta jadwalnya.",
-      "EN": "ANBK is an application that allows participants to carry out national assessments organized by PUSMENDIK and allows the Admin from PUSMENDIK to manage the implementation of test activities starting from managing participants, proctors to test questions and their schedules."
-    },
-    "challenge": {
-      "ID": "Target proyek ANBK adalah dapat digunakan mulai dari pelaksanaan Uji Kesetaraan sampai pelaksanaan AN dari jenjang SMA Sederajat, SMK, Jenjang SMP Sederajat dan Jenjang SD Sederajat pada tahun 2023. Kedepannya ANBK ini akan dikembangkan lagi dengan penambahan fitur-fitur terbaru yang berisi informasi-informasi yang memudahkan pengguna dalam melaksanakan kegiatan tesnya",
-      "EN": "The target of the ANBK project is that it can be used from the implementation of the Equivalency Test to the implementation of AN from SMA and Equivalent, SMK, SMP and Elementary School and Equivalent levels in 2023. In the future, ANBK will be further developed with the addition of the latest features containing information makes it easier for users to carry out their test activities"
-    },
-    "solution": {
-      "ID": "Dengan adanya proses atau kegiatan ANBK ini, maka diperlukan sebuah aplikasi untuk dapat memaksimalkan peserta dan admin tes ANBK dalam melaksanakan kegiatan tes.",
-      "EN": "With this ANBK process or activity, an application is needed to maximize ANBK test participants and admins in carrying out test activities."
-    },
-    "metrics": [
-      {
-        "value": "3.5M+",
-        "label": {
-          "ID": "Siswa Peserta Ujian",
-          "EN": "Concurrent Students"
-        }
-      },
-      {
-        "value": "99.99%",
-        "label": {
-          "ID": "Ketersediaan Server",
-          "EN": "Server Availability"
-        }
-      },
-      {
-        "value": "100K+",
-        "label": {
-          "ID": "Sekolah Terhubung",
-          "EN": "Connected Schools"
-        }
-      }
-    ],
-    "tags": [
-      "Load Test",
-      "Kubernetes",
-      "TSD",
-      "Google Cloud Platform (GCP)",
-      "UAT Document",
-      "FSD"
-    ],
-    "industry": "Government & Education",
-    "featuresList": [
-      {
-        "name": {
-          "ID": "Web Proktor",
-          "EN": "Proctor Web"
-        },
-        "description": {
-          "ID": "Pengguna aplikasi dengan peran proktor dapat menggunakan aplikasi web ANBK untuk memonitor kegiatan peserta, status peserta, daftar peserta, kelompok tes, laporan pengolahan dan lain sebagainya.",
-          "EN": "Application users with the role of proctor can use the ANBK web application to monitor participant activities, participant status, participant list, test groups, processing reports and so on."
-        }
-      },
-      {
-        "name": {
-          "ID": "Web Helpdesk",
-          "EN": "Helpdesk Web"
-        },
-        "description": {
-          "ID": "Web yang digunakan oleh peran Helpdesk untuk melakukan kegiatan monitoring peserta, pengelolaan proktor dan status tes.activities, proctor management and test status.",
-          "EN": "The website is used by the Helpdesk role to carry out participant monitoring activities, proctor management and test status."
-        }
-      },
-      {
-        "name": {
-          "ID": "Web Admin",
-          "EN": "Admin Web"
-        },
-        "description": {
-          "ID": "Web yang digunakan oleh role Admin untuk melakukan pengelolaan data mulai dari Helpdesk, Proktor, Status Tes, Hak Akses, Peserta, sampai monitoring aktivitas peserta.",
-          "EN": "The website is used by the Admin role to manage data starting from the Helpdesk, Proctor, Test Status, Access Rights, Participants, to monitoring participant activity."
-        }
-      },
-      {
-        "name": {
-          "ID": "Web Siswa",
-          "EN": "Student Web"
-        },
-        "description": {
-          "ID": "Merupakan web utama yang digunakan oleh siswa, dari jenjang SD - SMA dan sederajat untuk melakukan kegiatan konfirmasi data, konfirmasi tes dan pelaksanaan (pengerjaan) tes.",
-          "EN": "It is the main website used by students, from elementary to high school and equivalent levels, to carry out data confirmation activities, test confirmation and test implementation."
-        }
-      }
-    ],
-    "deliverables": [
-      "Load Test",
-      "Kubernetes",
-      "TSD",
-      "Google Cloud Platform (GCP)",
-      "UAT Document",
-      "FSD"
-    ],
-    "screenshots": [
-      "https://admin.radyalabs.com/assets/cb780612-4e97-4a34-8bb7-4992b14c275b"
+      "/images/portfolio/bioaudit-cms-mockup.png"
     ]
   },
   {
-    "id": "sikepo",
-    "slug": "sikepo",
-    "client": "Otoritas Jasa Keuangan (OJK)",
-    "logo": "OJK",
-    "image": "https://admin.radyalabs.com/assets/04735d7c-36e9-4c60-b8bd-0950e1266408",
+    "id": "bi-smart",
+    "slug": "bi-smart",
+    "client": "PT Bio Farma (Persero)",
+    "logo": "BIO FARMA",
+    "image": "/images/portfolio/bismart-main.jpg",
+    "images": [
+      "/images/portfolio/bismart-main.jpg",
+      "/images/portfolio/bismart-1.jpg"
+    ],
     "category": {
-      "ID": "FINTECH & REGULATORY",
-      "EN": "FINTECH & REGULATORY"
+      "ID": "RISK MANAGEMENT & EWS",
+      "EN": "RISK MANAGEMENT & EWS"
     },
     "title": {
-      "ID": "SIKePO",
-      "EN": "SIKePO"
+      "ID": "Bi-SMaRT",
+      "EN": "Bi-SMaRT"
     },
     "summary": {
-      "ID": "Sistem Informasi Ketentuan Perbankan Online (SIKePO) merupakan layanan teknologi informasi yang menyajikan informasi seputar Landasan Hukum dan Ketentuan Terkaitnya mengenai perbankan dan industri jasa keuangan lain yang disajikan secara online oleh OJK (Otoritas Jasa Keuangan).",
-      "EN": "Sistem Informasi Ketentuan Perbankan Online (SIKePO) is a rules and information searching application in regards of Banking and other Financial Institutions issued by OJK. User can search by tag, type, or topic, and the system will show all the rules related."
+      "ID": "Aplikasi pelaporan profil risiko, proses monitoring dan evaluasi risiko, stress testing, serta dashboard Early Warning System (EWS) KRI di lingkup Holding PT Bio Farma.",
+      "EN": "An enterprise application for risk profile reporting, monitoring and evaluation, stress testing, and Early Warning System (EWS) KRI dashboards across Holding PT Bio Farma."
     },
     "challenge": {
-      "ID": "Mempunyai kanal portal web CMS, portal web dan mobile apps untuk industri keuangan perbankan dan juga masyarakat umum yang mampu memenuhi kebutuhan latarbelakang di atas.",
-      "EN": "Having a CMS web portal channel, web portal and mobile apps for the banking financial industry and also the general public that is able to meet the background needs above."
+      "ID": "Penyusunan profil risiko manual yang terpisah di berbagai anak perusahaan holding dan kebutuhan pemantauan indikator risiko utama (KRI) secara cepat dan terintegrasi.",
+      "EN": "Siloed manual risk profile compilation across holding subsidiaries requiring rapid, unified Key Risk Indicator (KRI) telemetry."
     },
     "solution": {
-      "ID": "Membuat kanal portal web CMS untuk stakeholders yang langsung terkelola dan terintegrasi dengan portal web dan mobile apps untuk industri keuangan, perbankan dan juga masyarakat umum.",
-      "EN": "Create a CMS web portal channel for stakeholders that is directly managed and integrated with web portals and mobile apps for the financial industry, banking and the general public."
+      "ID": "Membangun aplikasi manajemen risiko terpusat dengan modul entri profil risiko, matriks stress test tahunan, dashboard EWS per bulan/triwulan, dan approval pejabat berwenang.",
+      "EN": "Building a centralized risk management portal with risk entry modules, annual stress test matrices, periodic EWS dashboards, and hierarchical approval workflows."
     },
     "metrics": [
       {
         "value": "100%",
         "label": {
-          "ID": "Perbankan Nasional",
-          "EN": "National Banks Access"
+          "ID": "Digitalisasi Profil Risiko",
+          "EN": "Risk Profile Digitization"
         }
       },
       {
-        "value": "JDIHN",
+        "value": "Real-time",
         "label": {
-          "ID": "Terintegrasi Resmi",
-          "EN": "Officially Integrated"
+          "ID": "Early Warning System (KRI)",
+          "EN": "Early Warning System (KRI)"
         }
       },
       {
-        "value": "<1 Detik",
+        "value": "-70%",
         "label": {
-          "ID": "Pencarian Regulasi",
-          "EN": "Search Retrieval"
+          "ID": "Siklus Approval Risiko",
+          "EN": "Approval Cycle Time"
         }
       }
     ],
     "tags": [
-      "FSD",
-      "User Manual",
-      "TSD",
-      "Source Code"
+      "Risk Management",
+      "Early Warning System",
+      "Stress Testing",
+      "Bio Farma",
+      "Enterprise"
     ],
-    "industry": "Banking & Financial Services",
+    "industry": "Healthcare & Pharmaceuticals",
     "featuresList": [
       {
         "name": {
-          "ID": "Informasi Perbankan",
-          "EN": "Banking Information"
+          "ID": "Risk Profile Management",
+          "EN": "Risk Profile Management"
         },
         "description": {
-          "ID": "SIKePO sebagai sarana berbagai informasi dari OJK terhadap perbankan, industri jasa keuangan lain dan masyarakat secara umum.",
-          "EN": "SIKePO is a means of sharing information from OJK regarding banking, other financial services industries and the public in general."
+          "ID": "Pengelolaan data profil risiko, proses approval, dan pembuatan laporan risiko.",
+          "EN": "Risk profile data management, approval processing, and reporting."
         }
       },
       {
         "name": {
-          "ID": "Survey",
-          "EN": "Surveys"
+          "ID": "Early Warning System Dashboard",
+          "EN": "Early Warning System Dashboard"
         },
         "description": {
-          "ID": "Menyediakan link survey terhadap ketentuan - ketentuan jasa keuangan yang OJK sediakan sebagai otoritas.",
-          "EN": "Provides a survey link regarding the financial services provisions that OJK provides as an authority."
-        }
-      },
-      {
-        "name": {
-          "ID": "Layanan informasi Landasan Hukum dan Ketentuan Terkait",
-          "EN": "Information Services Legal Basis and Related Provisions"
-        },
-        "description": {
-          "ID": "SIKePO sebagai sarana untuk mencari landasan hukum serta ketentuan-ketentuan yang berlaku dalam hal jasa keuangan, dalam hal ini SIKePO menyediakan file download untuk memudahkan perbankan, industri jasa keuangan lain dan masyarakat secara umum untuk membaca ketentuan-ketentuan yang terkait yang di butuhkan.",
-          "EN": "SIKePO as a means to find the legal basis and provisions that apply in financial services, in this case SIKePO provides download files to make it easier for banks, other financial services industries and the public in general to read the related provisions that are needed."
+          "ID": "Pemantauan grafik nilai KRI dan status mitigasi risiko per kategori.",
+          "EN": "Real-time visual monitoring of KRI scores and mitigation statuses."
         }
       }
     ],
     "deliverables": [
-      "FSD",
-      "User Manual",
-      "TSD",
-      "Source Code"
+      "Risk Management System",
+      "EWS Dashboard",
+      "Stress Testing Engine",
+      "User Manual"
     ],
     "screenshots": [
-      "https://admin.radyalabs.com/assets/3c2bd21b-1287-41f8-a975-a4f640e09fd9",
-      "https://admin.radyalabs.com/assets/49edef48-249c-4765-ab65-23a418523642"
-    ],
-    "backgroundColor": "#97232E"
-  },
-  {
-    "id": "muraqaba",
-    "slug": "muraqaba",
-    "client": "Muraqaba",
-    "logo": "MURAQABA",
-    "image": "https://admin.radyalabs.com/assets/740faad5-e53e-4d31-ae48-b039116b24f8",
-    "category": {
-      "ID": "MOBILE APP & STREAMING",
-      "EN": "MOBILE APP & STREAMING"
-    },
-    "title": {
-      "ID": "Muraqaba",
-      "EN": "Muraqaba"
-    },
-    "summary": {
-      "ID": "Aplikasi meditasi untuk memudahkan setiap orang untuk bermeditasi dengan audio-audio yang menenangkan",
-      "EN": "Meditation app to make it easier for everyone to meditate with calming audios"
-    },
-    "challenge": {
-      "ID": "Target utama dari Muraqaba Apps ini ada user Muslim di seluruh dunia, khususnya amerika atau negara dengan muslim yang minoritas maupun mayoritas.",
-      "EN": "The main target of Muraqaba Apps is Muslim users worldwide who need mindfulness and meditation support with soothing audios."
-    },
-    "solution": {
-      "ID": "Membuat aplikasi meditasi dengan sistem pengkategorian agar user bisa memilih metode meditasi dengan kebutuhan rohani yang ingin dicapai, misalnya menyelesaikan proble stress atau kecemasan berlebih pada jiwa.",
-      "EN": "Creating a dedicated meditation mobile app with categorization systems so users can easily select calming content and premium subscriptions."
-    },
-    "metrics": [
-      {
-        "value": "4.8/5.0",
-        "label": {
-          "ID": "Rating Pengguna",
-          "EN": "App Store Rating"
-        }
-      },
-      {
-        "value": "99.9%",
-        "label": {
-          "ID": "Stabilitas Audio",
-          "EN": "Streaming Uptime"
-        }
-      },
-      {
-        "value": "In-App",
-        "label": {
-          "ID": "Sistem Langganan",
-          "EN": "Subscription System"
-        }
-      }
-    ],
-    "tags": [
-      "User Manual",
-      "UAT Document"
-    ],
-    "industry": "Health & Wellness",
-    "featuresList": [
-      {
-        "name": {
-          "ID": "Features Stories",
-          "EN": "Features Stories"
-        },
-        "description": {
-          "ID": "Kumpulan-kumpulan artikel seputar kontrolisasi diri, manajemen stress dan lainnya untuk dibaca oleh para user",
-          "EN": "A collection of articles about self-control, stress management and others for users to read."
-        }
-      },
-      {
-        "name": {
-          "ID": "Subscribe",
-          "EN": "Subscribe"
-        },
-        "description": {
-          "ID": "Fitur payment jika ingin berlangganan untuk mendengarkan audio selanjutnya dari tim Muraqaba",
-          "EN": "Payment feature if you want to subscribe to listen to the next audio from the Muraqaba team"
-        }
-      },
-      {
-        "name": {
-          "ID": "Series dan Kategori Audio",
-          "EN": "Audio Series and Categories"
-        },
-        "description": {
-          "ID": "Kumpulan kategori dan audio meditasi untuk didengarkan para user ketika membutuhkan waktu penyegaran",
-          "EN": "A collection of categories and meditation audio for users to listen to when they need a moment of refreshment."
-        }
-      }
-    ],
-    "deliverables": [
-      "User Manual",
-      "UAT Document"
-    ],
-    "screenshots": [
-      "https://admin.radyalabs.com/assets/3f5dd77e-caf7-4201-9d0e-fb89aeb121cb"
-    ]
-  },
-  {
-    "id": "anteraja-aware",
-    "slug": "anteraja-aware",
-    "client": "Anteraja",
-    "logo": "ANTERAJA",
-    "image": "https://admin.radyalabs.com/assets/d2a7384a-c7c5-4ec7-acbb-a34e57dd73b9",
-    "category": {
-      "ID": "LOGISTICS & OPERATIONS",
-      "EN": "LOGISTICS & OPERATIONS"
-    },
-    "title": {
-      "ID": "Anteraja Aware",
-      "EN": "Anteraja Aware"
-    },
-    "summary": {
-      "ID": "Anteraja Aware adalah aplikasi internal untuk memantau absensi kurir dan manajemen tugas, melihat status Airway Bill, dan melihat laporan pengiriman di semua lokasi Anteraja",
-      "EN": "Anteraja Aware is an internal application to monitor courier absences and task management, view Airway Bill status, and view delivery report in all of Anteraja location"
-    },
-    "challenge": {
-      "ID": "Aplikasi mobile Anteraja ditargetkan selesai proses developmentnya selama 3 bulan dan untuk target penggunanya yang diutamakan adalah para Kurir pengantar parcel (Satria) Anteraja.",
-      "EN": "The Anteraja mobile application is targeted to complete the development process within 3 months and the target users are primarily Anteraja parcel delivery couriers (Satria)."
-    },
-    "solution": {
-      "ID": "Pembangunan aplikasi mobile Anteraja Aware akan memberikan solusi kepada Pengguna sehingga lebih memudahkan untuk diakses di smartphone-nya.",
-      "EN": "The development of the Anteraja Aware mobile application will provide a solution to users so that it is easier to access on their smartphones."
-    },
-    "metrics": [
-      {
-        "value": "3 Bulan",
-        "label": {
-          "ID": "Waktu Go-Live Cepat",
-          "EN": "Rapid Go-Live"
-        }
-      },
-      {
-        "value": "10K+",
-        "label": {
-          "ID": "Kurir Satria Aktif",
-          "EN": "Daily Active Couriers"
-        }
-      },
-      {
-        "value": "-45%",
-        "label": {
-          "ID": "Pending AWB Alert",
-          "EN": "Pending Parcel Lag"
-        }
-      }
-    ],
-    "tags": [
-      "Source Code",
-      "User Manual",
-      "FSD"
-    ],
-    "industry": "Logistics & Supply Chain",
-    "featuresList": [
-      {
-        "name": {
-          "ID": "Dashboard Report",
-          "EN": "Dashboard Report"
-        },
-        "description": {
-          "ID": "Fitur ini berfungsi menampilkan informasi laporan terkait data parcel Pickup, InTransit, delivery, Undefined, Anomali, return, Cancel dan Alert Per harinya",
-          "EN": "This feature functions to display report information related to Pickup, InTransit, Delivery, Undefined, Anomaly, Return, Cancel and Alert package data per day."
-        }
-      },
-      {
-        "name": {
-          "ID": "Pending AWB",
-          "EN": "Pending AWB"
-        },
-        "description": {
-          "ID": "Fitur ini berfungsi untuk membantu melakukan pencatatan data parcel yang Pending",
-          "EN": "Pending This feature functions to help record data on parcels that are pending."
-        }
-      },
-      {
-        "name": {
-          "ID": "Pemantauan Absen",
-          "EN": "Monitoring Absen"
-        },
-        "description": {
-          "ID": "Fitur ini berfungsi untuk memonitoring data absen satria perharinya",
-          "EN": "This feature functions to monitor Satria's daily absence data."
-        }
-      },
-      {
-        "name": {
-          "ID": "Manajemen Tugas",
-          "EN": "Task Management"
-        },
-        "description": {
-          "ID": "Fitur ini berfungsi untuk menampilkan task list harian serta dapat memudahkan untuk Satri menyelesaikan task hariannya.",
-          "EN": "This feature functions to display a daily task list and can make it easier for Satri to complete his daily tasks."
-        }
-      }
-    ],
-    "deliverables": [
-      "Source Code",
-      "User Manual",
-      "FSD"
-    ],
-    "screenshots": [
-      "https://admin.radyalabs.com/assets/8b78a2cf-d0f4-41cc-9e80-7fb85de9065c",
-      "https://admin.radyalabs.com/assets/b1eff1e8-4a8c-45fb-8c28-3460e435379d"
-    ]
-  },
-  {
-    "id": "tokoparts-ec-sites",
-    "slug": "tokoparts-ec-sites",
-    "client": "Tokoparts",
-    "logo": "TOKOPARTS",
-    "image": "https://admin.radyalabs.com/assets/5741b455-8e2b-4f0f-abec-2b6e90e90d54",
-    "category": {
-      "ID": "E-COMMERCE & CMS",
-      "EN": "E-COMMERCE & CMS"
-    },
-    "title": {
-      "ID": "Tokoparts EC Sites",
-      "EN": "Tokoparts EC Site"
-    },
-    "summary": {
-      "ID": "Tokoparts merupakan perusahaan penyedia suku cadang berteknologi modern yang menawarkan one-stop shopping untuk suku cadang berbagai merek dan kategori. Untuk meningkatkan kualitas layanan dan mempermudah akses pelanggan, Tokoparts mengembangkan aplikasi e-Commerce yang dapat diakses oleh pelanggan untuk melakukan pemesanan produk secara online.",
-      "EN": "Tokoparts is a modern technology spare parts provider company that offers one-stop shopping for spare parts of various brands and categories. To improve service quality and make customer access easier, Tokoparts developed an e-Commerce application that can be accessed by customers to order products online."
-    },
-    "challenge": {
-      "ID": "Peningkatan aplikasi e-Commerce & CMS site Tokoparts ini memiliki target untuk menambahkan fitur-fitur terbaru yang berisi informasi-informasi maupun fitur yang memudahkan pengguna dalam melakukan pemesanan produk.",
-      "EN": "The improvement of the Tokoparts e-Commerce & CMS site application has the target of adding the latest features containing information and features that make it easier for users to order products."
-    },
-    "solution": {
-      "ID": "Melakukan pengembangan aplikasie-Commerce dan CMS dari Tokoparts untuk meningkatkan kemudahan pelanggan dalam melakukan pemesanan untuk produk spareparts kendaraan roda empat seperti kampas rem, oli, minyak rem, dan produk-produk spareparts lainnya dari setiap brand ternama di Indonesia. Pelanggan dapat memesan produk secara online tanpa harus datang ke lokasi.",
-      "EN": "Developing e-Commerce and CMS applications from Tokoparts to improve customer convenience in ordering four-wheeled vehicle spare parts products such as brake pads, oil, brake fluid, and other spare parts products from every well-known brand in Indonesia. Customers can order products online without having to come to the location."
-    },
-    "metrics": [
-      {
-        "value": "50K+",
-        "label": {
-          "ID": "Katalog Suku Cadang",
-          "EN": "Spare Parts SKUs"
-        }
-      },
-      {
-        "value": "+60%",
-        "label": {
-          "ID": "Pemesanan Online",
-          "EN": "Online Order Growth"
-        }
-      },
-      {
-        "value": "<2 Detik",
-        "label": {
-          "ID": "Kecepatan Filter",
-          "EN": "Filter Response Time"
-        }
-      }
-    ],
-    "tags": [
-      "UAT Document",
-      "User Manual",
-      "FSD",
-      "Load Test",
-      "TSD"
-    ],
-    "industry": "Automotive & E-Commerce",
-    "featuresList": [
-      {
-        "name": {
-          "ID": "CMS - Manage Vehicle Model",
-          "EN": "CMS  Manage Vehicle Model"
-        },
-        "description": {
-          "ID": "Sebuah fitur yang memungkinkan admin untuk mengelola katalog model kendaraan.",
-          "EN": "A feature that allows admins to manage a catalog of vehicle models."
-        }
-      },
-      {
-        "name": {
-          "ID": "CMS - Manage Category",
-          "EN": "CMS - Manage Category"
-        },
-        "description": {
-          "ID": "Fitur ini digunakan oleh admin untuk mengelola kategori dan subkategori produk Tokoparts.",
-          "EN": "This feature is used by the admin to manage categories and sub categories of Tokoparts products."
-        }
-      },
-      {
-        "name": {
-          "ID": "Pencarian dengan Kategori",
-          "EN": "Search by Category"
-        },
-        "description": {
-          "ID": "Pengguna dapat mencari produk yang lebih spesifik berdasarkan kategori produk.",
-          "EN": "Users can search for more specific products based on product category."
-        }
-      },
-      {
-        "name": {
-          "ID": "CMS - Manage Brand",
-          "EN": "CMS - Manage Brand"
-        },
-        "description": {
-          "ID": "Melalui fitur ini, admin dapat mengelola merek, nama merek, informasi merek untuk produk yang dijual oleh Tokoparts.",
-          "EN": "Through this feature, admins can manage brands, brand names, brand information for products sold by Tokoparts."
-        }
-      },
-      {
-        "name": {
-          "ID": "Pengurutan Produk",
-          "EN": "Product Sorting"
-        },
-        "description": {
-          "ID": "Memudahkan pelanggan untuk melihat produk dengan mengurutkan produk berdasarkan kategori terlaris dan terpopuler.",
-          "EN": "Make it easier for customers to view products by sorting products based on best-selling and most popular categories."
-        }
-      }
-    ],
-    "deliverables": [
-      "UAT Document",
-      "User Manual",
-      "FSD",
-      "Load Test",
-      "TSD"
-    ],
-    "screenshots": [
-      "https://admin.radyalabs.com/assets/959d280f-a3fe-47fe-9656-48e09db90788",
-      "https://admin.radyalabs.com/assets/0ad9dea6-395b-479a-a19b-4e5b2ab5136f"
+      "/images/portfolio/bismart-cms-mockup.png"
     ]
   },
   {
@@ -866,32 +1711,35 @@ export const CASE_STUDIES: CaseStudy[] = [
     "slug": "imuni",
     "client": "Imuni",
     "logo": "IMUNI",
-    "image": "https://admin.radyalabs.com/assets/50c90664-cb28-403a-b4ca-80b2a0447ece",
+    "image": "/images/portfolio/imuni-main.jpg",
+    "images": [
+      "/images/portfolio/imuni-main.jpg"
+    ],
     "category": {
-      "ID": "HEALTHCARE & TELEMEDICINE",
-      "EN": "HEALTHCARE & TELEMEDICINE"
+      "ID": "ON-DEMAND TELEMEDICINE",
+      "EN": "ON-DEMAND TELEMEDICINE"
     },
     "title": {
-      "ID": "Imuni",
-      "EN": "Imuni"
+      "ID": "Imuni (On-Site Vaccination)",
+      "EN": "Imuni (On-Site Vaccination)"
     },
     "summary": {
-      "ID": "Imuni adalah layanan khusus vaksinasi on-site (di rumah atau di perusahaan Anda) untuk Anak dan Dewasa.Konsultasi sebelum pendaftaran, layanan tumbuh kembang, pemberian vaksinasi, hingga follow-up setelah vaksinasi di imuni dilakukan 100% oleh dokter khusus vaksinasi.",
-      "EN": "Imuni is a special on-site vaccination service (at home or at your company) for Children and Adults. Consultation before registration, growth and development services, vaccination administration, to follow-up after vaccination at Imuni are carried out 100% by specialist vaccination doctors."
+      "ID": "Platform layanan vaksinasi on-site khusus anak dan dewasa di rumah, konsultasi dokter spesialis sebelum imunisasi, pemantauan tumbuh kembang, dan follow-up pasca vaksin.",
+      "EN": "An on-demand on-site vaccination platform for children and adults at home, providing specialist doctor consultations, growth monitoring, and post-vaccination follow-ups."
     },
     "challenge": {
-      "ID": "Imuni ingin memberikan pelayanan Vaksinasi di Rumah (home service) atau Perusahaan pada (on-site) tanpa membuat pelanggan melakukan antrian secara manual dan datang ke klinik ataupun homecare lalu menunggu antrian ditempat untuk melakukan vaksin.",
-      "EN": "Imuni wants to provide Vaccination services at Home (home service) or Company on (on-site) without making customers queue manually and come to the clinic or homecare and then wait in line at the location to get vaccinated."
+      "ID": "Kekhawatiran orang tua membawa anak ke klinik saat antrean panjang dan perlunya jadwal imunisasi digital yang terorganisir bagi seluruh anggota keluarga.",
+      "EN": "Parental reluctance to take children into crowded clinic waiting rooms and the necessity for organized digital vaccination schedules for families."
     },
     "solution": {
-      "ID": "Membuat Aplikasi agar pelanggan tidak perlu keluar rumah dan waktu yang diinginkan pelanggan dapat disesuaikan dengan keinginan pasien. serta vaksinasi juga menjadi lebih aman karena tiap proses vaksinasi diberikan 100% oleh Dokter Khusus Vaksinasi yang selalu mengutamakan protokol kesehatan ketat.",
-      "EN": "Creating an Application so that customers do not need to leave the house and the time the customer wants can be adjusted to the patient's wishes. and vaccination is also safer because each vaccination process is given 100% by a Special Vaccination Doctor who always prioritizes strict health protocols."
+      "ID": "Membangun aplikasi mobile pemesanan vaksinasi home service dengan rekomendasi vaksin cerdas, chat konsultasi dokter, dan rekam medis digital.",
+      "EN": "Developing an on-demand home vaccination booking app with intelligent schedule reminders, doctor chat consultations, and digital medical history records."
     },
     "metrics": [
       {
         "value": "100%",
         "label": {
-          "ID": "Dokter Vaksin Khusus",
+          "ID": "Dokter Vaksinasi Khusus",
           "EN": "Certified Doctors"
         }
       },
@@ -905,162 +1753,796 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         "value": "10K+",
         "label": {
-          "ID": "Sesi Vaksinasi",
-          "EN": "Vaccination Sessions"
+          "ID": "Sesi Vaksinasi Rumah",
+          "EN": "Home Vaccination Sessions"
         }
       }
     ],
     "tags": [
-      "Source Code",
-      "User Manual",
-      "FSD",
-      "TSD"
+      "Telemedicine",
+      "Home Service",
+      "Vaccination",
+      "HealthTech",
+      "Mobile App"
     ],
     "industry": "Healthcare & Telemedicine",
     "featuresList": [
       {
         "name": {
-          "ID": "Chat",
-          "EN": "Chat"
+          "ID": "Home Vaccination Booking",
+          "EN": "Home Vaccination Booking"
         },
         "description": {
-          "ID": "Chat langsung dengan Dokter Konsultan Vaksinasi",
-          "EN": "Ngobrol langsung dengan Dokter Konsultan Vaksinasi"
+          "ID": "Pemesanan vaksin anak & dewasa dengan dokter spesialis datang langsung ke rumah.",
+          "EN": "Direct home-visit doctor vaccination appointment booking."
+        }
+      },
+      {
+        "name": {
+          "ID": "Growth & Vaccine Tracker",
+          "EN": "Growth & Vaccine Tracker"
+        },
+        "description": {
+          "ID": "Catatan buku vaksin digital dan pemantauan kurva tumbuh kembang anak.",
+          "EN": "Digital immunization booklet and child growth curve telemetry."
         }
       }
     ],
     "deliverables": [
-      "Source Code",
-      "User Manual",
-      "FSD",
-      "TSD"
+      "Patient Mobile App",
+      "Doctor Mobile App",
+      "Admin Operations Portal",
+      "Payment Gateway Integration"
     ],
     "screenshots": [
-      "https://admin.radyalabs.com/assets/16cab85f-2a9f-4bb5-b15b-ff31ea8a1efe",
-      "https://admin.radyalabs.com/assets/5bfeb184-2ec7-4bc3-b051-310d7e544123"
+      "/images/portfolio/imuni-cms-mockup.png"
     ]
   },
   {
-    "id": "bi-smart",
-    "slug": "bi-smart",
-    "client": "PT Bio Farma (Persero)",
-    "logo": "BIO FARMA",
-    "image": "https://admin.radyalabs.com/assets/5a3eeda4-5316-4b49-9234-78eb80709820",
+    "id": "danone-orderen",
+    "slug": "danone-orderen",
+    "client": "Danone AQUA",
+    "logo": "DANONE AQUA",
+    "image": "/images/portfolio/danone-1.png",
+    "images": [
+      "/images/portfolio/danone-1.png",
+      "/images/portfolio/danone-2.png",
+      "/images/portfolio/danone-3.png"
+    ],
     "category": {
-      "ID": "RISK MANAGEMENT & EWS",
-      "EN": "RISK MANAGEMENT & EWS"
+      "ID": "ORDER MANAGEMENT & DEVOPS",
+      "EN": "ORDER MANAGEMENT & DEVOPS"
     },
     "title": {
-      "ID": "Bi-SMaRT",
-      "EN": "Bi-SMaRT"
+      "ID": "Danone ORDERen & DevOps CI/CD",
+      "EN": "Danone ORDERen & DevOps CI/CD"
     },
     "summary": {
-      "ID": "Bi-SMaRT merupakan aplikasi yang dibuat untuk pelaporan profil risiko dan proses monitoring dan evaluasi risiko yang ada di lingkup Holding PT. Bio Farma. Melalui aplikasi ini, user dapat melakukan entry setiap profil risiko nya kemudian melakukan monitoring dan evaluasi risiko sesuai periode yang di tentukan. Kemudian profil risiko akan melewati proses approval oleh pejabat yang berwenang sesuai ketentuan yang ada di PT. Bio Farma.",
-      "EN": "Bi-SMaRT is an application created for risk profile reporting and risk monitoring and evaluation processes within the scope of Holding PT. Bio Farma. Through this application, users can enter each risk profile and then monitor and evaluate risks according to the specified period. Then the risk profile will go through an approval process by authorized officials in accordance with existing provisions at PT. Bio Farma."
+      "ID": "Sistem manajemen order (ORDERen) untuk administrasi depot internal Danone guna memperlancar proses penerimaan pesanan, terintegrasi SAP, dan otomatisasi CI/CD Azure DevOps.",
+      "EN": "An Order Management System (ORDERen) for Danone internal depot administration streamlining order taking, integrated with SAP, and implementing Azure DevOps CI/CD pipelines."
     },
     "challenge": {
-      "ID": "PT. Bio Farma ingin kegiatan dan proses dari seluruh kegiatan dalam pelaporan resiko menjadi lebih mudah baik dari sisi penginputan, persetujuan, sampai monitoringnya.",
-      "EN": "PT. Bio Farma wants the activities and processes of all risk reporting activities to be easier, both in terms of input, approval, and monitoring."
+      "ID": "Volume transaksi distribusi air mineral harian yang sangat tinggi pada ratusan depot serta kebutuhan pipeline deployment tanpa downtime di lingkungan cloud Danone.",
+      "EN": "Massive daily beverage distribution order volumes across hundreds of depots requiring zero-downtime deployment pipelines in Danone cloud infrastructure."
     },
     "solution": {
-      "ID": "Membuat aplikasi yang fiturnya mencakup seluruh alur proses end to end dari pelaporan risiko yang ada di lingkup Holding PT. Bio Farma",
-      "EN": "Develop an application whose features cover the entire end to end process flow of risk reporting within the scope of Holding PT. Bio Farma"
+      "ID": "Membangun aplikasi web ORDERen dengan sinkronisasi SAP otomatis, menerapkan best practice DevOps dengan automated CI/CD pipeline, SonarQube, dan monitoring real-time.",
+      "EN": "Building the ORDERen web platform with automatic SAP ERP sync, Azure DevOps automated CI/CD pipelines, SonarQube code quality checks, and real-time observability."
     },
     "metrics": [
       {
-        "value": "100%",
+        "value": "Automated",
         "label": {
-          "ID": "Digitalisasi Profil Risiko",
-          "EN": "Risk Digitization"
+          "ID": "CI/CD Azure DevOps Pipeline",
+          "EN": "Azure DevOps CI/CD"
+        }
+      },
+      {
+        "value": "SAP Live",
+        "label": {
+          "ID": "Integrasi ERP Real-time",
+          "EN": "Real-time ERP Integration"
+        }
+      },
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "Observability & Monitoring",
+          "EN": "Observability & Monitoring"
+        }
+      }
+    ],
+    "tags": [
+      "DevOps",
+      "Azure DevOps",
+      "SAP Integration",
+      "Order Management",
+      "Supply Chain"
+    ],
+    "industry": "F&B Manufacturing & Distribution",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Depot Order Entry System",
+          "EN": "Depot Order Entry System"
+        },
+        "description": {
+          "ID": "Pencatatan sales order harian, open sales order, dan riwayat pengiriman produk.",
+          "EN": "Daily sales order entry, open orders management, and product delivery history."
+        }
+      },
+      {
+        "name": {
+          "ID": "Automated DevOps Pipeline",
+          "EN": "Automated DevOps Pipeline"
+        },
+        "description": {
+          "ID": "Pipeline Azure Repos -> SonarQube -> Build -> Release -> Staging & Production.",
+          "EN": "Automated code push to Azure Repos, SonarQube testing, build, and automated staging/prod release."
+        }
+      }
+    ],
+    "deliverables": [
+      "ORDERen Web Application",
+      "Azure DevOps CI/CD Configuration",
+      "SAP Connector API",
+      "Monitoring Dashboard"
+    ],
+    "screenshots": [
+      "/images/portfolio/danone-1.png",
+      "/images/portfolio/danone-2.png",
+      "/images/portfolio/danone-3.png"
+    ]
+  },
+  {
+    "id": "ezrx-portal",
+    "slug": "ezrx-portal",
+    "client": "Anugrah Pharmindo Lestari (APL)",
+    "logo": "APL ZUELLIG",
+    "image": "/images/portfolio/ezrx-1.jpg",
+    "images": [
+      "/images/portfolio/ezrx-1.jpg"
+    ],
+    "category": {
+      "ID": "B2B PHARMA E-COMMERCE",
+      "EN": "B2B PHARMA E-COMMERCE"
+    },
+    "title": {
+      "ID": "eZRx B2B Customer Portal (APL / Zuellig Pharma)",
+      "EN": "eZRx B2B Customer Portal (APL / Zuellig Pharma)"
+    },
+    "summary": {
+      "ID": "Portal dan aplikasi mobile pemesanan produk farmasi B2B one-stop untuk rumah sakit, apotek, dan klinik rekanan APL di seluruh Indonesia dengan integrasi real-time SAP ERP.",
+      "EN": "A one-stop B2B pharmaceutical customer portal and mobile app for hospitals, pharmacies, and clinics across Indonesia to order APL products with real-time SAP integration."
+    },
+    "challenge": {
+      "ID": "Proses pemesanan obat manual yang rentan salah ketik, visibilitas stok distributor yang terbatas bagi apotek, dan pelacakan status pengiriman logistik medis.",
+      "EN": "Manual pharmaceutical ordering prone to typographical errors, limited stock visibility for pharmacies, and the need for medical logistics tracking."
+    },
+    "solution": {
+      "ID": "Membangun platform pemesanan mandiri (self-service) terintegrasi katalog APL, cek ketersediaan barang real-time, laporan piutang, dan pelacakan kurir obat.",
+      "EN": "Building a self-service ordering platform with live APL catalog sync, stock availability checks, invoice/credit statement reports, and medicine dispatch tracking."
+    },
+    "metrics": [
+      {
+        "value": "SAP Live",
+        "label": {
+          "ID": "Integrasi Pemesanan ERP",
+          "EN": "Live ERP Order Sync"
+        }
+      },
+      {
+        "value": "Nasional",
+        "label": {
+          "ID": "Akses RS & Apotek",
+          "EN": "Hospital & Pharmacy Access"
+        }
+      },
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "Visibilitas Stok Obat",
+          "EN": "Pharma Stock Visibility"
+        }
+      }
+    ],
+    "tags": [
+      "B2B e-Commerce",
+      "PharmaTech",
+      "SAP Integration",
+      "Mobile App",
+      "Supply Chain"
+    ],
+    "industry": "Pharmaceutical Distribution",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Self-Service Order Portal",
+          "EN": "Self-Service Order Portal"
+        },
+        "description": {
+          "ID": "Pencarian katalog produk medis, input surat pesanan digital, dan checkout instan.",
+          "EN": "Medical catalog search, digital purchase order input, and instant checkout."
+        }
+      },
+      {
+        "name": {
+          "ID": "Invoice & Stock Tracking",
+          "EN": "Invoice & Stock Tracking"
+        },
+        "description": {
+          "ID": "Laporan pembelian & piutang klinik serta pengecekan status pengiriman pesanan.",
+          "EN": "Purchasing & accounts receivable statements with real-time delivery telemetry."
+        }
+      }
+    ],
+    "deliverables": [
+      "B2B Web Portal",
+      "B2B Mobile App",
+      "SAP ERP Middleware",
+      "Security Compliance"
+    ],
+    "screenshots": [
+      "/images/portfolio/ezrx-1.jpg"
+    ]
+  },
+  {
+    "id": "tokoparts",
+    "slug": "tokoparts",
+    "client": "Tokoparts",
+    "logo": "TOKOPARTS",
+    "image": "/images/portfolio/tokoparts-1.jpg",
+    "images": [
+      "/images/portfolio/tokoparts-1.jpg",
+      "/images/portfolio/tokoparts-main.jpg"
+    ],
+    "category": {
+      "ID": "AUTOMOTIVE E-COMMERCE & CMS",
+      "EN": "AUTOMOTIVE E-COMMERCE & CMS"
+    },
+    "title": {
+      "ID": "Tokoparts e-Commerce & Headless CMS",
+      "EN": "Tokoparts e-Commerce & Headless CMS"
+    },
+    "summary": {
+      "ID": "Platform e-Commerce dan Headless CMS one-stop shopping untuk suku cadang berbagai brand kendaraan dengan katalog interaktif dan alur pemesanan online cepat.",
+      "EN": "A one-stop shopping e-Commerce and Headless CMS platform for automotive spare parts across various vehicle brands with interactive catalogs and rapid online checkout."
+    },
+    "challenge": {
+      "ID": "Kompleksitas puluhan ribu nomor suku cadang kendaraan yang berbeda dan kebutuhan bengkel serta pemilik kendaraan untuk memesan spare part tanpa datang ke toko fisik.",
+      "EN": "Managing tens of thousands of complex vehicle spare parts SKUs and enabling workshops and car owners to order parts online conveniently."
+    },
+    "solution": {
+      "ID": "Membangun platform storefront responsif dengan pencarian multi-kategori (merk, model mobil, part number) dan super administrator CMS untuk manajemen harga MSRP.",
+      "EN": "Developing a responsive storefront with multi-level filtering (brand, vehicle model, part number) and super admin CMS for MSRP pricing and master data management."
+    },
+    "metrics": [
+      {
+        "value": "50K+",
+        "label": {
+          "ID": "SKU Suku Cadang Terdaftar",
+          "EN": "Registered Parts SKU"
+        }
+      },
+      {
+        "value": "+60%",
+        "label": {
+          "ID": "Peningkatan Pesanan Online",
+          "EN": "Online Order Surge"
+        }
+      },
+      {
+        "value": "<2 dtk",
+        "label": {
+          "ID": "Filter Brand & Model Cepat",
+          "EN": "Catalog Filter Speed"
+        }
+      }
+    ],
+    "tags": [
+      "e-Commerce",
+      "Automotive",
+      "Headless CMS",
+      "Catalog Search",
+      "Full Stack"
+    ],
+    "industry": "Automotive & E-Commerce",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Interactive Catalog Search",
+          "EN": "Interactive Catalog Search"
+        },
+        "description": {
+          "ID": "Pencarian spare parts berdasarkan merk (Toyota, Honda, Hino, Isuzu, dll).",
+          "EN": "Spare parts lookup by brand (Toyota, Honda, Hino, Isuzu, etc.) and model year."
+        }
+      },
+      {
+        "name": {
+          "ID": "Admin MSRP & Inventory CMS",
+          "EN": "Admin MSRP & Inventory CMS"
+        },
+        "description": {
+          "ID": "Pengaturan daftar harga, diskon, stok gudang, dan sinkronisasi pesanan.",
+          "EN": "Master MSRP pricing, discounts, warehouse inventory, and order dispatch."
+        }
+      }
+    ],
+    "deliverables": [
+      "Customer Storefront Web",
+      "Super Admin CMS Portal",
+      "Catalog Search Engine",
+      "Payment Integration"
+    ],
+    "screenshots": [
+      "/images/portfolio/tokoparts-cms-mockup.png"
+    ]
+  },
+  {
+    "id": "transfood",
+    "slug": "transfood",
+    "client": "Trans Group (TRANS F&B)",
+    "logo": "TRANS F&B",
+    "image": "/images/portfolio/transfood-1.png",
+    "images": [
+      "/images/portfolio/transfood-1.png",
+      "/images/portfolio/transfood-2.png"
+    ],
+    "category": {
+      "ID": "ON-DEMAND F&B ORDERING",
+      "EN": "ON-DEMAND F&B ORDERING"
+    },
+    "title": {
+      "ID": "TRANSFood (Wendy's, Coffee Bean, Baskin)",
+      "EN": "TRANSFood (Wendy's, Coffee Bean, Baskin)"
+    },
+    "summary": {
+      "ID": "Rangkaian aplikasi pemesanan online untuk seluruh waralaba F&B di bawah naungan Trans Group (Wendy’s, The Coffee Bean & Tea Leaf, Baskin Robbins) mencakup delivery, dine-in, dan pick-up.",
+      "EN": "A comprehensive suite of online ordering applications for all F&B franchises under Trans Group (Wendy’s, The Coffee Bean & Tea Leaf, Baskin Robbins) covering delivery, dine-in, and pick-up."
+    },
+    "challenge": {
+      "ID": "Menyatukan ekosistem pemesanan dari berbagai brand restoran waralaba yang berbeda ke dalam satu aplikasi terintegrasi dengan sistem promo dan loyalty reward.",
+      "EN": "Unifying multi-brand franchise restaurant ordering workflows into a cohesive digital app with centralized promo campaigns and loyalty rewards."
+    },
+    "solution": {
+      "ID": "Membangun aplikasi mobile terintegrasi dengan portal manajemen menu restoran, opsi pemesanan multi-metode (dine-in, delivery, take-away), dan integrasi pembayaran digital.",
+      "EN": "Building an integrated mobile app with restaurant menu management dashboards, multi-fulfillment options (dine-in, delivery, pickup), and digital payment gateways."
+    },
+    "metrics": [
+      {
+        "value": "Multi-Brand",
+        "label": {
+          "ID": "Ekosistem Franchise Terpadu",
+          "EN": "Unified Franchise Ecosystem"
+        }
+      },
+      {
+        "value": "Omnichannel",
+        "label": {
+          "ID": "Delivery, Dine-In & Pick-Up",
+          "EN": "Delivery, Dine-in & Pickup"
+        }
+      },
+      {
+        "value": "Loyalty",
+        "label": {
+          "ID": "Manajemen Promo & Poin",
+          "EN": "Promo & Loyalty System"
+        }
+      }
+    ],
+    "tags": [
+      "F&B Tech",
+      "Mobile App",
+      "On-Demand Ordering",
+      "Loyalty Program",
+      "Omnichannel"
+    ],
+    "industry": "Food & Beverage Retail",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Multi-Brand Food Ordering",
+          "EN": "Multi-Brand Food Ordering"
+        },
+        "description": {
+          "ID": "Eksplorasi menu dan pemesanan makanan dari Wendy's, Coffee Bean, Baskin Robbins.",
+          "EN": "Menu discovery and food ordering across multiple Trans F&B brands."
+        }
+      },
+      {
+        "name": {
+          "ID": "Outlet & Revenue Dashboard",
+          "EN": "Outlet & Revenue Dashboard"
+        },
+        "description": {
+          "ID": "Dashboard performa penjualan harian, pesanan masuk, dan manajemen outlet.",
+          "EN": "Daily sales telemetry, gross revenue charts, and outlet management portal."
+        }
+      }
+    ],
+    "deliverables": [
+      "Customer Mobile App",
+      "Outlet Admin Dashboard",
+      "Menu Management Engine",
+      "Payment Gateway"
+    ],
+    "screenshots": [
+      "/images/portfolio/transfood-1.png",
+      "/images/portfolio/transfood-2.png"
+    ]
+  },
+  {
+    "id": "anteraja-aware",
+    "slug": "anteraja-aware",
+    "client": "Anteraja",
+    "logo": "ANTERAJA",
+    "image": "/images/portfolio/anteraja-1.jpg",
+    "images": [
+      "/images/portfolio/anteraja-1.jpg",
+      "/images/portfolio/anteraja-main.jpg"
+    ],
+    "category": {
+      "ID": "LOGISTICS & COURIER OPS",
+      "EN": "LOGISTICS & COURIER OPS"
+    },
+    "title": {
+      "ID": "Anteraja Aware",
+      "EN": "Anteraja Aware"
+    },
+    "summary": {
+      "ID": "Aplikasi internal logistik untuk memantau check-in kurir (Satria), tugas harian penjemputan paket, status Airway Bill (AWB), dan laporan pengiriman di seluruh Indonesia.",
+      "EN": "An internal logistics application to monitor courier (Satria) check-ins, daily pickup tasks, Airway Bill (AWB) statuses, and delivery reports across all Anteraja locations."
+    },
+    "challenge": {
+      "ID": "Koordinasi puluhan ribu kurir logistik di lapangan setiap hari dan penyampaian update status resi pengiriman real-time tanpa penundaan.",
+      "EN": "Coordinating tens of thousands of field couriers daily and delivering real-time parcel telemetry without tracking latency."
+    },
+    "solution": {
+      "ID": "Membangun aplikasi mobile kurir tangguh berbasis cross-platform dengan offline task caching, geofencing absensi, pelaporan AWB terperinci, dan sistem apresiasi (Kudos).",
+      "EN": "Developing a resilient cross-platform courier mobile app with offline task caching, geofenced attendance, detailed AWB status telemetry, and a peer appreciation system (Kudos)."
+    },
+    "metrics": [
+      {
+        "value": "50K+",
+        "label": {
+          "ID": "Kurir Satria Terhubung",
+          "EN": "Connected Couriers"
+        }
+      },
+      {
+        "value": "99.9%",
+        "label": {
+          "ID": "Akurasi Pemantauan AWB",
+          "EN": "AWB Tracking Accuracy"
         }
       },
       {
         "value": "Real-time",
         "label": {
-          "ID": "Early Warning System",
-          "EN": "Early Warning System"
-        }
-      },
-      {
-        "value": "-70%",
-        "label": {
-          "ID": "Siklus Approval",
-          "EN": "Approval Cycle Time"
+          "ID": "Pelaporan Absen & Tugas",
+          "EN": "Shift & Task Telemetry"
         }
       }
     ],
     "tags": [
-      "Load Test",
-      "UAT Document",
-      "TSD",
-      "FSD",
-      "User Manual",
-      "Source Code"
+      "Logistics",
+      "Mobile App",
+      "Courier Management",
+      "Geo Tracking",
+      "Supply Chain"
     ],
-    "industry": "Healthcare & Pharmaceuticals",
+    "industry": "Logistics & Supply Chain",
     "featuresList": [
       {
         "name": {
-          "ID": "Dashboard",
-          "EN": "Dashboard"
+          "ID": "Courier Task Management",
+          "EN": "Courier Task Management"
         },
         "description": {
-          "ID": "Fitur yang menampilkan grafik-grafik mulai dari total profil risiko, total peristiwa risiko, nilai KRI, item risiko per kategori dan sebagainya.",
-          "EN": "A feature that displays graphs ranging from total risk profile, total risk events, KRI values, risk items per category and so on."
+          "ID": "Daftar tugas briefing harian, target pickup, dan monitoring status pengiriman.",
+          "EN": "Daily briefing tasks, pickup targets, and parcel delivery progress."
         }
       },
       {
         "name": {
-          "ID": "Stress Testing",
-          "EN": "Stress Testing"
+          "ID": "Attendance & Performance Telemetry",
+          "EN": "Attendance & Performance Telemetry"
         },
         "description": {
-          "ID": "Fitur untuk melakukan stress test terhadap item risiko yang sudah di monitoring untuk dijadikan acuan level risiko di tahun berikutnya.",
-          "EN": "Feature for carrying out stress tests on risk items that have been monitored to be used as a reference for risk levels in the following year."
-        }
-      },
-      {
-        "name": {
-          "ID": "Risk Profle",
-          "EN": "Risk Profle"
-        },
-        "description": {
-          "ID": "Fitur yang berfungsi untuk mengelola data profil risiko, melakukan proses approvalnya, hingga pembuatan laporan risiko.",
-          "EN": "Features that function to manage risk profile data, carry out the approval process, and create risk reports."
-        }
-      },
-      {
-        "name": {
-          "ID": "Monitoring & Evaluasi Profil Resiko",
-          "EN": "Monitoring & Evaluasi Profil Resiko"
-        },
-        "description": {
-          "ID": "Fitur yang berfungsi untuk mengelola data hasil monitoring & evaluasi terhadap risiko pada periode tertentu sesuai dengan yang sudah diinput di modul profil risiko. Juga, terdapat proses approval dari hasil monitoring dan evaluasi risiko.",
-          "EN": "A feature that functions to manage monitoring & evaluation data on risks for a certain period according to what has been input in the risk profile module. Also, there is an approval process for the results of risk monitoring and evaluation."
-        }
-      },
-      {
-        "name": {
-          "ID": "Early Warning System",
-          "EN": "Early Warning System"
-        },
-        "description": {
-          "ID": "Fitur untuk menampilkan dashboard untuk memantau nilai KRI dari masing-masing item risiko di setiap periode (per bulan/per triwulan).",
-          "EN": "Feature to display a dashboard to monitor the KRI value of each risk item in each period (per month/quarterly)."
+          "ID": "Pemantauan kehadiran Satria di hub dan laporan performa harian/bulanan.",
+          "EN": "Hub attendance monitoring and daily/monthly performance telemetry."
         }
       }
     ],
     "deliverables": [
-      "Load Test",
-      "UAT Document",
-      "TSD",
-      "FSD",
-      "User Manual",
-      "Source Code"
+      "Cross-Platform Mobile App",
+      "Dispatcher Web Dashboard",
+      "Offline Sync Engine",
+      "Push Notification Service"
     ],
     "screenshots": [
-      "https://admin.radyalabs.com/assets/211d705a-4e0a-49d0-a4f5-475828022cb3",
-      "https://admin.radyalabs.com/assets/641c821d-14ff-4507-9f7b-c780b45282c3"
+      "/images/portfolio/anteraja-cms-mockup.png"
+    ]
+  },
+  {
+    "id": "binus-school",
+    "slug": "binus-school",
+    "client": "Binus School",
+    "logo": "BINUS SCHOOL",
+    "image": "/images/portfolio/binus-1.png",
+    "images": [
+      "/images/portfolio/binus-1.png",
+      "/images/portfolio/binus-2.png"
+    ],
+    "category": {
+      "ID": "SCHOOL MANAGEMENT PLATFORM",
+      "EN": "SCHOOL MANAGEMENT PLATFORM"
+    },
+    "title": {
+      "ID": "Binus School Information System (BSIS)",
+      "EN": "Binus School Information System (BSIS)"
+    },
+    "summary": {
+      "ID": "Platform digital manajemen sekolah terpadu dari jenjang TK hingga SMA di Binus School untuk mengelola presensi, penilaian nilai, jadwal kelas, laporan perkembangan siswa, dan komunikasi guru-orang tua.",
+      "EN": "An integrated school management digital platform from Kindergarten to High School at Binus School to manage attendance, grading, schedules, student progress, and teacher-parent communication."
+    },
+    "challenge": {
+      "ID": "Integrasi sistem akademik dari berbagai kampus sekolah Binus dengan kurikulum internasional dan kebutuhan orang tua untuk memantau kemajuan belajar anak secara real-time.",
+      "EN": "Integrating academic systems across multiple Binus School campuses running international curricula and providing parents real-time visibility into student progress."
+    },
+    "solution": {
+      "ID": "Membangun portal web administrasi sekolah dan aplikasi mobile orang tua-siswa dengan kalender akademik dinamis, e-rapor, sistem pencatatan disiplin, dan portal event sekolah.",
+      "EN": "Developing an administrative school web portal and parent-student mobile app featuring dynamic academic calendars, digital report cards, disciplinary tracking, and event management."
+    },
+    "metrics": [
+      {
+        "value": "TK - SMA",
+        "label": {
+          "ID": "Semua Jenjang Terintegrasi",
+          "EN": "K-12 Integrated Levels"
+        }
+      },
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Digitalisasi Absensi & Nilai",
+          "EN": "Attendance & Grades"
+        }
+      },
+      {
+        "value": "Terpadu",
+        "label": {
+          "ID": "Portal Orang Tua & Guru",
+          "EN": "Teacher-Parent Portal"
+        }
+      }
+    ],
+    "tags": [
+      "EdTech",
+      "School Management",
+      "Mobile App",
+      "Web Portal",
+      "Education"
+    ],
+    "industry": "Education & School Management",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Academic Calendar & Event Portal",
+          "EN": "Academic Calendar & Event Portal"
+        },
+        "description": {
+          "ID": "Manajemen jadwal mata pelajaran, pendaftaran ekstrakurikuler, dan sertifikat prestasi.",
+          "EN": "Subject schedule management, extracurricular registrations, and achievement certificates."
+        }
+      },
+      {
+        "name": {
+          "ID": "Student Progress & Attendance",
+          "EN": "Student Progress & Attendance"
+        },
+        "description": {
+          "ID": "Pencatatan kehadiran harian siswa dan ringkasan perkembangan belajar terpadu.",
+          "EN": "Daily student attendance recording and comprehensive academic progress summaries."
+        }
+      }
+    ],
+    "deliverables": [
+      "School Admin Web Portal",
+      "Parent & Student Mobile App",
+      "Grading & Report Card Engine",
+      "Database Architecture"
+    ],
+    "screenshots": [
+      "/images/portfolio/binus-1.png",
+      "/images/portfolio/binus-2.png"
+    ]
+  },
+  {
+    "id": "pertamina-envogas",
+    "slug": "pertamina-envogas",
+    "client": "PT Pertamina (Persero)",
+    "logo": "PERTAMINA",
+    "image": "/images/portfolio/envogas-1.jpg",
+    "images": [
+      "/images/portfolio/envogas-1.jpg"
+    ],
+    "category": {
+      "ID": "LOCATION BASED SERVICES",
+      "EN": "LOCATION BASED SERVICES"
+    },
+    "title": {
+      "ID": "Pertamina Envogas (LBS Maps)",
+      "EN": "Pertamina Envogas (LBS Maps)"
+    },
+    "summary": {
+      "ID": "Aplikasi berbasis lokasi (LBS) untuk menemukan SPBG (Stasiun Pengisian Bahan Bakar Gas) terdekat, panduan instalasi kendaraan berbahan bakar gas (CNG), serta kalkulator penghematan biaya bahan bakar.",
+      "EN": "A location-based service (LBS) application to find the nearest CNG gas filling stations (SPBG), installation guides for gas-fueled vehicles, and fuel cost savings calculators."
+    },
+    "challenge": {
+      "ID": "Meningkatkan adopsi bahan bakar gas ramah lingkungan dengan mempermudah pengemudi menemukan stasiun SPBG aktif dan mengetahui manfaat penghematan finansial.",
+      "EN": "Accelerating the adoption of eco-friendly gas fuels by making it effortless for drivers to locate active SPBG stations and calculate economic savings."
+    },
+    "solution": {
+      "ID": "Mengintegrasikan peta interaktif berbasis GPS dengan rute navigasi real-time ke SPBG terdekat, kalkulator penghematan bahan bakar otomatis, dan direktori teknis bengkel konversi.",
+      "EN": "Integrating GPS mapping with real-time navigation routes to the nearest SPBG, automated fuel cost savings calculators, and a certified conversion workshop directory."
+    },
+    "metrics": [
+      {
+        "value": "GPS Live",
+        "label": {
+          "ID": "Pencarian SPBG Terdekat",
+          "EN": "Nearest SPBG Station Maps"
+        }
+      },
+      {
+        "value": "Kalkulator",
+        "label": {
+          "ID": "Estimasi Penghematan BBM",
+          "EN": "Fuel Savings Calculator"
+        }
+      },
+      {
+        "value": "Panduan",
+        "label": {
+          "ID": "Info Perawatan Kendaraan Gas",
+          "EN": "CNG Maintenance Guide"
+        }
+      }
+    ],
+    "tags": [
+      "Location Based Service",
+      "GPS Maps",
+      "Energy Tech",
+      "Pertamina",
+      "Mobile App"
+    ],
+    "industry": "Energy & Gas Utilities",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Interactive SPBG Station Maps",
+          "EN": "Interactive SPBG Station Maps"
+        },
+        "description": {
+          "ID": "Peta rute lokasi SPBG aktif, jam operasional, dan ketersediaan bahan bakar gas.",
+          "EN": "Active SPBG station mapping with operating hours and fuel availability."
+        }
+      },
+      {
+        "name": {
+          "ID": "Fuel Cost Savings Calculator",
+          "EN": "Fuel Cost Savings Calculator"
+        },
+        "description": {
+          "ID": "Simulasi perbandingan biaya pengeluaran BBM konvensional vs Gas Envogas.",
+          "EN": "Interactive comparison calculator of conventional gasoline vs Envogas CNG."
+        }
+      }
+    ],
+    "deliverables": [
+      "Mobile Navigation App",
+      "SPBG Database Backend",
+      "Fuel Calculator Module"
+    ],
+    "screenshots": [
+      "/images/portfolio/envogas-1.jpg"
+    ]
+  },
+  {
+    "id": "pertamina-cqms",
+    "slug": "pertamina-cqms",
+    "client": "Pertamina Hulu Energi ONWJ",
+    "logo": "PERTAMINA PHE ONWJ",
+    "image": "/images/portfolio/cqms-1.png",
+    "images": [
+      "/images/portfolio/cqms-1.png",
+      "/images/portfolio/cqms-2.png"
+    ],
+    "category": {
+      "ID": "QUALITY MANAGEMENT SYSTEM",
+      "EN": "QUALITY MANAGEMENT SYSTEM"
+    },
+    "title": {
+      "ID": "Pertamina CQMS (Quality Management)",
+      "EN": "Pertamina CQMS (Quality Management)"
+    },
+    "summary": {
+      "ID": "Collaborative Quality Management System (CQMS) untuk grup internal PHE ONWJ guna memastikan setiap aktivitas proyek migas dan inspeksi material berjalan efektif, patuh, dan terdokumentasi.",
+      "EN": "A Collaborative Quality Management System (CQMS) for internal PHE ONWJ teams ensuring offshore oil & gas project activities and material inspections are conducted efficiently and compliantly."
+    },
+    "challenge": {
+      "ID": "Tingginya standar keselamatan dan kepatuhan mutu operasional migas lepas pantai yang membutuhkan pemantauan sertifikasi, kontrol dokumen proyek, dan inspeksi material ketat.",
+      "EN": "Stringent offshore oil & gas safety and quality standards requiring tight certification tracking, project document control, and material inspection governance."
+    },
+    "solution": {
+      "ID": "Membangun portal web CQMS terpadu dengan modul laporan rutin audit, register temuan punchlist, kontrol dokumen proyek, dan pemantauan sertifikasi peralatan instalasi migas.",
+      "EN": "Developing a unified CQMS web portal featuring audit routine reports, punchlist registers, project document controls, and offshore installation certification tracking."
+    },
+    "metrics": [
+      {
+        "value": "100%",
+        "label": {
+          "ID": "Project Document Control",
+          "EN": "Project Document Control"
+        }
+      },
+      {
+        "value": "Eksplorasi",
+        "label": {
+          "ID": "Monitoring Sertifikasi & QC",
+          "EN": "QC & Certification Monitor"
+        }
+      },
+      {
+        "value": "Kolaboratif",
+        "label": {
+          "ID": "Alur Kerja Internal PHE ONWJ",
+          "EN": "PHE ONWJ Collaborative"
+        }
+      }
+    ],
+    "tags": [
+      "Quality Management",
+      "Oil & Gas",
+      "PHE ONWJ",
+      "Document Control",
+      "Audit Trail"
+    ],
+    "industry": "Oil & Gas Quality Governance",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Project Document Control",
+          "EN": "Project Document Control"
+        },
+        "description": {
+          "ID": "Pusat repositori dan pelacakan status approval dokumen proyek eksplorasi.",
+          "EN": "Centralized repository and approval status tracking for exploration project documents."
+        }
+      },
+      {
+        "name": {
+          "ID": "Certification & Inspection Monitor",
+          "EN": "Certification & Inspection Monitor"
+        },
+        "description": {
+          "ID": "Pemantauan masa berlaku sertifikasi instalasi dan laporan inspeksi material.",
+          "EN": "Monitoring of installation certification validities and material inspection reports."
+        }
+      }
+    ],
+    "deliverables": [
+      "CQMS Web Portal",
+      "Inspection Workflow Engine",
+      "Document Control Module",
+      "Audit Compliance Setup"
+    ],
+    "screenshots": [
+      "/images/portfolio/cqms-1.png",
+      "/images/portfolio/cqms-2.png"
     ]
   }
 ];
@@ -1367,38 +2849,38 @@ export const PROCESS_STEPS: ProcessStep[] = [
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    id: 't1',
-    name: 'Agomy F. Fanany',
+    id: '793503fc-625b-4754-a958-218c563abb4b',
+    name: 'Aqomy F. Fanany',
     role: 'VP IT Development',
-    company: 'PT Antareja Express',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    company: 'Anteraja',
+    avatar: 'https://admin.radyalabs.com/assets/65d0931d-9e9e-4b13-9dbf-3897cf4cf2c5',
     quote: {
-      ID: 'Pengalaman kami dengan Radya Labs luar biasa. Mereka memahami kebutuhan bisnis kami dan memberikan solusi yang tepat serta berdampak nyata bagi efisiensi operasional.',
-      EN: 'Working with Radya Labs has been extraordinary. They grasped our complex logistics requirements immediately and delivered a scalable system that created tangible efficiency gains.'
+      ID: 'Pengalaman kami dengan Radya luar biasa. Keahlian mereka terbukti dalam mengembangkan aplikasi Aware Mobile lintas platform untuk membantu kami memantau operasi dan menyederhanakan alur kerja. Dukungan dari pengembang kontrak semakin meningkatkan kemampuan kami untuk memberikan lebih banyak solusi. Kami berterima kasih atas kontribusi Radya.',
+      EN: 'Our experience with Radya was exceptional. Their expertise was evident in developing the cross-platform Aware Mobile app to help us monitor operations and streamline workflows. The support from contract developers further boosted our ability to deliver more solutions. We are grateful for Radya\'s contribution.'
     },
     rating: 5
   },
   {
-    id: 't2',
+    id: 'a423c003-df07-42c2-9cad-9793b2cfb770',
     name: 'Bernardus Sandi',
     role: 'Co-founder & CEO',
-    company: 'Itnusi Tech Solutions',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
+    company: 'Imuni',
+    avatar: 'https://admin.radyalabs.com/assets/36a7b3e1-3b15-4866-bd5e-0d2dfee5a185',
     quote: {
-      ID: 'Radya Labs adalah partner teknologi yang profesional, responsif, dan selalu memberikan hasil terbaik. Kolaborasinya sangat menyenangkan dan tepat waktu.',
-      EN: 'Radya Labs is a deeply professional, responsive technology partner that consistently exceeds delivery standards. Their transparent communication makes working together seamless.'
+      ID: 'Mewakili imuni, kami sangat berterima kasih kepada Radya Labs atas kerja samanya dari tahap diskusi, development, launching, sampai maintenance dan iterasi mobile apps imuni. Kompetensi yang luar biasa dari seluruh tim Radya Labs dan komunikasi yang baik antara kita semoga bisa dipertahankan ke depan. Sukses untuk Radya Labs!',
+      EN: 'On behalf of Imuni, we are very grateful to Radya Labs for the collaboration from the discussion stage, development, launch, to the maintenance and iteration of the Imuni app. The exceptional competence of the entire team and the good communication between us will hopefully be maintained in the future. Wishing Radya Labs continued success!'
     },
     rating: 5
   },
   {
-    id: 't3',
-    name: 'Muhammad Miftahriyah',
-    role: 'Pusbang Pentalis Pendidikan ANMI',
-    company: 'PUSDATIN KEMENDIKBUDRISTEK',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80',
+    id: 'b84195ca-1b77-406f-a982-9b30830aade9',
+    name: 'Muhammad Natharisyah',
+    role: 'Pengembang Penilaian Pendidikan Ahli Muda',
+    company: 'PUSMENDIK, KEMENDIKBUDRISTEK',
+    avatar: 'https://admin.radyalabs.com/assets/ddf62318-375e-43ec-8bb4-f7849d200a79',
     quote: {
-      ID: 'Dengan dukungan Radya Labs, proses bisnis kami menjadi lebih efisien dan terukur. Mereka benar-benar memahami kebutuhan sektor publik yang kompleks.',
-      EN: 'With Radya Labs technical leadership, our public sector educational portals became significantly more resilient and measurable under peak traffic demands.'
+      ID: 'Karena kami telah bekerja sama selama sekitar 2 tahun, sejauh ini Radya Labs selalu ditanggapi dengan cepat. Ketika ada permintaan langsung dari pimpinan untuk melaksanakan uji kesetaraan, tim Radya Labs sigap dan menyelesaikan pekerjaan pengembangan tepat waktu sehingga pelaksanaan ujian dapat dilakukan dengan sukses.',
+      EN: 'Since we have been working together for about 2 years, so far Radya Labs has always been responsive. When there were immediate request from top management to conduct Equivalency test, Radya Labs team were alert, ready to go, and finished the development work on time so the test could be carried out successfully.'
     },
     rating: 5
   }

@@ -1,6 +1,6 @@
 'use client';
-import React from 'react';
-import { Language } from '@/types';
+import React, { useState, useEffect } from 'react';
+import { Language, Testimonial } from '@/types';
 import { TESTIMONIALS } from '@/lib/data';
 import { Star, Quote, Award } from 'lucide-react';
 
@@ -9,6 +9,29 @@ interface TestimonialsSectionProps {
 }
 
 export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ language }) => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(TESTIMONIALS);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadCmsTestimonials() {
+      try {
+        const res = await fetch('/api/cms');
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && data.testimonials && data.testimonials.length > 0) {
+            setTestimonials(data.testimonials);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load CMS testimonials:', err);
+      }
+    }
+    loadCmsTestimonials();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +51,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ langua
 
         {/* Testimonials Grid Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t) => (
+          {testimonials.map((t) => (
             <div
               key={t.id}
               className="p-8 rounded-3xl border border-slate-200/80 bg-white hover:border-[#1793E8]/50 hover:shadow-xl hover:-translate-y-1.5 hover:ring-2 hover:ring-[#1793E8]/20 transition-all duration-300 flex flex-col justify-between group shadow-xs"

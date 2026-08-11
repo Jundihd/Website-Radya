@@ -14,6 +14,30 @@ export const InsightArticleModal: React.FC<InsightArticleModalProps> = ({
   onClose,
   language,
 }) => {
+  // Lock background body scroll ONLY when an article modal is actively open
+  React.useEffect(() => {
+    if (article) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow || 'unset';
+      };
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [article]);
+
+  // Close on Escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && article) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [article, onClose]);
+
   if (!article) return null;
 
   const originalUrl = article.originalUrl || `https://radyalabs.com/id/blog/${article.slug || article.id}`;
@@ -24,8 +48,14 @@ export const InsightArticleModal: React.FC<InsightArticleModalProps> = ({
   const isHtml = contentText.includes('<p>') || contentText.includes('<div>') || contentText.includes('&ldquo;');
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl max-w-4xl w-full p-8 sm:p-10 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 border border-slate-100 max-h-[90vh] overflow-y-auto">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-md flex items-center justify-center p-4 overscroll-contain cursor-pointer"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-3xl max-w-4xl w-full p-8 sm:p-10 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 border border-slate-100 max-h-[90vh] overflow-y-auto overscroll-contain cursor-default"
+      >
         <button
           onClick={onClose}
           className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors z-10"

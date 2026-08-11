@@ -16,6 +16,84 @@ interface CaseStudiesSectionProps {
   onOpenContact?: () => void;
 }
 
+interface CardHeroImageCarouselProps {
+  images: string[];
+  alt: string;
+  categoryText: string;
+  client: string;
+  industry: string;
+}
+
+const CardHeroImageCarousel: React.FC<CardHeroImageCarouselProps> = ({
+  images,
+  alt,
+  categoryText,
+  client,
+  industry,
+}) => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (images.length <= 1 || isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % images.length);
+    }, 3600);
+    return () => clearInterval(interval);
+  }, [images.length, isHovered]);
+
+  return (
+    <div
+      className="relative h-48 overflow-hidden bg-slate-950"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {images.map((imgSrc, i) => (
+        <img
+          key={imgSrc + i}
+          src={imgSrc}
+          alt={`${alt} screenshot ${i + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 ${
+            i === currentIdx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0'
+          }`}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-20 pointer-events-none" />
+
+      {/* Category Pill (Top Left) */}
+      <div className="absolute top-3 left-3 z-30 pointer-events-none">
+        <span className="px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/10 text-[10px] font-extrabold text-[#29B6F6] uppercase tracking-wider shadow-sm">
+          {categoryText}
+        </span>
+      </div>
+
+      {/* Multi-Image Dots Indicator (Top Right - only if multiple photos) */}
+      {images.length > 1 && (
+        <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 shadow-sm">
+          {images.map((_, dotIdx) => (
+            <span
+              key={dotIdx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                dotIdx === currentIdx ? 'w-3.5 bg-[#29B6F6]' : 'w-1.5 bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Client Name & Industry Tag (Bottom) */}
+      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-30 pointer-events-none">
+        <span className="text-base sm:text-lg font-black text-white tracking-wide uppercase drop-shadow-md truncate max-w-[65%]">
+          {client}
+        </span>
+        <span className="text-[10px] text-slate-200 font-semibold bg-white/15 px-2 py-0.5 rounded-md backdrop-blur-md border border-white/10 shrink-0">
+          {industry}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   language,
   onSelectCaseStudy,
@@ -109,6 +187,9 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           >
             {studies.map((study) => {
               const categoryText = typeof study.category === 'object' ? (study.category[language] || study.category.ID) : study.category;
+              const cardImages = study.images && study.images.length > 0
+                ? study.images
+                : [study.image];
 
               return (
                 <div
@@ -117,32 +198,14 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                   className="w-[88vw] sm:w-[350px] md:w-[370px] lg:w-[380px] shrink-0 snap-start group bg-slate-900 rounded-3xl border border-slate-800 hover:border-[#1793E8]/60 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#1793E8]/10 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between cursor-pointer"
                 >
                   <div>
-                    {/* Image & Overlay Badges */}
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={study.image}
-                        alt={study.title[language]}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-                      
-                      {/* Category Pill */}
-                      <div className="absolute top-3 left-3">
-                        <span className="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 text-[10px] font-extrabold text-[#29B6F6] uppercase tracking-wider">
-                          {categoryText}
-                        </span>
-                      </div>
-
-                      {/* Client Name & Industry Tag */}
-                      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                        <span className="text-lg font-black text-white tracking-wide uppercase drop-shadow-md">
-                          {study.client}
-                        </span>
-                        <span className="text-[10px] text-slate-200 font-semibold bg-white/15 px-2 py-0.5 rounded-md backdrop-blur-md border border-white/10">
-                          {study.industry}
-                        </span>
-                      </div>
-                    </div>
+                    {/* Auto-Cycling Image Hero Carousel */}
+                    <CardHeroImageCarousel
+                      images={cardImages}
+                      alt={study.title[language]}
+                      categoryText={categoryText}
+                      client={study.client}
+                      industry={study.industry}
+                    />
 
                     {/* Content */}
                     <div className="p-6">

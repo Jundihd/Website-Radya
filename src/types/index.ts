@@ -25,6 +25,7 @@ export interface CaseStudy {
   client: string;
   logo: string;
   image: string;
+  images?: string[];
   category: { ID: string; EN: string };
   title: { ID: string; EN: string };
   summary: { ID: string; EN: string };

@@ -1,4 +1,4 @@
-import { InsightArticle, CaseStudy } from '@/types';
+import { InsightArticle, CaseStudy, Testimonial } from '@/types';
 
 /**
  * Directus Headless CMS SDK Client Initialization & Query Helper
@@ -316,6 +316,66 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
     });
   } catch (error) {
     console.error('[CMS Helper] Error fetching live articles:', error);
+    return [];
+  }
+}
+
+/**
+ * Fetch live testimonials directly from Radya Labs Directus CMS (https://admin.radyalabs.com)
+ */
+export async function fetchLiveCmsTestimonials(): Promise<Testimonial[]> {
+  try {
+    const endpoint = `${DIRECTUS_CMS_URL}/items/testimonial?fields=*,translations.*,avatar.*&limit=100`;
+    const res = await fetch(endpoint, {
+      next: { revalidate: 300 },
+    });
+
+    if (!res.ok) {
+      throw new Error(`Directus CMS error HTTP ${res.status}`);
+    }
+
+    const json = await res.json();
+    const rawItems = json.data || [];
+
+    return rawItems.map((item: any) => {
+      const tEn = item.translations?.find((t: any) => t.languages_code === 'en') || item.translations?.[0] || {};
+      const tId = item.translations?.find((t: any) => t.languages_code === 'id') || item.translations?.[1] || tEn;
+
+      let role = item.role || 'Client Leader';
+      let company = 'Client Organization';
+
+      if (item.role) {
+        if (item.role.includes(' at ')) {
+          const parts = item.role.split(' at ');
+          role = parts[0].trim();
+          company = parts[1].trim();
+        } else if (item.role.includes(',')) {
+          const parts = item.role.split(',');
+          role = parts[0].trim();
+          company = parts.slice(1).join(',').trim();
+        }
+      }
+
+      const avatarId = item.avatar?.id || (typeof item.avatar === 'string' ? item.avatar : null);
+      const avatar = avatarId
+        ? `${DIRECTUS_CMS_URL}/assets/${avatarId}`
+        : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80';
+
+      return {
+        id: item.id,
+        name: item.name || 'Client Leader',
+        role,
+        company,
+        avatar,
+        quote: {
+          ID: tId.testimony_text || tEn.testimony_text || '',
+          EN: tEn.testimony_text || tId.testimony_text || '',
+        },
+        rating: 5,
+      };
+    });
+  } catch (error) {
+    console.error('[CMS Helper] Error fetching live testimonials:', error);
     return [];
   }
 }
