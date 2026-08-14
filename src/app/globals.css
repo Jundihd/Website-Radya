@@ -1,10 +1,15 @@
+@import url('https://fonts.cdnfonts.com/css/proxima-nova-2');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  html, body, button, input, select, textarea, p, span, a, div {
+    font-family: 'Proxima Nova', 'proxima-nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-exo), 'Exo', 'Proxima Nova', sans-serif;
   }
   body {
     background-color: #F8FAFC;
@@ -12,6 +17,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+.font-exo {
+  font-family: var(--font-exo), 'Exo', sans-serif !important;
+}
+
+.font-proxima {
+  font-family: 'Proxima Nova', 'proxima-nova', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.font-raleway {
+  font-family: var(--font-raleway), 'Raleway', sans-serif !important;
 }
 
 @keyframes floatSlow {

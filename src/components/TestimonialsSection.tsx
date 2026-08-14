@@ -68,8 +68,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ langua
                 </div>
 
                 {/* Quote Text */}
-                <p className="text-slate-700 text-base leading-relaxed mb-8 italic">
-                  "{t.quote[language]}"
+                <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-8 italic font-raleway font-medium">
+                  &ldquo;{t.quote[language]}&rdquo;
                 </p>
               </div>
 

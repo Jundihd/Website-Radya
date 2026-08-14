@@ -346,7 +346,7 @@ export default function CaseStudyDetailPage({ params }: PageProps) {
                 <Award className="w-4 h-4" />
                 <span>Testimoni Resmi Klien</span>
               </div>
-              <blockquote className="text-base sm:text-lg italic font-medium text-slate-700 leading-relaxed mb-6">
+              <blockquote className="text-base sm:text-lg italic font-raleway font-medium text-slate-700 leading-relaxed mb-6">
                 &ldquo;{study.testimonial.quote.ID}&rdquo;
               </blockquote>
               <div className="font-bold text-[#0F172A] text-sm">

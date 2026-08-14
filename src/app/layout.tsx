@@ -1,21 +1,21 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
+import { Exo, Raleway } from 'next/font/google';
 import { Analytics } from '@/components/analytics/Analytics';
 import { Contentsquare } from './contentsquare';
 import { StructuredData } from '@/components/seo/StructuredData';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const exo = Exo({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-plus-jakarta',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-exo',
   display: 'swap',
 });
 
-const inter = Inter({
+const raleway = Raleway({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-inter',
+  variable: '--font-raleway',
   display: 'swap',
 });
 
@@ -98,7 +98,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`scroll-smooth ${plusJakartaSans.variable} ${inter.variable}`}
+      className={`scroll-smooth ${exo.variable} ${raleway.variable}`}
     >
       <head>
         <StructuredData />

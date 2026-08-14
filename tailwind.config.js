@@ -17,7 +17,13 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        sans: ['"Proxima Nova"', 'proxima-nova', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        exo: ['var(--font-exo)', 'Exo', 'sans-serif'],
+        heading: ['var(--font-exo)', 'Exo', 'sans-serif'],
+        body: ['"Proxima Nova"', 'proxima-nova', 'sans-serif'],
+        proxima: ['"Proxima Nova"', 'proxima-nova', 'sans-serif'],
+        raleway: ['var(--font-raleway)', 'Raleway', 'sans-serif'],
+        quote: ['var(--font-raleway)', 'Raleway', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radya': 'linear-gradient(135deg, #1793E8 0%, #29B6F6 100%)',

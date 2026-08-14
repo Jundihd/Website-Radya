@@ -199,10 +199,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               key={stat.id}
               className="flex flex-col p-4 rounded-2xl bg-white/80 border border-slate-200/70 shadow-xs backdrop-blur-xs hover:border-[#1793E8]/30 hover:shadow-md transition-all duration-200"
             >
-              <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F172A] tracking-tight text-gradient-radya">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F172A] tracking-tight text-gradient-radya font-exo">
                 {stat.value}
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+              <span className="text-xs sm:text-sm font-semibold text-slate-600 mt-1 font-proxima">
                 {stat.label[language]}
               </span>
             </div>
