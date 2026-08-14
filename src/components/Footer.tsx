@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Language } from '@/types';
 import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube, Facebook, ShieldCheck, Globe } from 'lucide-react';
+import { trackCtaClick } from '@/lib/analytics';
 
 interface FooterProps {
   language: Language;
@@ -119,8 +120,28 @@ export const Footer: React.FC<FooterProps> = ({
               <li><a href="#tentang-kami" className="hover:text-white transition-colors">{language === 'ID' ? 'Tentang Kami' : 'About Us'}</a></li>
               <li><a href="#portofolio" className="hover:text-white transition-colors">{language === 'ID' ? 'Portofolio & Case Study' : 'Case Studies'}</a></li>
               <li><a href="#insight" className="hover:text-white transition-colors">{language === 'ID' ? 'Insight & Blog' : 'Insights & Blog'}</a></li>
-              <li><button onClick={onOpenContact} className="hover:text-white transition-colors">{language === 'ID' ? 'Karir & Tim' : 'Careers'}</button></li>
-              <li><button onClick={onOpenContact} className="hover:text-white transition-colors">{language === 'ID' ? 'Kontak Kami' : 'Contact Us'}</button></li>
+              <li>
+                <button
+                  onClick={() => {
+                    trackCtaClick('Careers', 'Footer');
+                    onOpenContact();
+                  }}
+                  className="hover:text-white transition-colors"
+                >
+                  {language === 'ID' ? 'Karir & Tim' : 'Careers'}
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    trackCtaClick('Contact Us', 'Footer');
+                    onOpenContact();
+                  }}
+                  className="hover:text-white transition-colors"
+                >
+                  {language === 'ID' ? 'Kontak Kami' : 'Contact Us'}
+                </button>
+              </li>
             </ul>
 
             {/* Security Certification Pill */}

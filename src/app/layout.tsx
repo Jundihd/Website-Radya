@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
+import { Analytics } from '@/components/analytics/Analytics';
+import { Contentsquare } from './contentsquare';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -52,6 +54,8 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#F8FAFC] text-[#0F172A] antialiased">
+        <Contentsquare />
+        <Analytics />
         {children}
       </body>
     </html>

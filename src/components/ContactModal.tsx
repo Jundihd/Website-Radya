@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Language, ArchitectureBlueprint } from '@/types';
 import { X, Send, CheckCircle2, PhoneCall, Building, Mail, User, MessageSquare, Loader2 } from 'lucide-react';
+import { trackLeadSubmission, trackWhatsAppClick } from '@/lib/analytics';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -82,6 +83,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         if (data.whatsappUrl) {
           setWhatsappUrl(data.whatsappUrl);
         }
+        trackLeadSubmission({ name, service, budget, company });
       } else {
         setErrorMessage(data.error || 'Gagal mengirimkan formulir.');
       }
@@ -316,6 +318,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick('Contact Modal Confirmation')}
                   className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all"
                 >
                   <span>{language === 'ID' ? '💬 Chat Langsung via WhatsApp' : '💬 Direct Chat via WhatsApp'}</span>

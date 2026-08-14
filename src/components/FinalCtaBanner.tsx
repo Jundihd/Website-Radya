@@ -2,6 +2,7 @@
 import React from 'react';
 import { Language } from '@/types';
 import { ArrowRight, MessageSquare, PhoneCall, Sparkles } from 'lucide-react';
+import { trackCtaClick } from '@/lib/analytics';
 
 interface FinalCtaBannerProps {
   language: Language;
@@ -55,7 +56,10 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
             {/* CTA Button */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
-                onClick={onOpenContact}
+                onClick={() => {
+                  trackCtaClick('Book Consultation', 'Final CTA Banner');
+                  onOpenContact();
+                }}
                 className="bg-gradient-radya text-white font-extrabold text-base px-9 py-4 rounded-full shadow-xl hover:shadow-2xl hover:brightness-110 transition-all flex items-center justify-center gap-2 group"
               >
                 <PhoneCall className="w-5 h-5" />

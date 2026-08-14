@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Language } from '@/types';
 import { SERVICES_LIST, CASE_STUDIES, INDUSTRIES_LIST } from '@/lib/data';
+import { trackCtaClick } from '@/lib/analytics';
 import { Menu, X, Globe, PhoneCall, Search } from 'lucide-react';
 import Image from 'next/image';
 
@@ -161,7 +162,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* Contact CTA */}
               <button
-                onClick={onOpenContact}
+                onClick={() => {
+                  trackCtaClick('Book Consultation', 'Navbar Desktop');
+                  onOpenContact();
+                }}
                 className="bg-gradient-radya text-white text-sm font-bold px-5 py-2.5 rounded-full shadow-md shadow-[#1793E8]/25 hover:shadow-lg hover:shadow-[#1793E8]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center gap-2"
               >
                 <PhoneCall className="w-4 h-4" />
@@ -210,16 +214,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {link.label}
                 </a>
               ))}
-              <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
+              <div className="pt-4 border-t border-slate-100">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
+                    trackCtaClick('Book Consultation', 'Navbar Mobile Menu');
                     onOpenContact();
                   }}
-                  className="w-full bg-gradient-radya text-white font-bold py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-radya text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-md"
                 >
-                  <PhoneCall className="w-5 h-5" />
-                  <span>{language === 'ID' ? 'Jadwalkan Konsultasi Gratis' : 'Book your Free Consultation'}</span>
+                  <PhoneCall className="w-4 h-4" />
+                  <span>{language === 'ID' ? 'Jadwalkan Konsultasi' : 'Book Consultation'}</span>
                 </button>
               </div>
             </div>
