@@ -241,12 +241,22 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
           {/* Modal Bottom Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-slate-100">
-            <button
-              onClick={onClose}
-              className="w-full sm:w-auto px-6 py-3 rounded-full border border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-colors"
-            >
-              {language === 'ID' ? 'Tutup' : 'Close'}
-            </button>
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <button
+                onClick={onClose}
+                className="px-6 py-3 rounded-full border border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-colors"
+              >
+                {language === 'ID' ? 'Tutup' : 'Close'}
+              </button>
+              <a
+                href={`/portofolio/${study.slug}`}
+                className="px-5 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm flex items-center gap-1.5 transition-colors"
+              >
+                <span>{language === 'ID' ? 'Buka Halaman Khusus' : 'Open Dedicated Page'}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
             <button
               onClick={() => {
                 onClose();

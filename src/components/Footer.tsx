@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Language } from '@/types';
 import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube, Facebook, ShieldCheck, Globe } from 'lucide-react';
 import { trackCtaClick } from '@/lib/analytics';
+import { COMPANY_CONFIG } from '@/lib/company-info';
 
 interface FooterProps {
   language: Language;
@@ -46,36 +47,58 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="space-y-3 text-xs font-semibold text-slate-300">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#1793E8] shrink-0 mt-0.5" />
-                <span>
-                  Jl. Karawitan No.105A, Kel. Turangga, Kec. Lengkong, Kota Bandung, Jawa Barat 40054
-                </span>
+                <span>{COMPANY_CONFIG.address.fullFormatted}</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#1793E8] shrink-0" />
-                <a href="mailto:info@radyalabs.com" className="hover:text-white transition-colors">
-                  info@radyalabs.com
+                <a href={`mailto:${COMPANY_CONFIG.contacts.email}`} className="hover:text-white transition-colors">
+                  {COMPANY_CONFIG.contacts.email}
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#1793E8] shrink-0" />
-                <a href="tel:02263750660" className="hover:text-white transition-colors">
-                  (022) 63750660
+                <a href={`tel:${COMPANY_CONFIG.contacts.phoneOfficeRaw}`} className="hover:text-white transition-colors">
+                  {COMPANY_CONFIG.contacts.phoneOffice}
                 </a>
               </div>
             </div>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
-              <a href="#" className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors">
+              <a
+                href={COMPANY_CONFIG.socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Radya Labs LinkedIn"
+                className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors"
+              >
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors">
+              <a
+                href={COMPANY_CONFIG.socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Radya Labs Instagram"
+                className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors"
+              >
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors">
+              <a
+                href={COMPANY_CONFIG.socialLinks.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Radya Labs YouTube"
+                className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors"
+              >
                 <Youtube className="w-4 h-4" />
               </a>
-              <a href="#" className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors">
+              <a
+                href={COMPANY_CONFIG.socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Radya Labs Facebook"
+                className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-[#1793E8] transition-colors"
+              >
                 <Facebook className="w-4 h-4" />
               </a>
             </div>

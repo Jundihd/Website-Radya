@@ -38,6 +38,11 @@ export interface CaseStudy {
   deliverables?: string[];
   screenshots?: string[];
   backgroundColor?: string;
+  testimonial?: {
+    author: string;
+    role: string;
+    quote: { ID: string; EN: string };
+  };
 }
 
 export interface CoreValue {
