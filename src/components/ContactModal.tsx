@@ -266,17 +266,35 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   <MessageSquare className="w-3.5 h-3.5 text-[#1793E8]" />
                   <span>{language === 'ID' ? 'Catatan / Pesan Tambahan' : 'Additional Notes / Message'}</span>
                 </label>
-                <textarea
-                  rows={3}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder={
-                    language === 'ID'
-                      ? 'Kirimkan Pesan atau Pertanyaan kepada kami terkait proyek Anda, atau jika ada permintaan khusus seperti Permintaan Demo Gratis...'
-                      : 'Send us a message or inquiry regarding your project, or any specific requests such as a Free Demo Request...'
-                  }
-                  className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-800 focus:outline-none focus:border-[#1793E8]"
-                />
+                <div className="relative rounded-xl bg-slate-50 border border-slate-200 focus-within:border-[#1793E8] focus-within:ring-1 focus-within:ring-[#1793E8] transition-all">
+                  <textarea
+                    rows={3}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full p-4 bg-transparent text-sm font-medium text-slate-800 focus:outline-none resize-y relative z-10"
+                  />
+                  {!message && (
+                    <div className="absolute inset-0 p-4 pointer-events-none select-none text-sm leading-relaxed text-slate-400 font-normal z-0">
+                      {language === 'ID' ? (
+                        <>
+                          Kirimkan Pesan atau Pertanyaan kepada kami terkait proyek Anda, atau jika ada permintaan khusus seperti{' '}
+                          <span className="inline-flex items-center font-bold text-[#1793E8]/75 bg-[#1793E8]/10 px-1.5 py-0.5 rounded">
+                            Permintaan Demo Gratis
+                          </span>
+                          ...
+                        </>
+                      ) : (
+                        <>
+                          Send us a message or inquiry regarding your project, or any specific requests such as a{' '}
+                          <span className="inline-flex items-center font-bold text-[#1793E8]/75 bg-[#1793E8]/10 px-1.5 py-0.5 rounded">
+                            Free Demo Request
+                          </span>
+                          ...
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="pt-2">
