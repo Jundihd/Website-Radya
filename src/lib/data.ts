@@ -2852,63 +2852,49 @@ export const DEVELOPMENT_STAGES = [
     id: 'all-stages',
     name: {
       ID: 'Semua Tahap (End-to-End Development)',
-      EN: 'Full Lifecycle (End-to-End Development)',
+      EN: 'All Stages (End-to-End Development)',
     },
   },
   {
     id: 'step-01',
     name: {
-      ID: '01. Discover & Align (Pemahaman Kebutuhan & Strategi)',
-      EN: '01. Discover & Alignment (Needs Analysis & Strategy)',
+      ID: 'Discovery & Requirements (Validasi Ide & Kebutuhan)',
+      EN: 'Discovery & Requirements (Idea Validation & Scope)',
     },
   },
   {
     id: 'step-02',
     name: {
-      ID: '02. Research & Audit (Audit Teknis & Kelayakan)',
-      EN: '02. Research & Technical Audit (Feasibility & Audit)',
+      ID: 'Planning & Architecture (Arsitektur & Desain UI/UX)',
+      EN: 'Planning & Architecture (Architecture & UI/UX)',
     },
   },
   {
     id: 'step-03',
     name: {
-      ID: '03. Strategy & Blueprint (Arsitektur Sistem & Spesifikasi)',
-      EN: '03. Strategy & Architecture Blueprint (System Specs)',
+      ID: 'Agile Development (Pengembangan / Coding Sprint)',
+      EN: 'Agile Development (Coding & Iterative Sprints)',
     },
   },
   {
     id: 'step-04',
     name: {
-      ID: '04. UI/UX Design (Design System & Prototipe Interaktif)',
-      EN: '04. Human-Centered UI/UX Design (Interactive Prototypes)',
+      ID: 'Testing & QA Security (Uji Performa & Keamanan)',
+      EN: 'Testing & QA Security (QA & Security Testing)',
     },
   },
   {
     id: 'step-05',
     name: {
-      ID: '05. Agile Development (Tahap Coding & Sprint Iteratif / MVP)',
-      EN: '05. Agile Development (Coding & Iterative MVP Sprints)',
+      ID: 'CI/CD & Launch (Rilis & Deployment Cloud)',
+      EN: 'CI/CD & Launch (Cloud Release & Deployment)',
     },
   },
   {
     id: 'step-06',
     name: {
-      ID: '06. Testing & Security Audit (QA, Load Test & Pentest)',
-      EN: '06. Quality Assurance & Security Audit (Load Testing)',
-    },
-  },
-  {
-    id: 'step-07',
-    name: {
-      ID: '07. Deployment & Launch (Peluncuran & Rilis Cloud)',
-      EN: '07. Zero-Downtime Deployment (Production Release)',
-    },
-  },
-  {
-    id: 'step-08',
-    name: {
-      ID: '08. Support & Optimization (Pemeliharaan & SLA 24/7)',
-      EN: '08. 24/7 Managed Support & SLA (Ongoing Optimization)',
+      ID: 'Maintenance & Support (Pemeliharaan & SLA 24/7)',
+      EN: 'Maintenance & Support (24/7 Maintenance & SLA)',
     },
   },
 ];
