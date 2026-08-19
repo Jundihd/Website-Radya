@@ -1,17 +1,64 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Language } from '@/types';
-import { Cpu, Clock, LayoutGrid, Globe, UserCheck, Shield, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 
 interface ChallengesSectionProps {
   language: Language;
 }
 
 export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }) => {
+  // 3 Showcase Photos for the Left Carousel
+  const showcasePhotos = [
+    {
+      id: 'keynote',
+      image: '/images/satya-keynote-radya.png',
+      alt: 'Radya Labs Featured on Stage at Microsoft Keynote by Satya Nadella',
+      badge: 'MICROSOFT GLOBAL KEYNOTE',
+      title: {
+        ID: 'Pengakuan Global Microsoft',
+        EN: 'Global Microsoft Keynote Recognition',
+      },
+      description: {
+        ID: 'Solusi Radya Labs dipresentasikan langsung di panggung utama Microsoft: Build the Intelligent Cloud Platform.',
+        EN: 'Radya Labs solution highlighted live on Microsoft Mainstage: Build the Intelligent Cloud Platform.',
+      },
+    },
+    {
+      id: 'discussion',
+      image: '/images/satya-radya-discussion.png',
+      alt: 'Radya Labs Direct Technology Discussion with Microsoft CEO Satya Nadella',
+      badge: 'STRATEGIC PARTNERSHIP',
+      title: {
+        ID: 'Dialog Strategis Bersama CEO Microsoft',
+        EN: 'Strategic Dialogue with Microsoft CEO',
+      },
+      description: {
+        ID: 'Diskusi arsitektur dan inovasi teknologi enterprise bersama Satya Nadella dan jajaran pemimpin industri.',
+        EN: 'In-depth architectural and enterprise innovation dialogue with Satya Nadella and industry leaders.',
+      },
+    },
+    {
+      id: 'mosaic',
+      image: '/images/radya-ecosystem-mosaic.png',
+      alt: 'Radya Labs 15+ Years Tech Ecosystem, .NET Conf, and Awards',
+      badge: '15+ YEARS EXCELLENCE',
+      title: {
+        ID: 'Ekosistem Engineer & Komunitas Inovasi',
+        EN: 'Engineering Ecosystem & Innovation Community',
+      },
+      description: {
+        ID: 'Lebih dari 15 tahun konsisten memimpin inovasi .NET Conf, riset AI, dan kolaborasi kementerian.',
+        EN: 'Over 15 years pioneering .NET Conf conferences, AI research, and government digital transformation.',
+      },
+    },
+  ];
+
+  // 6 Challenges for the Right Carousel (No icons above bold title, as requested)
   const challenges = [
     {
       id: 'ojk-sikepo',
-      icon: Cpu,
       title: {
         ID: 'Sistem legacy sulit dikembangkan dan dipelihara',
         EN: 'Legacy systems are hard to develop and maintain',
@@ -25,7 +72,6 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     },
     {
       id: 'biofarma-bioaudit',
-      icon: Clock,
       title: {
         ID: 'Proses manual memperlambat pekerjaan krusial',
         EN: 'Manual processes slow down critical work',
@@ -39,7 +85,6 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     },
     {
       id: 'imuni',
-      icon: LayoutGrid,
       title: {
         ID: 'Data operasional tersebar di banyak sistem',
         EN: 'Operational data scattered across many systems',
@@ -53,7 +98,6 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     },
     {
       id: 'pusmendik-anbk',
-      icon: Globe,
       title: {
         ID: 'Sistem tidak dapat berskala untuk peluncuran nasional',
         EN: "Systems can't scale for a nationwide rollout",
@@ -67,7 +111,6 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     },
     {
       id: 'anteraja-aware',
-      icon: UserCheck,
       title: {
         ID: 'Tim IT internal kekurangan kapasitas untuk mengimbangi',
         EN: 'Internal IT team lacks capacity to keep up',
@@ -81,7 +124,6 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     },
     {
       id: 'biofarma-bismart',
-      icon: Shield,
       title: {
         ID: 'Pelaporan risiko & kepatuhan sulit dilacak',
         EN: 'Risk & compliance reporting is hard to track',
@@ -95,67 +137,293 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     },
   ];
 
+  // Left Photo Carousel State
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [isPhotoHovered, setIsPhotoHovered] = useState(false);
+
+  // Right Challenge Cards Carousel State
+  const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
+  const [isChallengeHovered, setIsChallengeHovered] = useState(false);
+
+  // Left Photo Auto-Rotate Timer (Every 5 seconds)
+  useEffect(() => {
+    if (isPhotoHovered) return;
+    const timer = setInterval(() => {
+      setActivePhotoIndex((prev) => (prev + 1) % showcasePhotos.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPhotoHovered, showcasePhotos.length]);
+
+  // Right Challenge Cards Auto-Rotate Timer (Every 4.5 seconds)
+  useEffect(() => {
+    if (isChallengeHovered) return;
+    const timer = setInterval(() => {
+      setActiveChallengeIndex((prev) => (prev + 1) % challenges.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isChallengeHovered, challenges.length]);
+
+  const handlePrevPhoto = () => {
+    setActivePhotoIndex((prev) => (prev - 1 + showcasePhotos.length) % showcasePhotos.length);
+  };
+
+  const handleNextPhoto = () => {
+    setActivePhotoIndex((prev) => (prev + 1) % showcasePhotos.length);
+  };
+
+  const handlePrevChallenge = () => {
+    setActiveChallengeIndex((prev) => (prev - 1 + challenges.length) % challenges.length);
+  };
+
+  const handleNextChallenge = () => {
+    setActiveChallengeIndex((prev) => (prev + 1) % challenges.length);
+  };
+
   return (
-    <section id="solusi" className="py-20 sm:py-24 bg-[#F8FAFC] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="solusi" className="py-20 sm:py-24 bg-[#F8FAFC] relative overflow-hidden">
+      {/* Decorative Subtle Background Gradients */}
+      <div className="absolute top-1/4 -left-32 w-80 h-80 bg-[#1793E8]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#43D3A4]/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="mb-12">
-          {/* Pill Badge */}
+        <div className="mb-12 md:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E0F2FE] text-[#0284C7] text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{language === 'ID' ? 'KEAHLIAN RADYA LABS' : 'RADYA LABS EXPERTISE'}</span>
           </div>
 
-          {/* Main Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-3">
-            {language === 'ID' ? 'Tantangan yang Kami Selesaikan' : 'Challenges We Solve'}
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-3">
+                {language === 'ID' ? 'Tantangan yang Kami Selesaikan' : 'Challenges We Solve'}
+              </h2>
+              <p className="text-slate-600 text-base sm:text-lg max-w-2xl">
+                {language === 'ID'
+                  ? 'Masalah nyata yang telah kami bantu klien atasi — bukan sekadar teori.'
+                  : "Real problems we've helped our clients overcome — not just theory."}
+              </p>
+            </div>
 
-          {/* Subtitle */}
-          <p className="text-slate-600 text-base sm:text-lg max-w-2xl">
-            {language === 'ID'
-              ? 'Masalah nyata yang telah kami bantu klien atasi — bukan sekadar teori.'
-              : "Real problems we've helped our clients overcome — not just theory."}
-          </p>
+            {/* Quick Navigation Dots */}
+            <div className="hidden md:flex items-center gap-2 text-xs font-bold text-slate-500 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#1793E8] animate-pulse" />
+              <span>{language === 'ID' ? 'Auto-Scrolling Showcase' : 'Live Rotating Showcase'}</span>
+            </div>
+          </div>
         </div>
 
-        {/* Challenges 6-card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-          {challenges.map((item) => {
-            const IconComponent = item.icon;
-            return (
-              <div
-                key={item.id}
-                className="bg-white rounded-2xl p-7 sm:p-8 border border-slate-100/90 shadow-xs hover:shadow-lg hover:border-slate-200 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  {/* Icon Box */}
-                  <div className="w-12 h-12 rounded-2xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center mb-6 group-hover:scale-105 group-hover:bg-[#0284C7] group-hover:text-white transition-all duration-200 shadow-xs">
-                    <IconComponent className="w-6 h-6" />
+        {/* 2-Column Split: Left Photo Carousel & Right Challenges Carousel */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          
+          {/* ========================================================================= */}
+          {/* LEFT SIDE: 3 Showcase Photos Auto-Rotating Carousel                       */}
+          {/* ========================================================================= */}
+          <div
+            className="lg:col-span-5 flex flex-col"
+            onMouseEnter={() => setIsPhotoHovered(true)}
+            onMouseLeave={() => setIsPhotoHovered(false)}
+          >
+            <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-xl flex-1 flex flex-col justify-between min-h-[420px] sm:min-h-[480px] group">
+              {/* Photo Slides Container */}
+              <div className="absolute inset-0 z-0">
+                {showcasePhotos.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                      idx === activePhotoIndex
+                        ? 'opacity-100 scale-100 z-10'
+                        : 'opacity-0 scale-105 pointer-events-none z-0'
+                    }`}
+                  >
+                    <Image
+                      src={item.image}
+                      alt={item.alt}
+                      fill
+                      className="object-cover"
+                      priority={idx === 0}
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                    />
+                    {/* Dark gradient overlay for optimal text contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-slate-950/20" />
                   </div>
+                ))}
+              </div>
 
-                  {/* Title */}
-                  <h3 className="text-lg sm:text-xl font-bold text-[#0F172A] leading-snug mb-3 group-hover:text-[#1793E8] transition-colors">
-                    {item.title[language]}
+              {/* Top Bar on Photo: Badge & Navigation Controls */}
+              <div className="relative z-20 p-5 sm:p-6 flex items-center justify-between">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[11px] font-extrabold tracking-wider uppercase shadow-md">
+                  <span className="w-2 h-2 rounded-full bg-[#00D285] animate-ping" />
+                  <span>{showcasePhotos[activePhotoIndex].badge}</span>
+                </div>
+
+                {/* Next/Prev Arrow Controls */}
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={handlePrevPhoto}
+                    aria-label="Previous Showcase Photo"
+                    className="w-8 h-8 rounded-full bg-slate-900/60 hover:bg-white text-white hover:text-slate-900 backdrop-blur-md border border-white/20 flex items-center justify-center transition-all shadow-sm active:scale-95"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={handleNextPhoto}
+                    aria-label="Next Showcase Photo"
+                    className="w-8 h-8 rounded-full bg-slate-900/60 hover:bg-white text-white hover:text-slate-900 backdrop-blur-md border border-white/20 flex items-center justify-center transition-all shadow-sm active:scale-95"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Content on Photo: Title, Subtitle, & Dot Indicators */}
+              <div className="relative z-20 p-6 sm:p-7">
+                <div className="mb-4">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-2 drop-shadow-md leading-tight">
+                    {showcasePhotos[activePhotoIndex].title[language]}
                   </h3>
-
-                  {/* Narrative Explanation connecting to Case Study */}
-                  <p className="text-sm text-slate-600 leading-relaxed font-normal mb-6">
-                    {item.description[language]}
+                  <p className="text-slate-200 text-xs sm:text-sm leading-relaxed drop-shadow-sm max-w-md font-medium">
+                    {showcasePhotos[activePhotoIndex].description[language]}
                   </p>
                 </div>
 
-                {/* Footer Link Tag */}
-                <a
-                  href={item.caseStudyHref}
-                  className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#0284C7] tracking-wider uppercase group-hover:text-[#1793E8] transition-colors"
-                >
-                  <span className="truncate pr-2">{item.caseStudyTag}</span>
-                  <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
-                </a>
+                {/* Progress Indicators & Dots */}
+                <div className="flex items-center justify-between pt-3 border-t border-white/20">
+                  <div className="flex items-center gap-2">
+                    {showcasePhotos.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActivePhotoIndex(idx)}
+                        aria-label={`Jump to photo slide ${idx + 1}`}
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          idx === activePhotoIndex
+                            ? 'w-8 bg-[#29B6F6]'
+                            : 'w-2 bg-white/40 hover:bg-white/70'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  <span className="text-[11px] font-bold text-slate-300 tracking-wider uppercase">
+                    {activePhotoIndex + 1} / {showcasePhotos.length}
+                  </span>
+                </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
+
+          {/* ========================================================================= */}
+          {/* RIGHT SIDE: Challenges Auto-Rotating Carousel (NO ICONS, BOLD TITLE ONLY) */}
+          {/* ========================================================================= */}
+          <div
+            className="lg:col-span-7 flex flex-col justify-between"
+            onMouseEnter={() => setIsChallengeHovered(true)}
+            onMouseLeave={() => setIsChallengeHovered(false)}
+          >
+            {/* Top Navigation & Status Bar */}
+            <div className="flex items-center justify-between mb-4 px-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">
+                  {language === 'ID' ? 'KASUS NYATA KLIEN' : 'REAL CLIENT CASES'}
+                </span>
+                <span className="text-xs font-bold text-[#1793E8]">
+                  ({activeChallengeIndex + 1} of {challenges.length})
+                </span>
+              </div>
+
+              {/* Arrow Controls for Right Carousel */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handlePrevChallenge}
+                  aria-label="Previous Challenge"
+                  className="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/90 shadow-xs transition-all active:scale-95 flex items-center justify-center hover:border-[#1793E8]/40 hover:text-[#1793E8]"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleNextChallenge}
+                  aria-label="Next Challenge"
+                  className="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/90 shadow-xs transition-all active:scale-95 flex items-center justify-center hover:border-[#1793E8]/40 hover:text-[#1793E8]"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Carousel Container (Card Carousel with Smooth Transition & Right Scroll Feed) */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-white to-slate-50 border border-slate-200/90 shadow-xl p-7 sm:p-9 flex-1 flex flex-col justify-between group transition-all duration-300">
+              
+              {/* Subtle Top Gradient Accent Line */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#1793E8] via-[#29B6F6] to-[#43D3A4]" />
+
+              {/* Challenge Content (Bold Title Highlight + Narrative Explanation) */}
+              <div className="transition-all duration-500 ease-out">
+                {/* Title Highlight (No Icon Box Above, as requested) */}
+                <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight leading-snug mb-4 transition-colors">
+                  {challenges[activeChallengeIndex].title[language]}
+                </h3>
+
+                {/* Narrative Explanation */}
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal mb-8">
+                  {challenges[activeChallengeIndex].description[language]}
+                </p>
+              </div>
+
+              {/* Bottom Action Footer & Case Study Tag */}
+              <div className="pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <a
+                  href={challenges[activeChallengeIndex].caseStudyHref}
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#1793E8] hover:text-[#0284C7] transition-colors tracking-wide uppercase group/link"
+                >
+                  <span>{challenges[activeChallengeIndex].caseStudyTag}</span>
+                  <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1.5 transition-transform" />
+                </a>
+
+                {/* Step / Slide Dots Indicator */}
+                <div className="flex items-center gap-1.5">
+                  {challenges.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveChallengeIndex(idx)}
+                      aria-label={`Go to challenge ${idx + 1}`}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        idx === activeChallengeIndex
+                          ? 'w-7 bg-[#1793E8]'
+                          : 'w-2 bg-slate-200 hover:bg-slate-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Carousel Preview Thumbnails / Mini-Cards Below */}
+            <div className="grid grid-cols-3 gap-3 mt-4">
+              {challenges.slice(0, 3).map((item, idx) => {
+                const isActive = activeChallengeIndex === idx || (activeChallengeIndex >= 3 && idx === activeChallengeIndex % 3);
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveChallengeIndex(idx)}
+                    className={`p-3 rounded-2xl text-left border transition-all duration-200 ${
+                      activeChallengeIndex === idx
+                        ? 'bg-white border-[#1793E8] shadow-md -translate-y-0.5'
+                        : 'bg-white/60 hover:bg-white border-slate-200/70 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <div className="text-[11px] font-bold text-slate-800 line-clamp-1">
+                      {item.title[language]}
+                    </div>
+                    <div className="text-[10px] text-slate-400 line-clamp-1 mt-0.5 font-medium">
+                      {item.caseStudyTag}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+          </div>
+
         </div>
       </div>
     </section>
