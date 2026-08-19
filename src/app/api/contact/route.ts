@@ -10,7 +10,8 @@ function escapeHtml(str: string): string {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, company, service, budget, message } = body;
+    const { name, email, phone, company, service, stage, developmentStage, budget, message } = body;
+    const chosenStage = stage || developmentStage || budget || '-';
 
     // Basic Validation
     if (!name || !email) {
@@ -41,7 +42,8 @@ export async function POST(request: Request) {
       phone: phone || '-',
       company: company || '-',
       service: service || 'General Inquiry',
-      budget: budget || '-',
+      stage: chosenStage,
+      budget: chosenStage, // for backward compatibility with older sheet webhooks
       message: message || '-',
       recipientEmail,
     };
@@ -91,8 +93,8 @@ export async function POST(request: Request) {
           + `📞 <b>Telepon / WA:</b> ${escapeHtml(phone || '-')}\n`
           + `🏢 <b>Perusahaan:</b> ${escapeHtml(company || '-')}\n`
           + `⚡ <b>Kebutuhan Layanan:</b> ${escapeHtml(service || '-')}\n`
-          + `💰 <b>Estimasi Anggaran:</b> ${escapeHtml(budget || '-')}\n`
-          + `📝 <b>Catatan Proyek:</b> ${escapeHtml(message || '-')}\n\n`
+          + `🚀 <b>Tahap yang Dikembangkan:</b> ${escapeHtml(chosenStage)}\n`
+          + `📝 <b>Catatan / Pesan Tambahan:</b> ${escapeHtml(message || '-')}\n\n`
           + `⏰ <b>Waktu:</b> ${escapeHtml(timestamp)}`;
 
         const telegramRes = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
@@ -120,7 +122,7 @@ export async function POST(request: Request) {
     // 3. Generate WhatsApp Direct Link for User & Team
     const adminWhatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '6281234567890';
     const waText = encodeURIComponent(
-      `Halo Tim Solution Architect Radya Labs,\nSaya telah mengajukan permintaan konsultasi di website dengan No. Referensi: ${referenceId}.\n\nNama: ${name}\nEmail: ${email}\nLayanan: ${service}`
+      `Halo Tim Solution Architect Radya Labs,\nSaya telah mengajukan permintaan konsultasi di website dengan No. Referensi: ${referenceId}.\n\nNama: ${name}\nEmail: ${email}\nLayanan: ${service}\nTahap: ${chosenStage}`
     );
     const whatsappUrl = `https://wa.me/${adminWhatsAppNumber.replace(/[^0-9]/g, '')}?text=${waText}`;
 

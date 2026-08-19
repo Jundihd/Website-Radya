@@ -1,5 +1,7 @@
 export const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID || '';
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ||
+  process.env.NEXT_PUBLIC_GA_ID ||
+  'G-FLJ8758H31';
 
 export const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID || '';
 export const HOTJAR_SNIPPET_VERSION = process.env.NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION || '6';
@@ -55,6 +57,7 @@ export const trackHotjarEvent = (eventName: string) => {
 export const trackLeadSubmission = (data: {
   name?: string;
   service?: string;
+  stage?: string;
   budget?: string;
   company?: string;
 }) => {
@@ -62,7 +65,7 @@ export const trackLeadSubmission = (data: {
     event_category: 'Consultation',
     event_label: data.service || 'General Inquiry',
     service: data.service,
-    budget: data.budget,
+    development_stage: data.stage || data.budget,
     company: data.company,
   });
 

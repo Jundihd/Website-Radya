@@ -366,7 +366,7 @@ export default function CaseStudyDetailPage({ params }: PageProps) {
                 Ingin Membangun Solusi Skala Enterprise Serupa?
               </h2>
               <p className="text-slate-300 text-sm sm:text-base mb-8 leading-relaxed">
-                Diskusikan arsitektur sistem, estimasi budget, dan timeline implementasi bersama Senior Principal Solutions Architect Radya Labs.
+                Diskusikan arsitektur sistem, tahap pengembangan, dan timeline implementasi bersama Senior Principal Solutions Architect Radya Labs.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link

@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Language, ArchitectureBlueprint } from '@/types';
-import { X, Send, CheckCircle2, PhoneCall, Building, Mail, User, MessageSquare, Loader2 } from 'lucide-react';
+import { X, Send, CheckCircle2, PhoneCall, Building, Mail, User, MessageSquare, Loader2, Layers, Briefcase } from 'lucide-react';
+import { SERVICES_LIST, DEVELOPMENT_STAGES } from '@/lib/data';
 import { trackLeadSubmission, trackWhatsAppClick } from '@/lib/analytics';
 
 interface ContactModalProps {
@@ -21,8 +22,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [company, setCompany] = useState('');
-  const [service, setService] = useState('Cloud Native & Microservices');
-  const [budget, setBudget] = useState('Rp 100M - 250M');
+  const [service, setService] = useState(SERVICES_LIST[0]?.title[language] || 'Cloud Native Development');
+  const [stage, setStage] = useState(DEVELOPMENT_STAGES[0]?.name[language] || 'Semua Tahap (End-to-End Development)');
   const [message, setMessage] = useState(
     initialBlueprint ? `Project Title: ${initialBlueprint.title}\nTimeline: ${initialBlueprint.estimatedTimeline}\n` : ''
   );
@@ -34,8 +35,29 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   const [whatsappUrl, setWhatsappUrl] = useState('');
 
+  // Synchronize defaults on language change
+  useEffect(() => {
+    if (SERVICES_LIST.length > 0) {
+      setService((prev) => {
+        // If current service matches any service's other language, translate it
+        const matched = SERVICES_LIST.find(
+          (s) => s.title.ID === prev || s.title.EN === prev
+        );
+        return matched ? matched.title[language] : SERVICES_LIST[0].title[language];
+      });
+    }
+    if (DEVELOPMENT_STAGES.length > 0) {
+      setStage((prev) => {
+        const matched = DEVELOPMENT_STAGES.find(
+          (stg) => stg.name.ID === prev || stg.name.EN === prev
+        );
+        return matched ? matched.name[language] : DEVELOPMENT_STAGES[0].name[language];
+      });
+    }
+  }, [language]);
+
   // Lock background body scroll when contact modal is active
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
@@ -46,7 +68,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   }, [isOpen]);
 
   // Close on Escape key
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         handleCloseModal();
@@ -74,7 +96,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, company, service, budget, message }),
+        body: JSON.stringify({ name, email, phone, company, service, stage, message }),
       });
       const data = await res.json();
       if (data.success) {
@@ -83,7 +105,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         if (data.whatsappUrl) {
           setWhatsappUrl(data.whatsappUrl);
         }
-        trackLeadSubmission({ name, service, budget, company });
+        trackLeadSubmission({ name, service, stage, company });
       } else {
         setErrorMessage(data.error || 'Gagal mengirimkan formulir.');
       }
@@ -203,43 +225,46 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    {language === 'ID' ? 'Kebutuhan Layanan Utama' : 'Primary Service Needed'}
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1 flex items-center gap-1.5">
+                    <Briefcase className="w-3.5 h-3.5 text-[#1793E8]" />
+                    <span>{language === 'ID' ? 'Kebutuhan Layanan Utama' : 'Primary Service Needed'}</span>
                   </label>
                   <select
                     value={service}
                     onChange={(e) => setService(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#1793E8]"
                   >
-                    <option value="Cloud Native & Microservices">Cloud Native & Microservices</option>
-                    <option value="AI Solutions & OCR Intelligence">AI Solutions & OCR Intelligence</option>
-                    <option value="Digital Transformation Consulting">Digital Transformation Consulting</option>
-                    <option value="DevOps & Infrastructure Automation">DevOps & Infrastructure Automation</option>
-                    <option value="UI/UX Design & Product Strategy">UI/UX Design & Product Strategy</option>
-                    <option value="IT Resource Augmentation">IT Resource Augmentation</option>
+                    {SERVICES_LIST.map((s) => (
+                      <option key={s.id} value={s.title[language]}>
+                        {s.title[language]}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    {language === 'ID' ? 'Estimasi Anggaran' : 'Estimated Budget Range'}
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-[#43D3A4]" />
+                    <span>{language === 'ID' ? 'Tahap yang Dikembangkan' : 'Development Stage / Phase'}</span>
                   </label>
                   <select
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
+                    value={stage}
+                    onChange={(e) => setStage(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#1793E8]"
                   >
-                    <option value="Rp 100M - 250M">Rp 100 Juta - 250 Juta</option>
-                    <option value="Rp 250M - 500M">Rp 250 Juta - 500 Juta</option>
-                    <option value="Rp 500M - 1B+">Rp 500 Juta - 1 Miliar+</option>
-                    <option value="Enterprise Custom SLA">Enterprise Custom SLA</option>
+                    {DEVELOPMENT_STAGES.map((stg) => (
+                      <option key={stg.id} value={stg.name[language]}>
+                        {stg.name[language]}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  {language === 'ID' ? 'Catatan Proyek / Pertanyaan' : 'Project Scope & Notes'}
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1 flex items-center gap-1.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#1793E8]" />
+                  <span>{language === 'ID' ? 'Catatan / Pesan Tambahan' : 'Additional Notes / Message'}</span>
                 </label>
                 <textarea
                   rows={3}
@@ -247,8 +272,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={
                     language === 'ID'
-                      ? 'Jelaskan tujuan proyek, tantangan teknis, atau ekspektasi timeline Anda...'
-                      : 'Describe your core technical goals, timeline, or current infrastructure state...'
+                      ? 'Kirimkan Pesan atau Pertanyaan kepada kami terkait proyek Anda, atau jika ada permintaan khusus seperti Permintaan Demo Gratis...'
+                      : 'Send us a message or inquiry regarding your project, or any specific requests such as a Free Demo Request...'
                   }
                   className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-800 focus:outline-none focus:border-[#1793E8]"
                 />
