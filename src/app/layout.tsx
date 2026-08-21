@@ -112,7 +112,7 @@ export default function RootLayout({
         {/* Jangkau.ai Chat AI Assistant SDK */}
         <Script id="jangkau-ai-sdk" strategy="afterInteractive">
           {`
-            window.JangkauSettings = {"position":"right","type":"expanded_bubble","launcherTitle":"Radya AI Assistant"};
+            window.JangkauSettings = {"position":"right","type":"standard","launcherTitle":"Chat dengan AI Assistant"};
             (function(d,t) {
               var BASE_URL="https://app.jangkau.ai";
               var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
