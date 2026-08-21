@@ -34,6 +34,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   const [whatsappUrl, setWhatsappUrl] = useState('');
+  const [twilioNotified, setTwilioNotified] = useState(false);
 
   // Synchronize defaults on language change
   useEffect(() => {
@@ -105,6 +106,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         if (data.whatsappUrl) {
           setWhatsappUrl(data.whatsappUrl);
         }
+        setTwilioNotified(!!data.twilioNotified);
         trackLeadSubmission({ name, service, stage, company });
       } else {
         setErrorMessage(data.error || 'Gagal mengirimkan formulir.');
@@ -352,6 +354,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     : '📊 Saved to Google Sheet & Internal Alert System'}
                 </span>
               </div>
+              {twilioNotified && (
+                <div className="flex items-center gap-2 text-emerald-700 font-medium">
+                  <span>
+                    {language === 'ID'
+                      ? '💬 Notifikasi WA terkirim via Twilio API (+62 813-1600-130)'
+                      : '💬 WA Alert sent via Twilio API (+62 813-1600-130)'}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* WhatsApp Direct Action Button */}

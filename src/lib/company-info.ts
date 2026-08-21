@@ -22,8 +22,8 @@ export const COMPANY_CONFIG = {
   contacts: {
     phoneOffice: '(022) 63750660',
     phoneOfficeRaw: '+622263750660',
-    salesWhatsApp: '+62 812-3456-7890',
-    salesWhatsAppRaw: '6281234567890',
+    salesWhatsApp: '+62 813-1600-130',
+    salesWhatsAppRaw: '628131600130',
     email: 'info@radyalabs.com',
     careersEmail: 'career@radyalabs.com',
   },

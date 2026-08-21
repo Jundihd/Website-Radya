@@ -7,6 +7,15 @@ function escapeHtml(str: string): string {
     .replace(/>/g, '&gt;');
 }
 
+function formatWaNumber(numStr: string): string {
+  if (numStr.startsWith('whatsapp:')) return numStr;
+  let cleaned = numStr.replace(/[^0-9]/g, '');
+  if (cleaned.startsWith('0')) {
+    cleaned = '62' + cleaned.slice(1);
+  }
+  return `whatsapp:+${cleaned}`;
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -119,8 +128,60 @@ export async function POST(request: Request) {
       }
     }
 
-    // 3. Generate WhatsApp Direct Link for User & Team
-    const adminWhatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '6281234567890';
+    // 3. Instant Twilio WhatsApp API Notification Alert
+    const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID;
+    const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
+    const twilioSenderWa = process.env.TWILIO_WHATSAPP_NUMBER || 'whatsapp:+14155238886'; // default Twilio sandbox number
+    const targetWaNumberRaw = process.env.TWILIO_TARGET_WHATSAPP_NUMBER || process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '628131600130';
+    let twilioNotified = false;
+
+    if (twilioAccountSid && twilioAuthToken) {
+      try {
+        const fromWa = formatWaNumber(twilioSenderWa);
+        const toWa = formatWaNumber(targetWaNumberRaw);
+        
+        const twilioWaMessage = `🔔 PERMINTAAN KONSULTASI BARU RADYA LABS\n\n`
+          + `📌 No. Referensi: ${referenceId}\n`
+          + `👤 Nama: ${name}\n`
+          + `✉️ Email: ${email}\n`
+          + `📞 Telepon / WA: ${phone || '-'}\n`
+          + `🏢 Perusahaan: ${company || '-'}\n`
+          + `⚡ Layanan: ${service || '-'}\n`
+          + `🚀 Tahap: ${chosenStage}\n`
+          + `📝 Pesan: ${message || '-'}\n\n`
+          + `⏰ Waktu: ${timestamp}`;
+
+        const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`;
+        const authHeader = 'Basic ' + Buffer.from(`${twilioAccountSid}:${twilioAuthToken}`).toString('base64');
+
+        const params = new URLSearchParams();
+        params.append('From', fromWa);
+        params.append('To', toWa);
+        params.append('Body', twilioWaMessage);
+
+        const twilioRes = await fetch(twilioUrl, {
+          method: 'POST',
+          headers: {
+            'Authorization': authHeader,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: params.toString(),
+        });
+
+        const twilioData = await twilioRes.json();
+        if (twilioRes.ok && twilioData.sid) {
+          twilioNotified = true;
+          console.log('[Contact API] Sent instant Twilio WhatsApp notification alert! SID:', twilioData.sid);
+        } else {
+          console.error('[Contact API] Twilio WhatsApp API error response:', twilioData);
+        }
+      } catch (twilioErr) {
+        console.error('[Contact API] Error sending Twilio WhatsApp alert:', twilioErr);
+      }
+    }
+
+    // 4. Generate WhatsApp Direct Link for User & Team
+    const adminWhatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '628131600130';
     const waText = encodeURIComponent(
       `Halo Tim Solution Architect Radya Labs,\nSaya telah mengajukan permintaan konsultasi di website dengan No. Referensi: ${referenceId}.\n\nNama: ${name}\nEmail: ${email}\nLayanan: ${service}\nTahap: ${chosenStage}`
     );
@@ -131,6 +192,7 @@ export async function POST(request: Request) {
       referenceId,
       sheetSynced,
       telegramNotified,
+      twilioNotified,
       whatsappUrl,
       message: 'Consultation request submitted successfully.',
     });

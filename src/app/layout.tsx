@@ -3,6 +3,7 @@ import './globals.css';
 import { Exo, Raleway } from 'next/font/google';
 import { Analytics } from '@/components/analytics/Analytics';
 import { Contentsquare } from './contentsquare';
+import Script from 'next/script';
 import { StructuredData } from '@/components/seo/StructuredData';
 
 const exo = Exo({
@@ -107,6 +108,29 @@ export default function RootLayout({
         <Contentsquare />
         <Analytics />
         {children}
+
+        {/* Jangkau.ai Chat AI Assistant SDK */}
+        <Script id="jangkau-ai-sdk" strategy="afterInteractive">
+          {`
+            window.JangkauSettings = {"position":"right","type":"expanded_bubble","launcherTitle":"Radya AI Assistant"};
+            (function(d,t) {
+              var BASE_URL="https://app.jangkau.ai";
+              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+              g.src=BASE_URL+"/packs/js/sdk.js";
+              g.defer = true;
+              g.async = true;
+              s.parentNode.insertBefore(g,s);
+              g.onload=function(){
+                if (window.jangkauSDK) {
+                  window.jangkauSDK.run({
+                    websiteToken: 'JtXpLYGZSk33RUWZs1SRs9G6',
+                    baseUrl: BASE_URL
+                  });
+                }
+              }
+            })(document,"script");
+          `}
+        </Script>
       </body>
     </html>
   );

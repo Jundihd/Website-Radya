@@ -172,15 +172,6 @@ export default function Home() {
         onClose={() => setSelectedArticle(null)}
         language={language}
       />
-
-      {/* Floating AI Assistant Chat Widget */}
-      <AiAssistantWidget
-        language={language}
-        onOpenContact={() => {
-          setActiveBlueprint(null);
-          setContactModalOpen(true);
-        }}
-      />
     </div>
   );
 }

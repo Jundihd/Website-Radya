@@ -2,8 +2,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { Language } from '@/types';
-import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube, Facebook, ShieldCheck, Globe } from 'lucide-react';
-import { trackCtaClick } from '@/lib/analytics';
+import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube, Facebook, ShieldCheck, Globe, MessageSquare } from 'lucide-react';
+import { trackCtaClick, trackWhatsAppClick } from '@/lib/analytics';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 
 interface FooterProps {
@@ -59,6 +59,21 @@ export const Footer: React.FC<FooterProps> = ({
                 <Phone className="w-4 h-4 text-[#1793E8] shrink-0" />
                 <a href={`tel:${COMPANY_CONFIG.contacts.phoneOfficeRaw}`} className="hover:text-white transition-colors">
                   {COMPANY_CONFIG.contacts.phoneOffice}
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+                <a
+                  href={`https://wa.me/${COMPANY_CONFIG.contacts.salesWhatsAppRaw}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick('Footer WhatsApp Link')}
+                  className="hover:text-emerald-300 transition-colors flex items-center gap-2"
+                >
+                  <span>{COMPANY_CONFIG.contacts.salesWhatsApp}</span>
+                  <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                    WhatsApp
+                  </span>
                 </a>
               </div>
             </div>
