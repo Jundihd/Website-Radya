@@ -200,6 +200,124 @@ export const SERVICES_LIST: ServiceItem[] = [
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    "id": "mmid-mitsubishi",
+    "slug": "mmid-mitsubishi",
+    "client": "Mitsubishi Motors",
+    "logo": "MITSUBISHI MOTORS",
+    "image": "/images/portfolio/mmid-1.png",
+    "images": [
+      "/images/portfolio/mmid-1.png",
+      "/images/portfolio/mmid-2.png"
+    ],
+    "category": {
+      "ID": "AUTOMOTIVE MOBILE APP",
+      "EN": "AUTOMOTIVE MOBILE APP"
+    },
+    "title": {
+      "ID": "My Mitsubishi Motors ID (MMID)",
+      "EN": "My Mitsubishi Motors ID (MMID)"
+    },
+    "summary": {
+      "ID": "Revamp aplikasi My Mitsubishi Motors ID (MMID) untuk meningkatkan kualitas layanan digital Mitsubishi Motors melalui penyempurnaan fitur, perbaikan pengalaman pengguna (UI/UX), serta peningkatan performa aplikasi.",
+      "EN": "Revamping the My Mitsubishi Motors ID (MMID) mobile application to elevate digital services through feature enhancements, UI/UX improvements, and performance optimization."
+    },
+    "challenge": {
+      "ID": "Seiring berkembangnya kebutuhan bisnis dan ekspektasi pengguna, aplikasi MMID memerlukan berbagai enhancement tanpa mengganggu layanan yang telah berjalan. Tantangan lainnya adalah menjaga konsistensi antara kebutuhan bisnis, desain, pengembangan, pengujian, dan dokumentasi, sekaligus memastikan setiap perubahan dapat diimplementasikan dengan kualitas yang baik dan tetap menjaga stabilitas aplikasi.",
+      "EN": "As business needs and user expectations evolve, the MMID application required continuous enhancements without disrupting active services. Maintaining alignment across business goals, design, development, testing, and documentation while ensuring system stability presented a key technical challenge."
+    },
+    "solution": {
+      "ID": "Melakukan revamp aplikasi My Mitsubishi Motors ID (MMID) dengan arsitektur Flutter cross-platform dan integrasi backend REST API di Microsoft Azure. Melakukan kolaborasi intensif antara stakeholder, tim bisnis, UI/UX, developer, QA, dan DevOps dengan pengujian menyeluruh sebelum release serta monitoring New Relic pasca implementasi.",
+      "EN": "Executing a comprehensive revamp of the My Mitsubishi Motors ID (MMID) application leveraging Flutter cross-platform architecture and Microsoft Azure REST APIs. Establishing intensive cross-functional collaboration with pre-release QA and post-deployment New Relic monitoring."
+    },
+    "metrics": [
+      {
+        "value": "80k+",
+        "label": {
+          "ID": "Anggota Komunitas Online",
+          "EN": "Online Community Members"
+        }
+      },
+      {
+        "value": "170+",
+        "label": {
+          "ID": "Jaringan Dealer Resmi",
+          "EN": "Official Dealerships"
+        }
+      },
+      {
+        "value": "24/7",
+        "label": {
+          "ID": "Layanan Bengkel Siaga",
+          "EN": "24/7 Customer Care"
+        }
+      }
+    ],
+    "tags": [
+      "Flutter",
+      "Dart",
+      "Microsoft Azure",
+      "REST API",
+      "New Relic",
+      "App Center",
+      "TestFlight",
+      "Automotive App"
+    ],
+    "industry": "Automotive & Transport",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Service Booking",
+          "EN": "Service Booking"
+        },
+        "description": {
+          "ID": "Booking service kendaraan secara online dengan alur cepat, mudah, dan transparan.",
+          "EN": "Fast, effortless, and transparent online vehicle maintenance booking system."
+        }
+      },
+      {
+        "name": {
+          "ID": "Find Dealer",
+          "EN": "Find Dealer"
+        },
+        "description": {
+          "ID": "Pencarian dealer resmi Mitsubishi Motors terdekat berbasis lokasi pengguna.",
+          "EN": "Location-based search to quickly find nearby official Mitsubishi Motors dealerships."
+        }
+      },
+      {
+        "name": {
+          "ID": "24 Jam Bengkel Siaga",
+          "EN": "24 Hours Standby Workshop"
+        },
+        "description": {
+          "ID": "Informasi dan bantuan darurat bengkel siaga 24 jam yang siap melayani kapan saja.",
+          "EN": "24/7 emergency hotline and standby workshop service availability."
+        }
+      },
+      {
+        "name": {
+          "ID": "Explore Cars",
+          "EN": "Explore Cars"
+        },
+        "description": {
+          "ID": "Eksplorasi lini produk kendaraan Mitsubishi (Xforce, New Xpander, dll) secara interaktif.",
+          "EN": "Interactive vehicle catalog exploring Mitsubishi model specifications and media."
+        }
+      }
+    ],
+    "deliverables": [
+      "Flutter Mobile App (iOS & Android)",
+      "Microsoft Azure REST API Integration",
+      "UI/UX Design System",
+      "New Relic Uptime & Performance Monitoring",
+      "App Center & TestFlight Deployment Pipeline"
+    ],
+    "screenshots": [
+      "/images/portfolio/mmid-1.png",
+      "/images/portfolio/mmid-2.png"
+    ]
+  },
+  {
     "id": "anbk",
     "slug": "anbk",
     "client": "Pusmendik Kemendikbudristek",
