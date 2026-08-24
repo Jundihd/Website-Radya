@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Language } from '@/types';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -22,7 +23,7 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
         EN: 'Rigid legacy architectures and technical debt slow down feature rollouts and increase operational fragility. We modernized the SIKePO regulatory portal for OJK, refactoring the system into an agile, scalable web and mobile platform seamlessly connected to national banking provisions.',
       },
       caseStudyTag: 'CASE STUDY: OJK — SIKEPO',
-      caseStudyHref: '#portofolio',
+      caseStudyHref: '/portofolio/sikepo',
     },
     {
       id: 'biofarma-bioaudit',
@@ -35,7 +36,7 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
         EN: 'Manual paper-based processes and repetitive approvals consume thousands of valuable work hours and invite human error. With Bio Farma, we built BioAudit — an IIA-compliant paperless audit management platform featuring automated verification and real-time audit trails.',
       },
       caseStudyTag: 'CASE STUDY: BIOFARMA — BIOAUDIT',
-      caseStudyHref: '#portofolio',
+      caseStudyHref: '/portofolio/bioaudit',
     },
     {
       id: 'imuni',
@@ -48,7 +49,7 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
         EN: "Operational data isolated across siloed systems prevents unified visibility and hampers rapid decision-making. Through IMUNI's integrated digital platform, we unified electronic health records, vaccine inventory logistics, and booking workflows into a single centralized, secure data hub.",
       },
       caseStudyTag: 'CASE STUDY: IMUNI — IMUNI',
-      caseStudyHref: '#portofolio',
+      caseStudyHref: '/portofolio/imuni',
     },
     {
       id: 'pusmendik-anbk',
@@ -61,7 +62,7 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
         EN: 'Legacy infrastructure frequently bottlenecks or crashes under sudden nationwide traffic surges. On the ANBK platform for Pusmendik Kemendikbudristek, we engineered a high-concurrency distributed cloud architecture with instant auto-scaling, reliably powering exams for millions of students nationwide.',
       },
       caseStudyTag: 'CASE STUDY: PUSMENDIK — ANBK',
-      caseStudyHref: '#portofolio',
+      caseStudyHref: '/portofolio/anbk',
     },
     {
       id: 'anteraja-aware',
@@ -74,7 +75,7 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
         EN: 'Fast-paced market growth often outpaces in-house engineering capacity and specialized technical skillsets. Radya Labs partnered with Anteraja as a dedicated co-engineering partner to accelerate the architecture and delivery of the smart logistics platform Anteraja Aware on schedule.',
       },
       caseStudyTag: 'CASE STUDY: ANTERAJA — ANTERAJA AWARE',
-      caseStudyHref: '#portofolio',
+      caseStudyHref: '/portofolio/anteraja-aware',
     },
     {
       id: 'biofarma-bismart',
@@ -87,7 +88,7 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
         EN: "Fragmented risk monitoring makes it difficult to detect anomalies and enforce compliance before operational disruptions occur. Through Bio Farma's BI-SMART, we delivered an enterprise risk governance dashboard equipped with proactive mitigation workflows and real-time compliance tracking.",
       },
       caseStudyTag: 'CASE STUDY: BIOFARMA — BI-SMART',
-      caseStudyHref: '#portofolio',
+      caseStudyHref: '/portofolio/bi-smart',
     },
   ];
 
@@ -191,27 +192,35 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
 
               {/* Bottom Action Footer & Case Study Tag */}
               <div className="pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
-                <a
+                <Link
                   href={challenges[activeChallengeIndex].caseStudyHref}
                   className="inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-[#1793E8] hover:text-[#0284C7] transition-colors tracking-wide uppercase group/link"
                 >
                   <span>{challenges[activeChallengeIndex].caseStudyTag}</span>
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1.5 transition-transform" />
-                </a>
+                </Link>
 
-                {/* Subtle Dots Indicator */}
-                <div className="flex items-center gap-1.5">
+                {/* Interactive Dots Indicator */}
+                <div className="flex items-center gap-1">
                   {challenges.map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => setActiveChallengeIndex(idx)}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveChallengeIndex(idx);
+                      }}
                       aria-label={`Go to challenge ${idx + 1}`}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeChallengeIndex
-                          ? 'w-7 bg-[#1793E8]'
-                          : 'w-2 bg-slate-200 hover:bg-slate-300'
-                      }`}
-                    />
+                      className="p-1.5 group cursor-pointer focus:outline-none"
+                    >
+                      <span
+                        className={`block h-2.5 rounded-full transition-all duration-300 ${
+                          idx === activeChallengeIndex
+                            ? 'w-7 bg-[#1793E8]'
+                            : 'w-2.5 bg-slate-300 group-hover:bg-slate-400'
+                        }`}
+                      />
+                    </button>
                   ))}
                 </div>
               </div>
@@ -264,16 +273,26 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
               ))}
 
               {/* Bottom Clean Dots Indicator */}
-              <div className="absolute bottom-5 left-0 right-0 z-20 flex items-center justify-center gap-2 pointer-events-none">
+              <div className="absolute bottom-4 left-0 right-0 z-20 flex items-center justify-center gap-1">
                 {showcasePhotos.map((_, idx) => (
-                  <span
+                  <button
                     key={idx}
-                    className={`h-2 rounded-full transition-all duration-500 shadow-sm ${
-                      idx === activePhotoIndex
-                        ? 'w-8 bg-[#29B6F6]'
-                        : 'w-2 bg-white/40'
-                    }`}
-                  />
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActivePhotoIndex(idx);
+                    }}
+                    aria-label={`Go to photo slide ${idx + 1}`}
+                    className="p-1.5 group cursor-pointer focus:outline-none"
+                  >
+                    <span
+                      className={`block h-2.5 rounded-full transition-all duration-500 shadow-sm ${
+                        idx === activePhotoIndex
+                          ? 'w-8 bg-[#29B6F6]'
+                          : 'w-2.5 bg-white/40 group-hover:bg-white/70'
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
 

@@ -1,5 +1,6 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Language, CaseStudy } from '@/types';
 import { CASE_STUDIES } from '@/lib/data';
 import {
@@ -12,7 +13,7 @@ import {
 
 interface CaseStudiesSectionProps {
   language: Language;
-  onSelectCaseStudy: (study: CaseStudy) => void;
+  onSelectCaseStudy?: (study: CaseStudy) => void;
   onOpenContact?: () => void;
 }
 
@@ -192,9 +193,9 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                 : [study.image];
 
               return (
-                <div
+                <Link
                   key={study.id}
-                  onClick={() => onSelectCaseStudy(study)}
+                  href={`/portofolio/${study.slug || study.id}`}
                   className="w-[88vw] sm:w-[350px] md:w-[370px] lg:w-[380px] shrink-0 snap-start group bg-slate-900 rounded-3xl border border-slate-800 hover:border-[#1793E8]/60 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#1793E8]/10 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between cursor-pointer"
                 >
                   <div>
@@ -246,7 +247,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                     <span>{language === 'ID' ? 'Lihat Detail Portofolio' : 'View Case Study Details'}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform text-[#29B6F6]" />
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
