@@ -249,6 +249,18 @@ export async function fetchLiveCmsPortfolios(): Promise<CaseStudy[]> {
   }
 }
 
+// Diverse, high-quality technology & business fallback cover images pool
+const ARTICLE_FALLBACK_IMAGES = [
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80', // Cloud Native / Cyber
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80', // Microchip / Tech
+  'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80', // Matrix Code / Software
+  'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=80', // Data Center / Security
+  'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&auto=format&fit=crop&q=80', // Code Development
+  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=80', // Team Collaboration / Tech
+  'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&auto=format&fit=crop&q=80', // UI/UX Product Design
+  'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80', // Cloud Server Rack
+];
+
 /**
  * Fetch live articles directly from Radya Labs Directus CMS
  */
@@ -267,7 +279,7 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
     const data = await res.json();
     const rawArticles = data.data || [];
 
-    return rawArticles.map((art: any) => {
+    return rawArticles.map((art: any, index: number) => {
       const transId = art.translations?.find((t: any) => t.languages_code === 'id') || art.translations?.[0] || {};
       const transEn = art.translations?.find((t: any) => t.languages_code === 'en') || art.translations?.[1] || transId;
 
@@ -284,9 +296,11 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
         })
         .filter(Boolean);
 
+      // Select dynamic fallback image based on article ID / index if thumbnail is null in Directus CMS
+      const dynamicFallback = ARTICLE_FALLBACK_IMAGES[(Math.abs(Number(art.id) || index)) % ARTICLE_FALLBACK_IMAGES.length];
       const coverImage = art.thumbnail
         ? `${DIRECTUS_CMS_URL}/assets/${art.thumbnail}`
-        : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80';
+        : dynamicFallback;
 
       const publishedDate = art.date_created
         ? new Date(art.date_created).toLocaleDateString('id-ID', {
