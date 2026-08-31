@@ -19,11 +19,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [affiliateDropdownOpen, setAffiliateDropdownOpen] = useState(false);
+  const [isAffiliatePinned, setIsAffiliatePinned] = useState(false);
+  const [isAffiliateHovered, setIsAffiliateHovered] = useState(false);
 
   // Search Modal state
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const affiliateDropdownRef = React.useRef<HTMLDivElement>(null);
+  const isAffiliateOpen = isAffiliatePinned || isAffiliateHovered;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,9 +36,24 @@ export const Navbar: React.FC<NavbarProps> = ({
       } else {
         setIsScrolled(false);
       }
+      // Scrolling closes the affiliate dropdown (pinned or hovered)
+      setIsAffiliatePinned(false);
+      setIsAffiliateHovered(false);
     };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (affiliateDropdownRef.current && !affiliateDropdownRef.current.contains(e.target as Node)) {
+        setIsAffiliatePinned(false);
+        setIsAffiliateHovered(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   // Close search modal on ESC key
@@ -141,32 +160,36 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </a>
               ))}
 
-              {/* Separate Affiliate Dropdown Menu */}
+              {/* Separate Affiliate Dropdown Menu with Radya Labs Color Palette & Click/Hover/Scroll support */}
               <div
+                ref={affiliateDropdownRef}
                 className="relative"
-                onMouseEnter={() => setAffiliateDropdownOpen(true)}
-                onMouseLeave={() => setAffiliateDropdownOpen(false)}
+                onMouseEnter={() => setIsAffiliateHovered(true)}
+                onMouseLeave={() => setIsAffiliateHovered(false)}
               >
                 <button
-                  onClick={() => setAffiliateDropdownOpen(!affiliateDropdownOpen)}
-                  className={`px-3 xl:px-4 py-2 text-xs xl:text-sm font-semibold rounded-full transition-all duration-200 flex items-center gap-1 ${
-                    affiliateDropdownOpen
-                      ? 'bg-white text-[#1793E8] shadow-xs'
-                      : 'text-slate-700 hover:text-[#1793E8] hover:bg-white/60'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsAffiliatePinned((prev) => !prev);
+                  }}
+                  className={`px-3.5 xl:px-4 py-2 text-xs xl:text-sm font-extrabold rounded-full transition-all duration-200 flex items-center gap-1.5 border shadow-2xs ${
+                    isAffiliateOpen
+                      ? 'bg-[#1793E8] text-white border-[#1793E8] shadow-md'
+                      : 'bg-[#1793E8]/10 text-[#1793E8] border-[#1793E8]/30 hover:bg-[#1793E8] hover:text-white hover:border-[#1793E8]'
                   }`}
                 >
                   <span>Affiliate</span>
                   <ChevronDown
                     className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      affiliateDropdownOpen ? 'rotate-180 text-[#1793E8]' : 'text-slate-400'
+                      isAffiliateOpen ? 'rotate-180 text-white' : 'text-[#1793E8]'
                     }`}
                   />
                 </button>
 
                 {/* Dropdown Menu Overlay */}
-                {affiliateDropdownOpen && (
+                {isAffiliateOpen && (
                   <div className="absolute top-full left-0 mt-1.5 w-56 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200/80 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                    <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#1793E8] border-b border-slate-100 mb-1">
                       {language === 'ID' ? 'Ekosistem Affiliate' : 'Affiliate Ecosystem'}
                     </div>
                     {affiliateLinks.map((item) => (
@@ -175,7 +198,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => setAffiliateDropdownOpen(false)}
+                        onClick={() => {
+                          setIsAffiliatePinned(false);
+                          setIsAffiliateHovered(false);
+                        }}
                         className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-800 hover:text-[#1793E8] transition-colors group"
                       >
                         <div>
@@ -200,13 +226,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* 1. Contact CTA (Left of Search & Language) */}
               <button
                 onClick={() => {
-                  trackCtaClick('Book Consultation', 'Navbar Desktop');
+                  trackCtaClick('Book a Consultation', 'Navbar Desktop');
                   onOpenContact();
                 }}
                 className="bg-gradient-radya text-white text-xs xl:text-sm font-bold px-4 xl:px-5 py-2.5 rounded-full shadow-md shadow-[#1793E8]/25 hover:shadow-lg hover:shadow-[#1793E8]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center gap-1.5 shrink-0"
               >
                 <PhoneCall className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
-                <span>{language === 'ID' ? 'Jadwalkan Konsultasi' : 'Book Consultation'}</span>
+                <span>{language === 'ID' ? 'Jadwalkan Konsultasi' : 'Book a Consultation'}</span>
               </button>
 
               {/* 2. Circular Search Icon Button (Positioned to the RIGHT of Jadwalkan Konsultasi) */}
@@ -312,13 +338,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    trackCtaClick('Book Consultation', 'Navbar Mobile Menu');
+                    trackCtaClick('Book a Consultation', 'Navbar Mobile Menu');
                     onOpenContact();
                   }}
                   className="w-full bg-gradient-radya text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-md text-sm"
                 >
                   <PhoneCall className="w-4 h-4" />
-                  <span>{language === 'ID' ? 'Jadwalkan Konsultasi' : 'Book Consultation'}</span>
+                  <span>{language === 'ID' ? 'Jadwalkan Konsultasi' : 'Book a Consultation'}</span>
                 </button>
               </div>
             </div>
