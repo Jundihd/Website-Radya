@@ -55,13 +55,6 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider">
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>{language === 'ID' ? 'INSIGHT & ARTIKEL RESMI' : 'LATEST INSIGHTS & THOUGHT LEADERSHIP'}</span>
-              </div>
-            </div>
-
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-2">
               {language === 'ID'
                 ? 'Artikel & Insight Terbaru dari Radya Labs'

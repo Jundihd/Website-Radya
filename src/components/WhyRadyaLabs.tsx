@@ -47,11 +47,6 @@ export const WhyRadyaLabs: React.FC<WhyRadyaLabsProps> = ({
           
           {/* Left Column - Story & Values */}
           <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider mb-4">
-              <Award className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'TENTANG RADYA LABS' : 'WHY RADYA LABS'}</span>
-            </div>
-
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-6 leading-tight">
               {language === 'ID'
                 ? 'Partner Teknologi untuk Pertumbuhan Bisnis'

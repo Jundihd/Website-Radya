@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({
               <li><a href="#layanan" className="hover:text-white transition-colors">AI & OCR Solutions</a></li>
               <li><a href="#layanan" className="hover:text-white transition-colors">Digital Transformation</a></li>
               <li><a href="#layanan" className="hover:text-white transition-colors">DevOps & Infrastructure</a></li>
-              <li><a href="#layanan" className="hover:text-white transition-colors">UI/UX Design & Product Strategy</a></li>
+              <li><a href="#layanan" className="hover:text-white transition-colors">Mobile & Web Development</a></li>
               <li><a href="#layanan" className="hover:text-white transition-colors">IT Resource Augmentation</a></li>
             </ul>
           </div>
@@ -154,7 +154,6 @@ export const Footer: React.FC<FooterProps> = ({
               {language === 'ID' ? 'Perusahaan' : 'Company'}
             </h4>
             <ul className="space-y-3 text-xs font-medium text-slate-400">
-              <li><a href="#tentang-kami" className="hover:text-white transition-colors">{language === 'ID' ? 'Tentang Kami' : 'About Us'}</a></li>
               <li><a href="#portofolio" className="hover:text-white transition-colors">{language === 'ID' ? 'Portofolio & Case Study' : 'Case Studies'}</a></li>
               <li><a href="#insight" className="hover:text-white transition-colors">{language === 'ID' ? 'Insight & Blog' : 'Insights & Blog'}</a></li>
               <li>
@@ -198,16 +197,16 @@ export const Footer: React.FC<FooterProps> = ({
             {/* Lang Switcher in Footer */}
             <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-full border border-slate-800">
               <button
-                onClick={() => onToggleLanguage('ID')}
-                className={`px-2 py-0.5 rounded-full text-[10px] ${language === 'ID' ? 'bg-[#1793E8] text-white' : 'text-slate-400'}`}
-              >
-                ID
-              </button>
-              <button
                 onClick={() => onToggleLanguage('EN')}
                 className={`px-2 py-0.5 rounded-full text-[10px] ${language === 'EN' ? 'bg-[#1793E8] text-white' : 'text-slate-400'}`}
               >
                 EN
+              </button>
+              <button
+                onClick={() => onToggleLanguage('ID')}
+                className={`px-2 py-0.5 rounded-full text-[10px] ${language === 'ID' ? 'bg-[#1793E8] text-white' : 'text-slate-400'}`}
+              >
+                ID
               </button>
             </div>
           </div>

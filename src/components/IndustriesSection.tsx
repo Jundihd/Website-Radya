@@ -53,10 +53,6 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{language === 'ID' ? 'INDUSTRI YANG KAMI LAYANI' : 'INDUSTRIES WE SERVE'}</span>
-          </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-4">
             {language === 'ID'
               ? 'Kami Sudah Memahami Regulator Industri Anda'

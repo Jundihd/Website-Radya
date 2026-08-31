@@ -23,7 +23,7 @@ import { InsightArticleModal } from '@/components/InsightArticleModal';
 import { AiAssistantWidget } from '@/components/AiAssistantWidget';
 
 export default function Home() {
-  const [language, setLanguage] = useState<Language>('ID');
+  const [language, setLanguage] = useState<Language>('EN');
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<InsightArticle | null>(null);
@@ -83,15 +83,6 @@ export default function Home() {
         <CaseStudiesSection
           language={language}
           onSelectCaseStudy={(study) => setSelectedCaseStudy(study)}
-          onOpenContact={() => {
-            setActiveBlueprint(null);
-            setContactModalOpen(true);
-          }}
-        />
-
-        {/* 07 Why Radya Labs */}
-        <WhyRadyaLabs
-          language={language}
           onOpenContact={() => {
             setActiveBlueprint(null);
             setContactModalOpen(true);

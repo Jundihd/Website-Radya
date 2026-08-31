@@ -24,13 +24,6 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#43D3A4] opacity-20 blur-3xl rounded-full pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl">
-
-            {/* Top Pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[#29B6F6] text-xs font-bold uppercase tracking-wider mb-6 border border-white/10">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'CERITAKAN TANTANGAN TEKNIS ANDA' : 'TELL US WHAT\'S BREAKING'}</span>
-            </div>
-
             {/* Headline */}
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[1.15]">
               {language === 'ID' ? (

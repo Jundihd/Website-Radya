@@ -129,23 +129,6 @@ export const SERVICES_LIST: ServiceItem[] = [
     ]
   },
   {
-    id: 'uiux-design',
-    title: { ID: 'UI/UX Design & Product', EN: 'UI/UX Design & Product Strategy' },
-    description: {
-      ID: 'Desain pengalaman pengguna yang intuitif, estetis, dan berdampak langsung pada conversion rate serta kepuasan pengguna.',
-      EN: 'Intuitive, accessible, human-centered UI/UX design optimized for conversion rates and user adoption.'
-    },
-    iconName: 'Layout',
-    tags: ['Design System', 'User Research', 'Prototyping', 'CRO'],
-    gradient: 'from-[#43D3A4] to-[#1793E8]',
-    features: [
-      { ID: 'Enterprise Design Systems & UI Kits', EN: 'Enterprise Design Systems & UI Kits' },
-      { ID: 'User Journey Mapping & Research', EN: 'User Journey Mapping & Research' },
-      { ID: 'Interactive High-Fidelity Prototypes', EN: 'Interactive High-Fidelity Prototypes' },
-      { ID: 'Usability Testing & CRO Optimization', EN: 'Usability Testing & CRO Optimization' }
-    ]
-  },
-  {
     id: 'mobile-web',
     title: { ID: 'Mobile & Web Development', EN: 'Mobile & Web Development' },
     description: {
@@ -177,23 +160,6 @@ export const SERVICES_LIST: ServiceItem[] = [
       { ID: 'Agile Scrum Pods with PM', EN: 'Agile Scrum Pods with PM' },
       { ID: 'Flexible Augmentation Models', EN: 'Flexible Augmentation Models' },
       { ID: 'Seamless Team Integration', EN: 'Seamless Team Integration' }
-    ]
-  },
-  {
-    id: 'product-engineering',
-    title: { ID: 'Product Engineering', EN: 'Full Lifecycle Product Engineering' },
-    description: {
-      ID: 'Pengembangan produk software dari ideasi, arsitektur, hingga peluncuran komersial dengan standar standar enterprise.',
-      EN: 'Full lifecycle software product engineering from conceptual discovery through architecture, QA, and market launch.'
-    },
-    iconName: 'Layers',
-    tags: ['MVP Development', 'SaaS Architecture', 'Scale'],
-    gradient: 'from-[#43D3A4] to-[#29B6F6]',
-    features: [
-      { ID: 'SaaS Platform Multi-tenancy', EN: 'SaaS Platform Multi-tenancy' },
-      { ID: 'Enterprise MVP to Scale Strategy', EN: 'Enterprise MVP to Scale Strategy' },
-      { ID: 'Continuous Quality Assurance', EN: 'Continuous Quality Assurance' },
-      { ID: 'Security Auditing & SLA Support', EN: 'Security Auditing & SLA Support' }
     ]
   }
 ];

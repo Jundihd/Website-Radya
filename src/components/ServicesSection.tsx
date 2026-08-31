@@ -58,10 +58,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
         {/* Top Header Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-16">
           <div className="lg:col-span-8">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider mb-4">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'LAYANAN UTAMA' : 'OUR CORE SERVICES'}</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight">
               {language === 'ID'
                 ? 'Titik Awal Klien Memilih Radya Labs'

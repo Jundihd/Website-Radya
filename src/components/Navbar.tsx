@@ -71,7 +71,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { href: '#solusi', label: language === 'ID' ? 'Solusi' : 'Solutions' },
     { href: '#layanan', label: language === 'ID' ? 'Layanan' : 'Services' },
     { href: '#portofolio', label: language === 'ID' ? 'Portofolio' : 'Portfolio' },
-    { href: '#tentang-kami', label: language === 'ID' ? 'Tentang Kami' : 'About Us' },
     { href: '#industri', label: language === 'ID' ? 'Industri' : 'Industries' },
     { href: '#insight', label: language === 'ID' ? 'Insight' : 'Insights' },
   ];
@@ -248,16 +247,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* 3. Language Switcher (Rightmost Element) */}
               <div className="relative flex items-center bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 shrink-0">
                 <button
-                  onClick={() => onToggleLanguage('ID')}
-                  className={`px-2.5 py-1 rounded-full transition-all ${
-                    language === 'ID'
-                      ? 'bg-white text-[#1793E8] shadow-xs font-bold'
-                      : 'text-slate-500 hover:text-slate-800'
-                  }`}
-                >
-                  ID
-                </button>
-                <button
                   onClick={() => onToggleLanguage('EN')}
                   className={`px-2.5 py-1 rounded-full transition-all ${
                     language === 'EN'
@@ -266,6 +255,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }`}
                 >
                   EN
+                </button>
+                <button
+                  onClick={() => onToggleLanguage('ID')}
+                  className={`px-2.5 py-1 rounded-full transition-all ${
+                    language === 'ID'
+                      ? 'bg-white text-[#1793E8] shadow-xs font-bold'
+                      : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  ID
                 </button>
               </div>
             </div>
@@ -279,11 +278,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <Search className="w-4 h-4" />
               </button>
               <button
-                onClick={() => onToggleLanguage(language === 'ID' ? 'EN' : 'ID')}
+                onClick={() => onToggleLanguage(language === 'EN' ? 'ID' : 'EN')}
                 className="p-2 rounded-lg bg-slate-100 text-xs font-semibold text-slate-700 border border-slate-200 flex items-center gap-1"
               >
                 <Globe className="w-3.5 h-3.5 text-[#1793E8]" />
-                <span>{language === 'ID' ? 'EN' : 'ID'}</span>
+                <span>{language === 'EN' ? 'ID' : 'EN'}</span>
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

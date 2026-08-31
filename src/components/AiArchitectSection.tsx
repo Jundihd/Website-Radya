@@ -78,10 +78,6 @@ export const AiArchitectSection: React.FC<AiArchitectSectionProps> = ({
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-radya text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-md">
-            <Bot className="w-4 h-4" />
-            <span>{language === 'ID' ? 'RADYA LABS AI ARCHITECT' : 'RADYA AI SOLUTION BLUEPRINT'}</span>
-          </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
             {language === 'ID'
               ? 'Dapatkan Rekomendasi Arsitektur AI & Cloud Instan'

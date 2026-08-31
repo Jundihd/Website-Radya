@@ -145,10 +145,6 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#29B6F6] text-[11px] font-bold uppercase tracking-wider mb-3 border border-white/10">
-              <Briefcase className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'PORTOFOLIO KAMI' : 'FEATURED CASE STUDIES'}</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-3">
               {language === 'ID' ? '25+ Sistem Berjalan Aktif di Produksi' : '25 Systems Currently Running in Production'}
             </h2>

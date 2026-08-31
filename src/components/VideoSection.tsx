@@ -27,12 +27,6 @@ export const VideoSection: React.FC<VideoSectionProps> = ({ language }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-10">
-          {/* Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E0F2FE] text-[#0284C7] text-xs font-bold uppercase tracking-wider mb-4">
-            <Video className="w-3.5 h-3.5" />
-            <span>{language === 'ID' ? 'VIDEO PROFIL KAMI' : 'OUR PROFILE VIDEO'}</span>
-          </div>
-
           {/* Heading */}
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-3">
             {language === 'ID' ? 'Lihat Radya Labs Beraksi' : 'See Radya Labs in Action'}
