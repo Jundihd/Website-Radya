@@ -40,8 +40,8 @@ export const Footer: React.FC<FooterProps> = ({
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
               {language === 'ID'
-                ? 'Mitra teknologi terpercaya untuk membantu bisnis berinovasi, bertumbuh, dan berdampak nyata di era digital.'
-                : 'Enterprise technology partner empowering global organizations with cloud native architectures and AI automation.'}
+                ? 'Berbasis di Bandung sejak 2011. Kami membangun dan mengelola sistem utama yang digunakan oleh institusi terkemuka di Indonesia.'
+                : 'Bandung-based since 2011. We build and maintain the systems Indonesian institutions run on.'}
             </p>
 
             <div className="space-y-3 text-xs font-semibold text-slate-300">
@@ -180,14 +180,6 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
             </ul>
-
-            {/* Security Certification Pill */}
-            <div className="mt-6 p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="text-[11px] font-bold text-slate-300">
-                ISO 27001 Certified
-              </span>
-            </div>
           </div>
 
         </div>

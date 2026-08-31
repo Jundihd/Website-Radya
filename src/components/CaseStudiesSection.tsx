@@ -150,12 +150,12 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
               <span>{language === 'ID' ? 'PORTOFOLIO KAMI' : 'FEATURED CASE STUDIES'}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-3">
-              {language === 'ID' ? 'Solusi Nyata, Dampak Terukur' : 'Proven Enterprise Impact & ROI'}
+              {language === 'ID' ? '25+ Sistem Berjalan Aktif di Produksi' : '25 Systems Currently Running in Production'}
             </h2>
             <p className="text-slate-300 text-sm max-w-2xl">
               {language === 'ID'
-                ? 'Geser ke kanan/kiri untuk menelusuri studi kasus & portofolio unggulan dari Radya Labs.'
-                : 'Scroll horizontally to explore our enterprise case studies and customer success stories.'}
+                ? 'Perbankan, pemerintah, farmasi, pertambangan, logistik. Filter berdasarkan industri Anda.'
+                : 'Banking, government, pharmaceutical, mining, logistics. Filter by your industry.'}
             </p>
           </div>
 

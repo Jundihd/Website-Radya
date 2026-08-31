@@ -12,51 +12,51 @@ export const EnterpriseArchitectureSection: React.FC<EnterpriseArchitectureSecti
 }) => {
   const features = [
     {
-      id: 'iso-security',
-      icon: Shield,
+      id: 'post-launch-support',
+      icon: UserCheck,
       title: {
-        ID: 'ISO 27001 Security Standard',
-        EN: 'ISO 27001 Security Standard',
+        ID: 'Kami Masih Mendampingi di Tahun Ke-5',
+        EN: 'We\'re Still Here in Year Five',
       },
       description: {
-        ID: 'Manajemen keamanan informasi ketat yang melindungi data enterprise sensitif & kepatuhan.',
-        EN: 'Strict information security management protecting sensitive enterprise data & compliance.',
+        ID: 'Mayoritas vendor menyerahkan kode lalu menghilang. Kami mengelola sistem audit Bio Farma, platform Anteraja, dan infrastruktur ANBK selama bertahun-tahun.',
+        EN: 'Most vendors hand over the code and disappear. We\'ve maintained Bio Farma\'s audit system, Anteraja\'s courier platform, and the ANBK exam infrastructure across multiple years and rollouts.',
       },
     },
     {
       id: 'uptime-sla',
       icon: Clock,
       title: {
-        ID: '99.9% Uptime SLA Guarantee',
-        EN: '99.9% Uptime SLA Guarantee',
+        ID: '15 Tahun Tanpa Kegagalan Rilis',
+        EN: '15 Years · 0 Missed Rollouts',
       },
       description: {
-        ID: 'Infrastruktur cloud andal dan arsitektur microservices berkeandalan tinggi.',
-        EN: 'Reliable cloud infrastructure and high-availability microservices architecture.',
+        ID: 'Tingkat keandalan 99.99% pada sistem berkonkuensi tinggi dengan jutaan pengguna serentak.',
+        EN: '99.99% uptime reliability on high-concurrency platforms serving millions of concurrent users.',
       },
     },
     {
       id: 'certified-architects',
-      icon: UserCheck,
+      icon: Shield,
       title: {
         ID: 'Certified Cloud & AI Architects',
         EN: 'Certified Cloud & AI Architects',
       },
       description: {
-        ID: 'Tim insinyur berpengalaman yang tersertifikasi di Azure, AWS, Google Gemini, dan Kata.ai.',
-        EN: 'Experienced engineering team certified in Azure, AWS, Google Gemini, and Kata.ai.',
+        ID: 'Tim insinyur berpengalaman yang tersertifikasi di Azure, AWS, GCP, dan AI Enterprise.',
+        EN: 'Experienced engineering team certified across Azure, AWS, GCP, and Enterprise AI.',
       },
     },
     {
       id: 'agile-playbook',
       icon: Cpu,
       title: {
-        ID: 'Agile Scrum Playbook',
-        EN: 'Agile Scrum Playbook',
+        ID: 'Agile & Transparansi Kode Penuh',
+        EN: 'Agile & Full Code Transparency',
       },
       description: {
-        ID: 'Siklus sprint 2 minggu yang transparan dengan deliverable jelas, CI/CD, dan live demo.',
-        EN: 'Transparent 2-week sprint cycles with clear deliverables, CI/CD, and live demos.',
+        ID: 'Siklus sprint 2 minggu yang transparan dengan CI/CD terotomatisasi, audit trail, dan demo berkala.',
+        EN: 'Transparent 2-week sprint cycles with automated CI/CD, audit trails, and live demos.',
       },
     },
   ];
@@ -69,21 +69,21 @@ export const EnterpriseArchitectureSection: React.FC<EnterpriseArchitectureSecti
           {/* Pill Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E0F2FE] text-[#0284C7] text-xs font-bold uppercase tracking-wider mb-4">
             <Award className="w-3.5 h-3.5" />
-            <span>{language === 'ID' ? 'MENGAPA RADYA LABS?' : 'WHY RADYA LABS?'}</span>
+            <span>{language === 'ID' ? 'KEUNGGULAN UTAMA' : 'WHAT SETS US APART'}</span>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-3">
             {language === 'ID'
-              ? 'Mengapa Pemimpin Enterprise Memilih Radya Labs'
-              : 'Why Enterprise Leaders Choose Radya Labs'}
+              ? 'Keunggulan yang Tidak Anda Dapatkan di Tempat Lain'
+              : 'What You Get That You Won\'t Get Elsewhere'}
           </h2>
 
           {/* Subtitle */}
           <p className="text-slate-600 text-base sm:text-lg max-w-3xl">
             {language === 'ID'
-              ? 'Dibangun di atas standar keamanan ketat, insinyur tersertifikasi, dan 15+ tahun penyampaian perangkat lunak.'
-              : 'Built on rigorous security standards, certified engineers, and 15+ years of software delivery.'}
+              ? 'Komitmen rekayasa perangkat lunak berskala mission-critical selama 15+ tahun dengan insinyur yang tetap mendampingi setelah rilis.'
+              : 'Enterprise software engineering commitments built over 15+ years — with engineers who stay engaged long after launch.'}
           </p>
         </div>
 

@@ -59,13 +59,13 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-4">
             {language === 'ID'
-              ? 'Spesialisasi Sektor Berpengalaman'
-              : 'Deep Domain Expertise Across Key Sectors'}
+              ? 'Kami Sudah Memahami Regulator Industri Anda'
+              : 'We Already Know Your Regulator'}
           </h2>
           <p className="text-slate-600 text-base sm:text-lg">
             {language === 'ID'
-              ? 'Kami memahami regulasi dan tantangan unik setiap industri untuk merancang solusi yang relevan.'
-              : 'Architected to address strict regulatory compliance and domain operational workflows.'}
+              ? 'Perbankan (OJK), farmasi (IIA, BPOM), pengadaan pemerintah, dan pendidikan. Kami membangun sistem langsung di dalam batasan regulasi tersebut.'
+              : 'Banking (OJK), pharmaceuticals (IIA, BPOM), government procurement, education. We\'ve shipped inside these constraints, not just around them.'}
           </p>
         </div>
 

@@ -1,13 +1,14 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Language, InsightArticle } from '@/types';
 import { INSIGHTS_ARTICLES, FAQS } from '@/lib/data';
 import { BookOpen, ArrowRight, Clock, Calendar, ChevronDown, ChevronLeft, ChevronRight, UserCheck, Sparkles } from 'lucide-react';
 
 interface InsightsSectionProps {
   language: Language;
-  onSelectArticle: (article: InsightArticle) => void;
+  onSelectArticle?: (article: InsightArticle) => void;
 }
 
 export const InsightsSection: React.FC<InsightsSectionProps> = ({
@@ -101,6 +102,7 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
             className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4 px-1"
           >
             {articles.map((art) => {
+              const articleHref = `/insight/${art.slug || art.id}`;
               return (
                 <article
                   key={art.id}
@@ -108,9 +110,9 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
                 >
                   <div>
                     {/* Cover Image with next/image */}
-                    <div
-                      onClick={() => onSelectArticle(art)}
-                      className="relative h-52 overflow-hidden cursor-pointer bg-slate-100"
+                    <Link
+                      href={articleHref}
+                      className="relative block h-52 overflow-hidden cursor-pointer bg-slate-100"
                     >
                       <Image
                         src={art.image}
@@ -124,7 +126,7 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
                           {typeof art.category === 'object' ? (art.category[language] || art.category.ID) : art.category}
                         </span>
                       </div>
-                    </div>
+                    </Link>
 
                     {/* Body */}
                     <div className="p-6">
@@ -146,11 +148,10 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
                         <span>{language === 'ID' ? 'Oleh: Principal Solution Architect, Radya Labs' : 'By: Principal Solution Architect, Radya Labs'}</span>
                       </div>
 
-                      <h3
-                        onClick={() => onSelectArticle(art)}
-                        className="text-xl font-bold text-[#0F172A] mb-3 group-hover:text-[#1793E8] transition-colors leading-snug cursor-pointer line-clamp-2"
-                      >
-                        {art.title[language] || art.title.ID}
+                      <h3 className="text-xl font-bold text-[#0F172A] mb-3 group-hover:text-[#1793E8] transition-colors leading-snug cursor-pointer line-clamp-2">
+                        <Link href={articleHref}>
+                          {art.title[language] || art.title.ID}
+                        </Link>
                       </h3>
 
                       <p className="text-[#475569] text-sm leading-relaxed mb-4 line-clamp-3">
@@ -175,13 +176,13 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
 
                   {/* Action Button */}
                   <div className="p-4 bg-slate-50 border-t border-slate-100 flex flex-col gap-2">
-                    <button
-                      onClick={() => onSelectArticle(art)}
+                    <Link
+                      href={articleHref}
                       className="w-full py-2.5 px-4 rounded-xl bg-gradient-radya text-white font-bold text-xs flex items-center justify-between shadow-xs hover:brightness-110 transition-all"
                     >
                       <span>{language === 'ID' ? 'Baca Artikel Lengkap' : 'Read Full Article'}</span>
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </Link>
                   </div>
                 </article>
               );

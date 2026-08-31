@@ -162,13 +162,13 @@ export const DevelopmentProcess: React.FC<DevelopmentProcessProps> = ({
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
             {language === 'ID'
-              ? 'Metodologi Delivery Terstruktur'
-              : 'Disciplined & Transparent Delivery Playbook'}
+              ? 'Anda Dapat Masuk di Tahap Manapun'
+              : 'You Can Bring Us In at Any Stage'}
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
             {language === 'ID'
-              ? 'Pendekatan iteratif berbasis Agile yang menjamin ketepatan waktu, kualitas kode tinggi, dan visibilitas transparan.'
-              : 'Agile execution designed for predictable releases, zero downtime deployments, and complete transparency.'}
+              ? 'Baik Anda memulai dari halaman kosong maupun produk sudah rilis dan memerlukan perbaikan — kami menyesuaikan titik masuk dengan kondisi Anda saat ini.'
+              : 'Whether you\'re starting from a blank page or your product is live but something needs fixing — we scope the engagement around where you are now.'}
           </p>
         </div>
 

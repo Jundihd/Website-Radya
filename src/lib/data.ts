@@ -22,10 +22,10 @@ export const HERO_STATS: StatItem[] = [
   },
   {
     id: 'team',
-    value: '100+',
-    numberValue: 100,
+    value: '60+',
+    numberValue: 60,
     suffix: '+',
-    label: { ID: 'Karyawan Ahli', EN: 'Expert Engineers' },
+    label: { ID: 'Engineer & Spesialis', EN: 'Engineers & Specialists' },
     iconName: 'Users'
   },
   {
@@ -3015,6 +3015,13 @@ export const DEVELOPMENT_STAGES = [
       EN: 'Maintenance & Support (24/7 Maintenance & SLA)',
     },
   },
+  {
+    id: 'prefer-not-to-say',
+    name: {
+      ID: 'Belum Ditentukan (Prefer Not to Say)',
+      EN: 'Prefer Not to Say / Undecided',
+    },
+  },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -3059,6 +3066,7 @@ export const TESTIMONIALS: Testimonial[] = [
 export const INSIGHTS_ARTICLES: InsightArticle[] = [
   {
     id: 'art-1',
+    slug: 'bagaimana-ai-dapat-meningkatkan-efisiensi-operasional-perusahaan',
     title: {
       ID: 'Bagaimana AI Dapat Meningkatkan Efisiensi Operasional Perusahaan',
       EN: 'How Enterprise Generative AI Drives Measureable Operational Efficiency'
@@ -3074,10 +3082,12 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
     category: { ID: 'AI & INOVASI', EN: 'AI & INNOVATION' },
     date: '22 Mei 2026',
     readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80',
+    tags: ['Artificial Intelligence', 'Generative AI', 'Enterprise Automation', 'LLM']
   },
   {
     id: 'art-2',
+    slug: '5-alasan-migrasi-ke-cloud-native-adalah-langkah-tepat-untuk-bisnis',
     title: {
       ID: '5 Alasan Migrasi ke Cloud Native adalah Langkah Tepat untuk Bisnis',
       EN: '5 Strategic Reasons Migrating to Cloud Native Architectures Drives Growth'
@@ -3093,10 +3103,12 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
     category: { ID: 'CLOUD NATIVE', EN: 'CLOUD NATIVE' },
     date: '15 Mei 2026',
     readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80',
+    tags: ['Cloud Native', 'Kubernetes', 'Microservices', 'AWS', 'GCP']
   },
   {
     id: 'art-3',
+    slug: 'devops-best-practices-untuk-mempercepat-delivery-aplikasi-enterprise',
     title: {
       ID: 'DevOps Best Practices untuk Mempercepat Delivery Aplikasi Enterprise',
       EN: 'DevOps Best Practices for Accelerating Enterprise Software Delivery'
@@ -3112,7 +3124,8 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
     category: { ID: 'DEVOPS & INFRA', EN: 'DEVOPS & INFRA' },
     date: '08 Mei 2026',
     readTime: '4 min read',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
+    tags: ['DevOps', 'Terraform', 'CI/CD Automation', 'Infrastructure']
   }
 ];
 

@@ -15,12 +15,12 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     {
       id: 'ojk-sikepo',
       title: {
-        ID: 'Sistem legacy sulit dikembangkan dan dipelihara',
-        EN: 'Legacy systems are hard to develop and maintain',
+        ID: 'Sistem legacy Anda terlalu berisiko untuk diubah',
+        EN: 'Your legacy system is too risky to change',
       },
       description: {
-        ID: 'Arsitektur lama yang kaku dan minim dokumentasi sering menghambat penambahan fitur baru dan meningkatkan risiko downtime. Kami memodernisasi portal regulasi SIKePO untuk OJK dengan merombak arsitektur menjadi sistem web dan mobile modern yang lincah, aman, serta terintegrasi langsung dengan ketentuan perbankan nasional.',
-        EN: 'Rigid legacy architectures and technical debt slow down feature rollouts and increase operational fragility. We modernized the SIKePO regulatory portal for OJK, refactoring the system into an agile, scalable web and mobile platform seamlessly connected to national banking provisions.',
+        ID: 'Setiap permintaan fitur baru berubah menjadi negosiasi berbulan-bulan karena takut ada sistem yang jebol. Kami merombak portal regulasi perbankan OJK menjadi platform web dan mobile modern berkecepatan tinggi yang terindeks langsung dengan ketentuan perbankan nasional.',
+        EN: 'Every new feature request turns into a three-month negotiation about what might break. We rebuilt OJK\'s banking regulation portal into a modern web and mobile platform, indexed to national banking provisions, with sub-second search.',
       },
       caseStudyTag: 'CASE STUDY: OJK — SIKEPO',
       caseStudyHref: '/portofolio/sikepo',
@@ -28,11 +28,11 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     {
       id: 'biofarma-bioaudit',
       title: {
-        ID: 'Proses manual memperlambat pekerjaan krusial',
-        EN: 'Manual processes slow down critical work',
+        ID: 'Proses manual memperlambat pekerjaan krusial Anda',
+        EN: 'Your manual processes slow down critical work',
       },
       description: {
-        ID: 'Pengelolaan alur kerja berbasis kertas dan verifikasi manual memakan ribuan jam kerja serta rawan kelalaian pencatatan. Bersama Bio Farma, kami membangun BioAudit — portal audit internal paperless berstandar IIA dengan alur persetujuan terotomatisasi dan penelusuran audit trail secara real-time.',
+        ID: 'Pengelolaan alur kerja berbasis kertas dan verifikasi manual memakan ribuan jam kerja serta rawan kelalaian. Bersama Bio Farma, kami membangun BioAudit — portal audit internal paperless berstandar IIA dengan alur persetujuan terotomatisasi dan penelusuran audit trail real-time.',
         EN: 'Manual paper-based processes and repetitive approvals consume thousands of valuable work hours and invite human error. With Bio Farma, we built BioAudit — an IIA-compliant paperless audit management platform featuring automated verification and real-time audit trails.',
       },
       caseStudyTag: 'CASE STUDY: BIOFARMA — BIOAUDIT',
@@ -41,12 +41,12 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     {
       id: 'imuni',
       title: {
-        ID: 'Data operasional tersebar di banyak sistem',
-        EN: 'Operational data scattered across many systems',
+        ID: 'Data operasional Anda tersebar di banyak sistem',
+        EN: 'Your operational data is scattered across many systems',
       },
       description: {
-        ID: 'Informasi yang terfragmentasi di berbagai aplikasi internal menyulitkan konsolidasi data dan memperlambat pengambilan keputusan strategis. Melalui platform terpadu IMUNI, kami mengintegrasikan rekam medis pasien, logistik persediaan vaksin, dan pemesanan layanan ke dalam satu data hub terpusat yang sinkron dan aman.',
-        EN: "Operational data isolated across siloed systems prevents unified visibility and hampers rapid decision-making. Through IMUNI's integrated digital platform, we unified electronic health records, vaccine inventory logistics, and booking workflows into a single centralized, secure data hub.",
+        ID: 'Informasi yang terfragmentasi di berbagai aplikasi internal menyulitkan konsolidasi data dan memperlambat keputusan strategis. Melalui platform terpadu IMUNI, kami mengintegrasikan rekam medis pasien, logistik persediaan vaksin, dan pemesanan layanan ke dalam satu data hub terpusat yang sinkron.',
+        EN: 'Operational data isolated across siloed systems prevents unified visibility and hampers rapid decision-making. Through IMUNI\'s integrated digital platform, we unified electronic health records, vaccine inventory logistics, and booking workflows into a single centralized, secure data hub.',
       },
       caseStudyTag: 'CASE STUDY: IMUNI — IMUNI',
       caseStudyHref: '/portofolio/imuni',
@@ -54,12 +54,12 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     {
       id: 'pusmendik-anbk',
       title: {
-        ID: 'Sistem tidak dapat berskala untuk peluncuran nasional',
-        EN: "Systems can't scale for a nationwide rollout",
+        ID: 'Sistem Anda tidak dapat berskala untuk rilis nasional',
+        EN: 'Your system can\'t scale for a nationwide rollout',
       },
       description: {
-        ID: 'Infrastruktur konvensional kerap gagal menangani lonjakan traffic masif secara mendadak saat peluncuran berskala nasional. Pada platform ANBK Pusmendik Kemendikbudristek, kami merancang arsitektur distributed cloud berkinerja tinggi dengan auto-scaling yang andal melayani jutaan peserta ujian di ribuan sekolah serentak tanpa downtime.',
-        EN: 'Legacy infrastructure frequently bottlenecks or crashes under sudden nationwide traffic surges. On the ANBK platform for Pusmendik Kemendikbudristek, we engineered a high-concurrency distributed cloud architecture with instant auto-scaling, reliably powering exams for millions of students nationwide.',
+        ID: 'Infrastruktur konvensional kerap gagal menangani lonjakan traffic masif saat peluncuran nasional. Pada platform ANBK Kemendikbudristek, kami merancang arsitektur cloud terdistribusi dengan auto-scaling yang andal melayani jutaan peserta ujian di ribuan sekolah serentak dengan 99.99% uptime.',
+        EN: 'Legacy infrastructure frequently bottlenecks or crashes under sudden nationwide traffic surges. On the ANBK platform for Ministry of Education, we engineered a high-concurrency distributed cloud architecture with dynamic auto-scaling, reliably serving millions of students nationwide at 99.99% uptime.',
       },
       caseStudyTag: 'CASE STUDY: PUSMENDIK — ANBK',
       caseStudyHref: '/portofolio/anbk',
@@ -67,11 +67,11 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     {
       id: 'anteraja-aware',
       title: {
-        ID: 'Tim IT internal kekurangan kapasitas untuk mengimbangi',
-        EN: 'Internal IT team lacks capacity to keep up',
+        ID: 'Tim IT internal Anda kekurangan kapasitas untuk mengimbangi',
+        EN: 'Your internal IT team lacks capacity to keep up',
       },
       description: {
-        ID: 'Laju ekspansi bisnis yang pesat sering kali melampaui ketersediaan resource dan keahlian spesifik tim engineering in-house. Radya Labs berkolaborasi erat dengan Anteraja sebagai extended engineering squad untuk mengakselerasi arsitektur dan delivery aplikasi logistik cerdas Anteraja Aware tepat waktu.',
+        ID: 'Laju ekspansi bisnis sering kali melampaui ketersediaan resource dan keahlian spesifik tim engineering internal. Radya Labs berkolaborasi erat dengan Anteraja sebagai extended engineering squad untuk mengakselerasi arsitektur dan delivery platform logistik Anteraja Aware tepat waktu.',
         EN: 'Fast-paced market growth often outpaces in-house engineering capacity and specialized technical skillsets. Radya Labs partnered with Anteraja as a dedicated co-engineering partner to accelerate the architecture and delivery of the smart logistics platform Anteraja Aware on schedule.',
       },
       caseStudyTag: 'CASE STUDY: ANTERAJA — ANTERAJA AWARE',
@@ -80,12 +80,12 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
     {
       id: 'biofarma-bismart',
       title: {
-        ID: 'Pelaporan risiko & kepatuhan sulit dilacak',
-        EN: 'Risk & compliance reporting is hard to track',
+        ID: 'Pelaporan risiko & kepatuhan Anda sulit dilacak',
+        EN: 'Your risk & compliance reporting is hard to track',
       },
       description: {
-        ID: 'Pemantauan risiko dan kepatuhan regulasi secara parsial menyulitkan mitigasi masalah sebelum berdampak pada operasional perusahaan. Melalui sistem BI-SMART Bio Farma, kami menghadirkan dashboard tata kelola risiko terpadu dengan analitik prediktif dan tracking kepatuhan enterprise yang transparan.',
-        EN: "Fragmented risk monitoring makes it difficult to detect anomalies and enforce compliance before operational disruptions occur. Through Bio Farma's BI-SMART, we delivered an enterprise risk governance dashboard equipped with proactive mitigation workflows and real-time compliance tracking.",
+        ID: 'Pemantauan risiko parsial menyulitkan mitigasi masalah sebelum berdampak pada operasional. Melalui sistem BI-SMART Bio Farma, kami menghadirkan dashboard tata kelola risiko terpadu dengan analitik prediktif dan tracking kepatuhan enterprise real-time.',
+        EN: 'Fragmented risk monitoring makes it difficult to detect anomalies and enforce compliance before operational disruptions occur. Through Bio Farma\'s BI-SMART, we delivered an enterprise risk governance dashboard equipped with proactive mitigation workflows and real-time compliance tracking.',
       },
       caseStudyTag: 'CASE STUDY: BIOFARMA — BI-SMART',
       caseStudyHref: '/portofolio/bi-smart',
@@ -152,12 +152,12 @@ export const ChallengesSection: React.FC<ChallengesSectionProps> = ({ language }
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight mb-3">
-            {language === 'ID' ? 'Tantangan yang Kami Selesaikan' : 'Challenges We Solve'}
+            {language === 'ID' ? 'Enam Masalah Nyata yang Telah Kami Selesaikan' : 'Six Problems We\'ve Actually Solved'}
           </h2>
-          <p className="text-slate-600 text-base sm:text-lg max-w-2xl">
+          <p className="text-slate-600 text-base sm:text-lg max-w-3xl">
             {language === 'ID'
-              ? 'Masalah nyata yang telah kami bantu klien atasi — bukan sekadar teori.'
-              : "Real problems we've helped our clients overcome — not just theory."}
+              ? 'Setiap poin berasal dari sistem klien asli yang dapat Anda telusuri. Temukan yang paling serupa dengan tantangan perusahaan Anda.'
+              : 'Each one is a real client system you can look up. Find the one that sounds like yours.'}
           </p>
         </div>
 

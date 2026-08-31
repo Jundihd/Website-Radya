@@ -107,10 +107,10 @@ export const TrustedCompanies: React.FC<TrustedCompaniesProps> = ({ language }) 
               <Award className="w-4 h-4" />
               <span>{language === 'ID' ? 'KLIEN TERPERCAYA' : 'TRUSTED BY ENTERPRISES'}</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight max-w-3xl leading-snug">
               {language === 'ID'
-                ? 'Dipercaya Oleh Berbagai Organisasi Terkemuka'
-                : 'Empowering Industry Leaders & Public Institutions'}
+                ? 'Danone, Pertamina, Bio Farma, OJK, dan Kemendikbudristek mempercayakan sistem krusial mereka kepada Radya Labs.'
+                : 'Danone, Pertamina, Bio Farma, OJK, and the Ministry of Education trust us with systems they cannot afford to lose.'}
             </h3>
           </div>
         </div>

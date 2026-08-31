@@ -125,7 +125,6 @@ export default function Home() {
         {/* 12 Latest Insights & FAQ */}
         <InsightsSection
           language={language}
-          onSelectArticle={(article) => setSelectedArticle(article)}
         />
 
         {/* 13 Final CTA Banner */}

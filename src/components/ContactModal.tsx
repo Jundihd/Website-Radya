@@ -266,7 +266,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase mb-1 flex items-center gap-1.5">
                   <MessageSquare className="w-3.5 h-3.5 text-[#1793E8]" />
-                  <span>{language === 'ID' ? 'Catatan / Pesan Tambahan' : 'Additional Notes / Message'}</span>
+                  <span>{language === 'ID' ? 'Catatan / Pesan Tambahan (Opsional)' : 'Additional Notes / Message (Optional)'}</span>
                 </label>
                 <div className="relative rounded-xl bg-slate-50 border border-slate-200 focus-within:border-[#1793E8] focus-within:ring-1 focus-within:ring-[#1793E8] transition-all">
                   <textarea
@@ -279,7 +279,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     <div className="absolute inset-0 p-4 pointer-events-none select-none text-sm leading-relaxed text-slate-400 font-normal z-0">
                       {language === 'ID' ? (
                         <>
-                          Kirimkan Pesan atau Pertanyaan kepada kami terkait proyek Anda, atau jika ada permintaan khusus seperti{' '}
+                          (Opsional) Kirimkan pesan atau pertanyaan terkait proyek Anda, atau jika ada permintaan khusus seperti{' '}
                           <span className="inline-flex items-center font-bold text-[#1793E8]/75 bg-[#1793E8]/10 px-1.5 py-0.5 rounded">
                             Permintaan Demo Gratis
                           </span>
@@ -287,7 +287,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                         </>
                       ) : (
                         <>
-                          Send us a message or inquiry regarding your project, or any specific requests such as a{' '}
+                          (Optional) Send us a message or inquiry regarding your project, or any specific requests such as a{' '}
                           <span className="inline-flex items-center font-bold text-[#1793E8]/75 bg-[#1793E8]/10 px-1.5 py-0.5 rounded">
                             Free Demo Request
                           </span>

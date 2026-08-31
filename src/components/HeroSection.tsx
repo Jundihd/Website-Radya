@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Language } from '@/types';
 import { HERO_STATS } from '@/lib/data';
-import { ArrowRight, Zap, FolderKanban } from 'lucide-react';
+import { ArrowRight, Zap, FolderKanban, MessageSquare } from 'lucide-react';
 
 interface HeroSectionProps {
   language: Language;
@@ -66,22 +66,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </span>
               <span className="text-xs font-bold tracking-wide uppercase text-slate-700">
                 {language === 'ID'
-                  ? 'Teman Transformasi Digital Terbaik Anda'
-                  : 'Your Trusted Digital Transformation Partner'}
+                  ? 'MEMBANGUN SISTEM MISI KRITIS INDONESIA SEJAK 2011'
+                  : 'BUILDING INDONESIA\'S MISSION-CRITICAL SYSTEMS SINCE 2011'}
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[46px] lg:leading-[1.18] font-extrabold text-[#0F172A] tracking-tight mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-[42px] lg:leading-[1.2] font-extrabold text-[#0F172A] tracking-tight mb-4">
               {language === 'ID' ? (
                 <>
-                  Membangun Solusi Digital{' '}
-                  <span className="text-gradient-radya">Cerdas, Aman</span>, dan Berdampak Nyata.
+                  Saat sistem tidak boleh gagal,{' '}
+                  <span className="text-gradient-radya">perusahaan Indonesia percaya pada Radya Labs</span>.
                 </>
               ) : (
                 <>
-                  Build Intelligent Digital Solutions That{' '}
-                  <span className="text-gradient-radya">Scale Your Enterprise</span>.
+                  When the system cannot fail,{' '}
+                  <span className="text-gradient-radya">Indonesian enterprises call Radya Labs</span>.
                 </>
               )}
             </h1>
@@ -89,27 +89,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Paragraph */}
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-7 max-w-xl font-normal">
               {language === 'ID'
-                ? 'Radya Labs membantu perusahaan bertransformasi digital dan bertumbuh melalui solusi Cloud Native, AI, dan aplikasi berkualitas tinggi yang siap menghadapi masa depan.'
-                : 'Radya Labs empowers companies to digitally transform and grow through Cloud Native, AI, and future-ready high-quality applications.'}
+                ? 'Selama 15 tahun kami telah merancang platform di balik ujian nasional, regulasi perbankan, dan audit farmasi — sistem di mana downtime bukanlah pilihan. Arsitektur cloud native, terapan AI, dan tim engineer yang tetap mendampingi setelah peluncuran.'
+                : 'For 15 years we\'ve engineered the platforms behind national exams, banking regulation, and pharmaceutical audits — systems where downtime is not an option. Cloud native architecture, applied AI, and engineers who stay after launch.'}
             </p>
 
             {/* Primary & Secondary Action CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
               <a
-                href="#layanan"
+                href="#portofolio"
                 className="bg-gradient-radya text-white font-bold text-sm sm:text-base px-7 py-3.5 rounded-full shadow-lg shadow-[#1793E8]/30 hover:shadow-xl hover:shadow-[#1793E8]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 group"
               >
-                <span>{language === 'ID' ? 'Jelajahi Layanan Kami' : 'Explore Our Services'}</span>
+                <span>
+                  {language === 'ID'
+                    ? 'Lihat bagaimana kami membangun ANBK untuk 3 juta siswa'
+                    : 'See how we built ANBK for 3 million students'}
+                </span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </a>
 
-              <a
-                href="#portofolio"
-                className="bg-white hover:bg-slate-50 text-[#0F172A] border border-slate-200 font-bold text-sm sm:text-base px-7 py-3.5 rounded-full shadow-xs hover:border-slate-300 transition-all duration-200 flex items-center justify-center gap-2"
+              <button
+                type="button"
+                onClick={onOpenContact}
+                className="bg-white hover:bg-slate-50 text-[#0F172A] border border-slate-200 font-bold text-sm sm:text-base px-7 py-3.5 rounded-full shadow-xs hover:border-slate-300 transition-all duration-200 flex items-center justify-center gap-2 shrink-0"
               >
-                <FolderKanban className="w-4 h-4 text-[#1793E8]" />
-                <span>{language === 'ID' ? 'Lihat Portofolio Kami' : 'View our Portfolio'}</span>
-              </a>
+                <MessageSquare className="w-4 h-4 text-[#1793E8]" />
+                <span>{language === 'ID' ? 'Bicara dengan Engineer Kami' : 'Talk to an Engineer'}</span>
+              </button>
             </div>
 
           </div>
@@ -172,17 +177,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       }`}
                     />
                   ))}
-                </div>
-              </div>
-
-              {/* Floating hanging badge: ISO 27001 & SOC2 Compliant (Positioned Top-Right) */}
-              <div className="absolute -top-4 -right-2 sm:-top-5 sm:-right-4 bg-white/95 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3 z-20 animate-float hover:shadow-2xl transition-shadow">
-                <div className="w-10 h-10 rounded-xl bg-[#43D3A4]/15 flex items-center justify-center text-[#43D3A4] shrink-0">
-                  <Zap className="w-5 h-5 fill-[#43D3A4]" />
-                </div>
-                <div>
-                  <div className="text-xs font-extrabold text-slate-900">ISO 27001 & SOC2 Compliant</div>
-                  <div className="text-[11px] font-medium text-slate-500">Enterprise Security Standard</div>
                 </div>
               </div>
 

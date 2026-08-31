@@ -60,20 +60,20 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
           <div className="lg:col-span-8">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1793E8]/10 text-[#1793E8] text-xs font-bold uppercase tracking-wider mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'LAYANAN KAMI' : 'OUR CORE SERVICES'}</span>
+              <span>{language === 'ID' ? 'LAYANAN UTAMA' : 'OUR CORE SERVICES'}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight">
               {language === 'ID'
-                ? 'Solusi End-to-End untuk Kebutuhan Digital Anda'
-                : 'End-to-End Solutions for Your Digital Scale'}
+                ? 'Titik Awal Klien Memilih Radya Labs'
+                : 'Where Teams Usually Bring Us In'}
             </h2>
           </div>
 
           <div className="lg:col-span-4 flex lg:justify-end">
             <p className="text-slate-600 text-base leading-relaxed">
               {language === 'ID'
-                ? 'Kami menyediakan layanan komprehensif untuk membantu bisnis Anda berinovasi dan tumbuh di era digital.'
-                : 'Comprehensive engineering capabilities to help your organization innovate, automate, and outpace market competition.'}
+                ? 'Mayoritas klien datang dengan salah satu tantangan utama ini. Kami merancang sisanya setelah memahami batasan teknis Anda.'
+                : 'Most clients arrive with one of these core challenges. We scope the rest once we understand your constraints.'}
             </p>
           </div>
         </div>
@@ -118,7 +118,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
               {/* Bottom Action Link */}
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#1793E8]">
-                <span>{language === 'ID' ? 'PELAJARI LEBIH LANJUT' : 'LEARN MORE'}</span>
+                <span>{language === 'ID' ? 'Lihat Implementasi Produksi' : 'See this in production'}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
               </div>
             </div>
@@ -138,13 +138,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             <div>
               <h3 className="text-xl sm:text-2xl font-bold mb-1">
                 {language === 'ID'
-                  ? 'Punya tantangan digital yang kompleks?'
-                  : 'Have a complex enterprise technical challenge?'}
+                  ? 'Ragu Apakah Tantangan Anda Membutuhkan Kami?'
+                  : 'Not sure if your problem needs us?'}
               </h3>
               <p className="text-slate-300 text-sm sm:text-base">
                 {language === 'ID'
-                  ? 'Mari diskusikan bersama C Level kami bagaimana cara membantu mewujudkan solusi terbaik untuk bisnis Anda.'
-                  : 'Connect with our C Level to scope your architecture and technology requirements.'}
+                  ? 'Ceritakan situasi Anda dalam beberapa kalimat. Jika tidak cocok, kami akan berterus terang dan mengarahkan Anda ke solusi yang lebih baik.'
+                  : 'Send us the situation in a few sentences. If it\'s not a fit, we\'ll tell you and point you somewhere better.'}
               </p>
             </div>
           </div>
@@ -153,7 +153,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             onClick={onOpenContact}
             className="shrink-0 bg-gradient-radya text-white font-bold text-sm sm:text-base px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2"
           >
-            <span>{language === 'ID' ? 'KONSULTASI SEKARANG' : 'CONSULT NOW'}</span>
+            <span>{language === 'ID' ? 'Bicara dengan Engineer' : 'Ask an Engineer'}</span>
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>

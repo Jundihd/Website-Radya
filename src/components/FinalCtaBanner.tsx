@@ -28,20 +28,18 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
             {/* Top Pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-[#29B6F6] text-xs font-bold uppercase tracking-wider mb-6 border border-white/10">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>{language === 'ID' ? 'MULAI PROYEK ANDA' : 'START YOUR DIGITAL JOURNEY'}</span>
+              <span>{language === 'ID' ? 'CERITAKAN TANTANGAN TEKNIS ANDA' : 'TELL US WHAT\'S BREAKING'}</span>
             </div>
 
             {/* Headline */}
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[1.15]">
               {language === 'ID' ? (
                 <>
-                  Siap Memulai Transformasi Digital Bersama{' '}
-                  <span className="text-gradient-radya">Radya Labs</span>?
+                  Jelaskan masalah Anda dalam beberapa kalimat — senior engineer kami akan merespons dalam 2 hari kerja.
                 </>
               ) : (
                 <>
-                  Ready to Accelerate Your Enterprise Digital Transformation with{' '}
-                  <span className="text-gradient-radya">Radya Labs</span>?
+                  Describe the problem in a few sentences — a senior engineer will read it and reply within two working days.
                 </>
               )}
             </h2>
@@ -49,8 +47,8 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
             {/* Paragraph */}
             <p className="text-slate-300 text-base sm:text-xl leading-relaxed mb-10">
               {language === 'ID'
-                ? 'Tim kami siap membantu Anda merancang solusi, membangun arsitekturnya, hingga menjalankan solusi Cloud Native & AI yang siap diandalkan untuk skala enterprise.'
-                : 'Our team is ready to help you design solutions, build the architecture, and run reliable enterprise-grade Cloud Native & AI solutions.'}
+                ? 'Tanpa paksaan sales, tanpa komitmen awal.'
+                : 'No sales sequence, no obligation.'}
             </p>
 
             {/* CTA Button */}
@@ -63,7 +61,7 @@ export const FinalCtaBanner: React.FC<FinalCtaBannerProps> = ({
                 className="bg-gradient-radya text-white font-extrabold text-base px-9 py-4 rounded-full shadow-xl hover:shadow-2xl hover:brightness-110 transition-all flex items-center justify-center gap-2 group"
               >
                 <PhoneCall className="w-5 h-5" />
-                <span>{language === 'ID' ? 'Jadwalkan Konsultasi Gratis' : 'Book a Free Consultation'}</span>
+                <span>{language === 'ID' ? 'Bicara dengan Engineer Kami' : 'Talk to an Engineer'}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
