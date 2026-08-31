@@ -31,13 +31,24 @@ export const metadata: Metadata = {
   },
 };
 
-// Fetch live CMS portfolios if available, else return static CASE_STUDIES
+// Fetch live CMS portfolios and merge with all 25+ static CASE_STUDIES
 async function getAllPortfolios(): Promise<CaseStudy[]> {
   try {
     const cmsPortfolios = await fetchLiveCmsPortfolios();
+    const merged = [...CASE_STUDIES];
     if (cmsPortfolios && cmsPortfolios.length > 0) {
-      return cmsPortfolios;
+      cmsPortfolios.forEach((cmsItem) => {
+        const idx = merged.findIndex(
+          (p) => p.id === cmsItem.id || p.slug === cmsItem.slug || p.id === cmsItem.slug
+        );
+        if (idx !== -1) {
+          merged[idx] = { ...merged[idx], ...cmsItem };
+        } else {
+          merged.push(cmsItem);
+        }
+      });
     }
+    return merged;
   } catch (err) {
     console.error('Error fetching portfolios for portfolio hub page:', err);
   }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CaseStudy } from '@/types';
@@ -15,6 +15,10 @@ import {
   Award,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
+  Maximize2,
+  X,
+  ImageIcon,
 } from 'lucide-react';
 
 interface CaseStudyClientViewProps {
@@ -23,14 +27,58 @@ interface CaseStudyClientViewProps {
 
 export const CaseStudyClientView: React.FC<CaseStudyClientViewProps> = ({ study }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHeroHovered, setIsHeroHovered] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Consolidate all available screenshots & images into a deduplicated array
+  const allPhotos = useMemo(() => {
+    const list = [study.image, ...(study.images || []), ...(study.screenshots || [])].filter(Boolean);
+    return Array.from(new Set(list));
+  }, [study]);
+
+  // Auto-rotate top hero carousel every 4 seconds if not hovered and multiple photos exist
+  useEffect(() => {
+    if (allPhotos.length <= 1 || isHeroHovered) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % allPhotos.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [allPhotos.length, isHeroHovered]);
+
+  // Keyboard navigation for Lightbox (ESC to close, Left/Right arrows to navigate)
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightboxIndex(null);
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev !== null ? (prev - 1 + allPhotos.length) % allPhotos.length : 0));
+      } else if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev !== null ? (prev + 1) % allPhotos.length : 0));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, allPhotos.length]);
+
+  const handlePrevSlide = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentSlide((prev) => (prev - 1 + allPhotos.length) % allPhotos.length);
+  };
+
+  const handleNextSlide = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentSlide((prev) => (prev + 1) % allPhotos.length);
+  };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A]">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans">
       {/* Sticky Header Navigation */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 py-4 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <Link
-            href="/#portofolio"
+            href="/portofolio"
             className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[#1793E8] transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -69,7 +117,7 @@ export const CaseStudyClientView: React.FC<CaseStudyClientViewProps> = ({ study 
             Beranda
           </Link>
           <ChevronRight className="w-3 h-3 text-slate-300" />
-          <Link href="/#portofolio" className="hover:text-slate-700 transition-colors">
+          <Link href="/portofolio" className="hover:text-slate-700 transition-colors">
             Portofolio & Studi Kasus
           </Link>
           <ChevronRight className="w-3 h-3 text-slate-300" />
@@ -115,16 +163,91 @@ export const CaseStudyClientView: React.FC<CaseStudyClientViewProps> = ({ study 
           </section>
         )}
 
-        {/* Primary Featured Showcase Image */}
-        <div className="relative w-full h-[320px] sm:h-[460px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 mb-14 bg-slate-900">
-          <Image
-            src={study.image}
-            alt={`${study.title.ID} — ${study.client}`}
-            fill
-            sizes="(max-width: 1024px) 100vw, 1024px"
-            className="object-cover"
-            priority
-          />
+        {/* Top Hero Auto-Rotating Photo Carousel Showcase */}
+        <div
+          className="relative w-full h-[340px] sm:h-[480px] md:h-[540px] rounded-3xl overflow-hidden shadow-2xl border border-slate-800/90 mb-14 bg-slate-950 group select-none cursor-pointer"
+          onMouseEnter={() => setIsHeroHovered(true)}
+          onMouseLeave={() => setIsHeroHovered(false)}
+          onClick={() => setLightboxIndex(currentSlide)}
+        >
+          {/* Photo Slides */}
+          {allPhotos.map((imgSrc, idx) => {
+            const isActive = idx === currentSlide;
+            return (
+              <div
+                key={imgSrc + idx}
+                className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                  isActive ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0 pointer-events-none'
+                }`}
+              >
+                <Image
+                  src={imgSrc}
+                  alt={`${study.title.ID} screenshot ${idx + 1}`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  className="object-cover"
+                  priority={idx === 0}
+                />
+              </div>
+            );
+          })}
+
+          {/* Dark Overlay Gradient for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30 z-20 pointer-events-none" />
+
+          {/* Top Info Bar */}
+          <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between pointer-events-none">
+            <span className="px-3.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 text-xs font-extrabold text-[#29B6F6] uppercase tracking-wider shadow-md">
+              {typeof study.category === 'object' ? study.category.ID : study.category} — {study.client}
+            </span>
+
+            {/* Click to Enlarge Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-md">
+              <Maximize2 className="w-3.5 h-3.5 text-[#29B6F6]" />
+              <span>Klik untuk Perbesar ({currentSlide + 1}/{allPhotos.length})</span>
+            </div>
+          </div>
+
+          {/* Previous / Next Arrow Controls */}
+          {allPhotos.length > 1 && (
+            <div className="absolute inset-y-0 left-0 right-0 z-30 flex items-center justify-between px-4 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                onClick={handlePrevSlide}
+                className="pointer-events-auto p-3 rounded-2xl bg-slate-950/80 hover:bg-[#1793E8] text-white border border-white/20 backdrop-blur-md shadow-xl transition-all hover:scale-110 active:scale-95"
+                title="Foto Sebelumnya"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={handleNextSlide}
+                className="pointer-events-auto p-3 rounded-2xl bg-slate-950/80 hover:bg-[#1793E8] text-white border border-white/20 backdrop-blur-md shadow-xl transition-all hover:scale-110 active:scale-95"
+                title="Foto Selanjutnya"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+          )}
+
+          {/* Bottom Dot Indicators */}
+          {allPhotos.length > 1 && (
+            <div className="absolute bottom-4 left-0 right-0 z-30 flex items-center justify-center gap-2 pointer-events-none">
+              {allPhotos.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentSlide(dotIdx);
+                  }}
+                  className={`pointer-events-auto h-2 rounded-full transition-all duration-300 ${
+                    dotIdx === currentSlide
+                      ? 'w-8 bg-[#29B6F6] shadow-sm'
+                      : 'w-2 bg-white/50 hover:bg-white'
+                  }`}
+                  title={`Foto ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* 2-Column Core Architecture Breakdown */}
@@ -175,23 +298,43 @@ export const CaseStudyClientView: React.FC<CaseStudyClientViewProps> = ({ study 
           </div>
         )}
 
-        {/* Visual Gallery if multiple screenshots exist */}
-        {study.images && study.images.length > 1 && (
+        {/* Visual Implementation Gallery - Clickable to View Full Detail */}
+        {allPhotos.length > 0 && (
           <div className="mb-14">
-            <h3 className="text-2xl font-extrabold text-[#0F172A] mb-6">Galeri Implementasi Sistem</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {study.images.slice(1).map((imgSrc, idx) => (
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-2xl font-extrabold text-[#0F172A]">Galeri Implementasi Sistem</h3>
+                <p className="text-slate-500 text-xs sm:text-sm mt-1">
+                  Klik foto mana saja untuk melihat tangkapan layar sistem dalam resolusi penuh.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1793E8] bg-[#1793E8]/10 px-3 py-1 rounded-full">
+                <ImageIcon className="w-4 h-4" />
+                <span>{allPhotos.length} Foto Screenshot</span>
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {allPhotos.map((imgSrc, idx) => (
                 <div
-                  key={idx}
-                  className="relative h-64 rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-100 group"
+                  key={imgSrc + idx}
+                  onClick={() => setLightboxIndex(idx)}
+                  className="relative h-60 rounded-2xl overflow-hidden shadow-md border border-slate-200/90 bg-slate-950 group cursor-pointer hover:border-[#1793E8] hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <Image
                     src={imgSrc}
                     alt={`${study.title.ID} Preview ${idx + 1}`}
                     fill
-                    sizes="(max-width: 640px) 100vw, 500px"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-slate-950/30 group-hover:bg-slate-950/60 transition-colors flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 duration-200 p-4 text-center">
+                    <Maximize2 className="w-8 h-8 text-[#29B6F6] mb-2 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-extrabold uppercase tracking-wider">Perbesar Foto #{idx + 1}</span>
+                  </div>
+                  <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-md bg-slate-900/80 backdrop-blur-sm text-[10px] font-bold text-white border border-white/10">
+                    Foto {idx + 1} dari {allPhotos.length}
+                  </div>
                 </div>
               ))}
             </div>
@@ -236,7 +379,7 @@ export const CaseStudyClientView: React.FC<CaseStudyClientViewProps> = ({ study 
                 <span>Jadwalkan Konsultasi Gratis</span>
               </button>
               <Link
-                href="/#portofolio"
+                href="/portofolio"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all flex items-center justify-center gap-2"
               >
                 <span>Lihat Studi Kasus Lainnya</span>
@@ -246,6 +389,108 @@ export const CaseStudyClientView: React.FC<CaseStudyClientViewProps> = ({ study 
           </div>
         </div>
       </main>
+
+      {/* Lightbox High-Resolution Fullscreen Image Modal Popup */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-8 animate-in fade-in duration-200"
+          onClick={() => setLightboxIndex(null)}
+        >
+          {/* Top Bar Controls */}
+          <div className="flex items-center justify-between text-white z-50 mb-2">
+            <div className="flex items-center gap-3">
+              <span className="font-extrabold text-sm sm:text-base text-[#29B6F6]">
+                {study.title.ID}
+              </span>
+              <span className="text-xs text-slate-400 bg-slate-800 px-2.5 py-0.5 rounded-full">
+                Foto {lightboxIndex + 1} dari {allPhotos.length}
+              </span>
+            </div>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex(null);
+              }}
+              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/20 cursor-pointer"
+              title="Tutup (ESC)"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Main Fullscreen High-Res Image Container */}
+          <div
+            className="relative flex-1 w-full max-w-6xl mx-auto my-auto flex items-center justify-center overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative w-full h-full max-h-[82vh]">
+              <Image
+                src={allPhotos[lightboxIndex]}
+                alt={`${study.title.ID} Full Resolution Photo ${lightboxIndex + 1}`}
+                fill
+                sizes="100vw"
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            {/* Left / Right Arrow Navigation */}
+            {allPhotos.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + allPhotos.length) % allPhotos.length : 0));
+                  }}
+                  className="absolute left-2 sm:left-4 p-3 sm:p-4 rounded-2xl bg-slate-900/80 hover:bg-[#1793E8] text-white border border-white/20 backdrop-blur-md shadow-2xl transition-all hover:scale-110 active:scale-95 cursor-pointer"
+                  title="Foto Sebelumnya (Panah Kiri)"
+                >
+                  <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % allPhotos.length : 0));
+                  }}
+                  className="absolute right-2 sm:right-4 p-3 sm:p-4 rounded-2xl bg-slate-900/80 hover:bg-[#1793E8] text-white border border-white/20 backdrop-blur-md shadow-2xl transition-all hover:scale-110 active:scale-95 cursor-pointer"
+                  title="Foto Selanjutnya (Panah Kanan)"
+                >
+                  <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Bottom Thumbnail Strip Indicator */}
+          {allPhotos.length > 1 && (
+            <div
+              className="flex items-center justify-center gap-3 overflow-x-auto no-scrollbar py-2 z-50"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {allPhotos.map((thumbSrc, thumbIdx) => (
+                <button
+                  key={thumbSrc + thumbIdx}
+                  onClick={() => setLightboxIndex(thumbIdx)}
+                  className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                    thumbIdx === lightboxIndex
+                      ? 'border-[#29B6F6] scale-110 shadow-lg'
+                      : 'border-white/20 opacity-50 hover:opacity-100'
+                  }`}
+                >
+                  <Image
+                    src={thumbSrc}
+                    alt={`Thumbnail ${thumbIdx + 1}`}
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Direct Contact Modal Dialog Popup */}
       <ContactModal

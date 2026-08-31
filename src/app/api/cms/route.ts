@@ -11,7 +11,22 @@ export async function GET() {
     ]);
 
     const articles = liveArticles.length > 0 ? liveArticles : INSIGHTS_ARTICLES;
-    const portfolios = CASE_STUDIES;
+
+    // Merge CASE_STUDIES (all 25+ rich enterprise portfolios) with live CMS portfolios so no portfolio is lost
+    const mergedPortfolios = [...CASE_STUDIES];
+    if (livePortfolios && livePortfolios.length > 0) {
+      livePortfolios.forEach((cmsItem) => {
+        const idx = mergedPortfolios.findIndex(
+          (p) => p.id === cmsItem.id || p.slug === cmsItem.slug || p.id === cmsItem.slug
+        );
+        if (idx !== -1) {
+          mergedPortfolios[idx] = { ...mergedPortfolios[idx], ...cmsItem };
+        } else {
+          mergedPortfolios.push(cmsItem);
+        }
+      });
+    }
+
     const testimonials = liveTestimonials.length > 0 ? liveTestimonials : TESTIMONIALS;
 
     return NextResponse.json({
@@ -19,11 +34,11 @@ export async function GET() {
       headlessCMS: 'Directus CMS (Radya Labs Official)',
       directusUrl: DIRECTUS_CMS_URL,
       articlesCount: articles.length,
-      portfoliosCount: portfolios.length,
+      portfoliosCount: mergedPortfolios.length,
       testimonialsCount: testimonials.length,
       isLive: liveArticles.length > 0 || livePortfolios.length > 0 || liveTestimonials.length > 0,
       articles,
-      portfolios,
+      portfolios: mergedPortfolios,
       testimonials,
     });
   } catch (error: any) {
