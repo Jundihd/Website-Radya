@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { DIRECTUS_CMS_URL, fetchLiveCmsArticles, fetchLiveCmsPortfolios, fetchLiveCmsTestimonials } from '@/lib/directus';
+import { DIRECTUS_CMS_URL, fetchLiveCmsArticles, fetchLiveCmsPortfolios, fetchLiveCmsTestimonials, deduplicatePortfolios } from '@/lib/directus';
 import { INSIGHTS_ARTICLES, CASE_STUDIES, TESTIMONIALS } from '@/lib/data';
 
 export async function GET() {
@@ -12,20 +12,9 @@ export async function GET() {
 
     const articles = liveArticles.length > 0 ? liveArticles : INSIGHTS_ARTICLES;
 
-    // Merge CASE_STUDIES (all 25+ rich enterprise portfolios) with live CMS portfolios so no portfolio is lost
-    const mergedPortfolios = [...CASE_STUDIES];
-    if (livePortfolios && livePortfolios.length > 0) {
-      livePortfolios.forEach((cmsItem) => {
-        const idx = mergedPortfolios.findIndex(
-          (p) => p.id === cmsItem.id || p.slug === cmsItem.slug || p.id === cmsItem.slug
-        );
-        if (idx !== -1) {
-          mergedPortfolios[idx] = { ...mergedPortfolios[idx], ...cmsItem };
-        } else {
-          mergedPortfolios.push(cmsItem);
-        }
-      });
-    }
+    // Deduplicate portfolios so ANBK, Tokoparts, etc. only appear ONCE without duplicates
+    const combinedPortfolios = [...CASE_STUDIES, ...livePortfolios];
+    const portfolios = deduplicatePortfolios(combinedPortfolios);
 
     const testimonials = liveTestimonials.length > 0 ? liveTestimonials : TESTIMONIALS;
 
@@ -34,11 +23,11 @@ export async function GET() {
       headlessCMS: 'Directus CMS (Radya Labs Official)',
       directusUrl: DIRECTUS_CMS_URL,
       articlesCount: articles.length,
-      portfoliosCount: mergedPortfolios.length,
+      portfoliosCount: portfolios.length,
       testimonialsCount: testimonials.length,
       isLive: liveArticles.length > 0 || livePortfolios.length > 0 || liveTestimonials.length > 0,
       articles,
-      portfolios: mergedPortfolios,
+      portfolios,
       testimonials,
     });
   } catch (error: any) {
@@ -51,7 +40,7 @@ export async function GET() {
       testimonialsCount: TESTIMONIALS.length,
       isLive: false,
       articles: INSIGHTS_ARTICLES,
-      portfolios: CASE_STUDIES,
+      portfolios: deduplicatePortfolios(CASE_STUDIES),
       testimonials: TESTIMONIALS,
     });
   }

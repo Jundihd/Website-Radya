@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CaseStudy, Language } from '@/types';
@@ -13,54 +13,116 @@ import {
   ChevronRight,
   PhoneCall,
   Sparkles,
-  Filter,
 } from 'lucide-react';
 
 interface PortfolioListingClientViewProps {
   initialPortfolios: CaseStudy[];
 }
 
+interface CardHeroImageCarouselProps {
+  images: string[];
+  alt: string;
+  categoryText: string;
+  client: string;
+  industry: string;
+}
+
+const CardHeroImageCarousel: React.FC<CardHeroImageCarouselProps> = ({
+  images,
+  alt,
+  categoryText,
+  client,
+  industry,
+}) => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (images.length <= 1 || isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % images.length);
+    }, 3600);
+    return () => clearInterval(interval);
+  }, [images.length, isHovered]);
+
+  return (
+    <div
+      className="relative h-52 overflow-hidden bg-slate-950"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {images.map((imgSrc, i) => (
+        <img
+          key={imgSrc + i}
+          src={imgSrc}
+          alt={`${alt} screenshot ${i + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 ${
+            i === currentIdx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0'
+          }`}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-20 pointer-events-none" />
+
+      {/* Category Pill (Top Left) */}
+      <div className="absolute top-3 left-3 z-30 pointer-events-none">
+        <span className="px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/10 text-[10px] font-extrabold text-[#29B6F6] uppercase tracking-wider shadow-sm">
+          {categoryText}
+        </span>
+      </div>
+
+      {/* Multi-Image Dots Indicator (Top Right) */}
+      {images.length > 1 && (
+        <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 shadow-sm pointer-events-none">
+          {images.map((_, dotIdx) => (
+            <span
+              key={dotIdx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                dotIdx === currentIdx ? 'w-3.5 bg-[#29B6F6]' : 'w-1.5 bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Client Name & Industry Tag (Bottom) */}
+      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-30 pointer-events-none">
+        <span className="text-base sm:text-lg font-black text-white tracking-wide uppercase drop-shadow-md truncate max-w-[65%]">
+          {client}
+        </span>
+        <span className="text-[10px] text-slate-200 font-semibold bg-white/15 px-2 py-0.5 rounded-md backdrop-blur-md border border-white/10 shrink-0">
+          {industry}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export const PortfolioListingClientView: React.FC<PortfolioListingClientViewProps> = ({ initialPortfolios }) => {
   const [language, setLanguage] = useState<Language>('EN');
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [visibleCount, setVisibleCount] = useState<number>(12);
 
-  // Extract unique categories dynamically from portfolios
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    initialPortfolios.forEach((p) => {
-      const catName = typeof p.category === 'object' ? p.category.EN || p.category.ID : p.category;
-      if (catName) set.add(catName.toUpperCase());
-    });
-    return ['ALL', ...Array.from(set)];
-  }, [initialPortfolios]);
-
-  // Filter portfolios based on search query and selected category
+  // Filter portfolios based on search query
   const filteredPortfolios = useMemo(() => {
     return initialPortfolios.filter((p) => {
-      const catName = (typeof p.category === 'object' ? p.category.EN || p.category.ID : p.category || '').toUpperCase();
-      const matchesCategory = selectedCategory === 'ALL' || catName === selectedCategory;
-
-      const titleStr = (p.title?.EN || p.title?.ID || '').toLowerCase();
+      const titleStr = (typeof p.title === 'object' ? p.title.EN || p.title.ID : p.title || '').toLowerCase();
       const clientStr = (p.client || '').toLowerCase();
-      const summaryStr = (p.summary?.EN || p.summary?.ID || '').toLowerCase();
+      const summaryStr = (typeof p.summary === 'object' ? p.summary.EN || p.summary.ID : p.summary || '').toLowerCase();
       const tagsStr = (p.tags || []).join(' ').toLowerCase();
       const industryStr = (p.industry || '').toLowerCase();
       const query = searchQuery.toLowerCase().trim();
 
-      const matchesSearch =
+      return (
         !query ||
         titleStr.includes(query) ||
         clientStr.includes(query) ||
         summaryStr.includes(query) ||
         tagsStr.includes(query) ||
-        industryStr.includes(query);
-
-      return matchesCategory && matchesSearch;
+        industryStr.includes(query)
+      );
     });
-  }, [initialPortfolios, selectedCategory, searchQuery]);
+  }, [initialPortfolios, searchQuery]);
 
   const displayedPortfolios = filteredPortfolios.slice(0, visibleCount);
   const hasMore = visibleCount < filteredPortfolios.length;
@@ -194,30 +256,6 @@ export const PortfolioListingClientView: React.FC<PortfolioListingClientViewProp
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Category Pills Filter */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-4 mb-10 border-b border-slate-200">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mr-2 shrink-0">
-            <Filter className="w-3.5 h-3.5 text-[#1793E8]" />
-            <span>{language === 'ID' ? 'Industri / Sektor:' : 'Industry / Sector:'}</span>
-          </span>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                setSelectedCategory(cat);
-                setVisibleCount(12);
-              }}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all shrink-0 ${
-                selectedCategory === cat
-                  ? 'bg-[#1793E8] text-white shadow-md'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:border-[#1793E8]/50 hover:text-[#1793E8]'
-              }`}
-            >
-              {cat === 'ALL' ? (language === 'ID' ? 'SEMUA PORTOFOLIO' : 'ALL PORTFOLIOS') : cat}
-            </button>
-          ))}
-        </div>
-
         {/* Results Counter Summary */}
         <div className="flex items-center justify-between mb-8 text-xs font-bold text-slate-500">
           <span>
@@ -232,18 +270,21 @@ export const PortfolioListingClientView: React.FC<PortfolioListingClientViewProp
           )}
         </div>
 
-        {/* 3-Column Responsive Portfolio Grid */}
+        {/* 3-Column Responsive Portfolio Grid with Photo Carousels */}
         {displayedPortfolios.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {displayedPortfolios.map((study) => {
               const portfolioHref = `/portofolio/${study.slug || study.id}`;
-              const titleText = study.title[language] || study.title.ID;
-              const summaryText = study.summary[language] || study.summary.ID;
+              const titleText = typeof study.title === 'object' ? study.title[language] || study.title.ID : study.title;
+              const summaryText = typeof study.summary === 'object' ? study.summary[language] || study.summary.ID : study.summary;
               const categoryText =
                 typeof study.category === 'object'
                   ? study.category[language] || study.category.ID
                   : study.category;
-              const coverImage = study.image || (study.images && study.images[0]) || '/images/portfolio/anbk-1.png';
+
+              const cardImages = Array.from(
+                new Set([study.image, ...(study.images || []), ...(study.screenshots || [])])
+              ).filter(Boolean);
 
               return (
                 <Link
@@ -252,34 +293,14 @@ export const PortfolioListingClientView: React.FC<PortfolioListingClientViewProp
                   className="group bg-slate-900 rounded-3xl border border-slate-800 hover:border-[#1793E8]/60 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#1793E8]/10 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between cursor-pointer"
                 >
                   <div>
-                    {/* Cover Image */}
-                    <div className="relative h-52 overflow-hidden bg-slate-950">
-                      <Image
-                        src={coverImage}
-                        alt={titleText}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
-
-                      {/* Category Pill */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <span className="px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/10 text-[10px] font-extrabold text-[#29B6F6] uppercase tracking-wider shadow-sm">
-                          {categoryText}
-                        </span>
-                      </div>
-
-                      {/* Client Name & Industry */}
-                      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-10">
-                        <span className="text-base font-black text-white tracking-wide uppercase drop-shadow-md truncate max-w-[65%]">
-                          {study.client}
-                        </span>
-                        <span className="text-[10px] text-slate-200 font-semibold bg-white/15 px-2 py-0.5 rounded-md backdrop-blur-md border border-white/10 shrink-0">
-                          {study.industry}
-                        </span>
-                      </div>
-                    </div>
+                    {/* Auto-Rotating Hero Photo Carousel inside each Card */}
+                    <CardHeroImageCarousel
+                      images={cardImages}
+                      alt={titleText}
+                      categoryText={categoryText}
+                      client={study.client}
+                      industry={study.industry}
+                    />
 
                     {/* Card Content Body */}
                     <div className="p-6 text-white">
@@ -300,7 +321,7 @@ export const PortfolioListingClientView: React.FC<PortfolioListingClientViewProp
                                 {m.value}
                               </div>
                               <div className="text-[9px] sm:text-[10px] font-semibold text-slate-400 truncate">
-                                {m.label[language] || m.label.ID}
+                                {typeof m.label === 'object' ? (m.label[language] || m.label.ID) : m.label}
                               </div>
                             </div>
                           ))}
@@ -343,17 +364,16 @@ export const PortfolioListingClientView: React.FC<PortfolioListingClientViewProp
             </h3>
             <p className="text-slate-500 text-sm mb-6">
               {language === 'ID'
-                ? `Tidak ada studi kasus yang cocok dengan pencarian "${searchQuery}". Coba kata kunci lain atau pilih kategori Semua.`
-                : `No case studies match your search "${searchQuery}". Try another keyword or select All categories.`}
+                ? `Tidak ada studi kasus yang cocok dengan pencarian "${searchQuery}". Coba kata kunci lain.`
+                : `No case studies match your search "${searchQuery}". Try another keyword.`}
             </p>
             <button
               onClick={() => {
                 setSearchQuery('');
-                setSelectedCategory('ALL');
               }}
               className="px-6 py-2.5 rounded-full bg-gradient-radya text-white font-bold text-xs shadow-md"
             >
-              {language === 'ID' ? 'Reset Filter' : 'Reset Filters'}
+              {language === 'ID' ? 'Hapus Pencarian' : 'Clear Search'}
             </button>
           </div>
         )}

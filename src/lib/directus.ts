@@ -24,6 +24,71 @@ export async function fetchDirectusCollection<T>(collection: string): Promise<T[
 }
 
 /**
+ * Deduplicate portfolio case studies by slug, ID, client name, or title keywords
+ */
+export function deduplicatePortfolios(items: CaseStudy[]): CaseStudy[] {
+  const result: CaseStudy[] = [];
+  const seenKeys = new Set<string>();
+
+  for (const item of items) {
+    const rawClient = (item.client || '').toLowerCase().trim();
+    const rawTitleID = (typeof item.title === 'object' ? item.title.ID || '' : item.title || '').toLowerCase().trim();
+    const rawTitleEN = (typeof item.title === 'object' ? item.title.EN || '' : item.title || '').toLowerCase().trim();
+    const rawSlug = (item.slug || item.id || '').toLowerCase().trim();
+
+    let primaryKey = rawSlug;
+    if (rawClient.includes('pusmendik') || rawTitleID.includes('anbk') || rawTitleEN.includes('anbk')) {
+      primaryKey = 'anbk';
+    } else if (rawClient.includes('tokoparts') || rawTitleID.includes('tokoparts') || rawTitleEN.includes('tokoparts')) {
+      primaryKey = 'tokoparts';
+    } else if (rawClient.includes('imuni') || rawTitleID.includes('imuni') || rawTitleEN.includes('imuni')) {
+      primaryKey = 'imuni';
+    } else if (rawClient.includes('muraqaba') || rawTitleID.includes('muraqaba') || rawTitleEN.includes('muraqaba')) {
+      primaryKey = 'muraqaba';
+    } else if (rawClient.includes('anteraja') || rawTitleID.includes('anteraja') || rawTitleEN.includes('anteraja')) {
+      primaryKey = 'anteraja-aware';
+    } else if (rawTitleID.includes('bioaudit') || rawTitleEN.includes('bioaudit')) {
+      primaryKey = 'bioaudit';
+    } else if (rawTitleID.includes('bi-smart') || rawTitleEN.includes('bi-smart')) {
+      primaryKey = 'bi-smart';
+    } else if (rawClient.includes('mitsubishi') || rawTitleID.includes('mmid') || rawTitleEN.includes('mmid')) {
+      primaryKey = 'mmid-mitsubishi';
+    } else if (rawTitleID.includes('sikepo') || rawTitleEN.includes('sikepo')) {
+      primaryKey = 'sikepo';
+    }
+
+    if (seenKeys.has(primaryKey)) {
+      const existingIdx = result.findIndex((r) => {
+        const rSlug = (r.slug || r.id || '').toLowerCase();
+        return rSlug === primaryKey || rSlug.includes(primaryKey);
+      });
+      if (existingIdx !== -1) {
+        const existing = result[existingIdx];
+        result[existingIdx] = {
+          ...item,
+          ...existing,
+          title: {
+            ID: (typeof existing.title === 'object' ? existing.title.ID : existing.title) || (typeof item.title === 'object' ? item.title.ID : item.title),
+            EN: (typeof existing.title === 'object' ? existing.title.EN : existing.title) || (typeof item.title === 'object' ? item.title.EN : item.title),
+          },
+          summary: {
+            ID: (typeof existing.summary === 'object' ? existing.summary.ID : existing.summary) || (typeof item.summary === 'object' ? item.summary.ID : item.summary),
+            EN: (typeof existing.summary === 'object' ? existing.summary.EN : existing.summary) || (typeof item.summary === 'object' ? item.summary.EN : item.summary),
+          },
+          images: Array.from(new Set([...(existing.images || [existing.image]), ...(item.images || [item.image])])).filter(Boolean),
+        };
+      }
+      continue;
+    }
+
+    seenKeys.add(primaryKey);
+    result.push(item);
+  }
+
+  return result;
+}
+
+/**
  * Fetch live portfolio case studies directly from Radya Labs Directus CMS (https://admin.radyalabs.com)
  */
 export async function fetchLiveCmsPortfolios(): Promise<CaseStudy[]> {
@@ -34,49 +99,15 @@ export async function fetchLiveCmsPortfolios(): Promise<CaseStudy[]> {
     });
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch portfolios from Directus CMS: ${res.status}`);
+      console.warn(`[CMS Helper] Directus portfolio endpoint HTTP ${res.status}`);
+      return [];
     }
 
-    const json = await res.json();
-    const rawItems = json.data || [];
+    const data = await res.json();
+    const rawItems = data.data || [];
 
-    const clientMetadataMap: Record<string, { client: string; logo: string; industry: string; categoryId: string; categoryEn: string; metrics: { value: string; label: { ID: string; EN: string } }[] }> = {
-      '1f11de3f-75c3-40ff-9525-96ad67b277dd': {
-        client: 'PT Bio Farma (Persero)',
-        logo: 'BIO FARMA',
-        industry: 'Healthcare & Pharmaceuticals',
-        categoryId: 'AUDIT & GOVERNANCE',
-        categoryEn: 'AUDIT & GOVERNANCE',
-        metrics: [
-          { value: '+85%', label: { ID: 'Efisiensi Siklus Audit', EN: 'Audit Cycle Efficiency' } },
-          { value: '100%', label: { ID: 'Kepatuhan Regulasi', EN: 'Regulatory Compliance' } },
-          { value: 'Paperless', label: { ID: 'Sistem Pelaporan', EN: 'Reporting Workflow' } },
-        ],
-      },
-      '25b6ffe2-2cd4-4953-ac9e-4c643f1137f5': {
-        client: 'Pusmendik Kemendikbudristek',
-        logo: 'PUSMENDIK',
-        industry: 'Government & Education',
-        categoryId: 'PUBLIC SECTOR PLATFORM',
-        categoryEn: 'PUBLIC SECTOR PLATFORM',
-        metrics: [
-          { value: '3.5M+', label: { ID: 'Siswa Peserta Ujian', EN: 'Concurrent Students' } },
-          { value: '99.99%', label: { ID: 'Ketersediaan Server', EN: 'Server Availability' } },
-          { value: '100K+', label: { ID: 'Sekolah Terhubung', EN: 'Connected Schools' } },
-        ],
-      },
-      '30789d0a-8168-47d8-affd-cb916b6496ac': {
-        client: 'Otoritas Jasa Keuangan (OJK)',
-        logo: 'OJK',
-        industry: 'Banking & Financial Services',
-        categoryId: 'FINTECH & REGULATORY',
-        categoryEn: 'FINTECH & REGULATORY',
-        metrics: [
-          { value: '100%', label: { ID: 'Perbankan Nasional', EN: 'National Banks Access' } },
-          { value: 'JDIHN', label: { ID: 'Terintegrasi Resmi', EN: 'Officially Integrated' } },
-          { value: '<1 Detik', label: { ID: 'Pencarian Regulasi', EN: 'Search Retrieval' } },
-        ],
-      },
+    // Client metadata map for rich display
+    const clientMetadataMap: Record<string, { client: string; logo: string; industry: string; categoryId: string; categoryEn: string; metrics: any[] }> = {
       'aba6f0df-f6f7-41f0-a2dd-af104fe341b3': {
         client: 'Muraqaba',
         logo: 'MURAQABA',
@@ -158,15 +189,15 @@ export async function fetchLiveCmsPortfolios(): Promise<CaseStudy[]> {
       const deliverables = (item.deliverables || [])
         .map((d: any) => {
           const dt = d.deliverables_id?.translations?.find((t: any) => t.languages_code === 'id') || d.deliverables_id?.translations?.[0];
-          return dt?.name || dt?.title || d.deliverables_id?.name || d.deliverables_id?.title;
+          return dt?.name || '';
         })
         .filter(Boolean);
 
       const featuresList = (item.features || []).map((f: any) => {
         const fId = f.translations?.find((t: any) => t.languages_code === 'id') || f.translations?.[0] || {};
-        const fEn = f.translations?.find((t: any) => t.languages_code === 'en') || f.translations?.[1] || fId;
+        const fEn = f.translations?.find((t: any) => t.languages_code === 'en') || fId;
         return {
-          name: { ID: fId.name || '', EN: fEn.name || fId.name || '' },
+          name: { ID: fId.name || 'Fitur', EN: fEn.name || fId.name || 'Feature' },
           description: { ID: fId.description || '', EN: fEn.description || fId.description || '' },
         };
       });
@@ -219,99 +250,75 @@ export async function fetchLiveCmsPortfolios(): Promise<CaseStudy[]> {
 }
 
 /**
- * Fetch live blog articles directly from Radya Labs Directus CMS (https://admin.radyalabs.com)
+ * Fetch live articles directly from Radya Labs Directus CMS
  */
 export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
   try {
-    const endpoint = `${DIRECTUS_CMS_URL}/items/blog?fields=*,translations.*,cover_image.*,category_id.*,category_id.translations.*,tags.tags_id.*,tags.tags_id.translations.*&sort=-date_published&limit=100`;
+    const endpoint = `${DIRECTUS_CMS_URL}/items/blog?fields=*,translations.*,author_id.*,category_id.*,category_id.translations.*,tags.tags_id.*,tags.tags_id.translations.*&limit=100`;
     const res = await fetch(endpoint, {
-      next: { revalidate: 300 }, // Cache for 5 minutes
+      next: { revalidate: 300 },
     });
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch from Directus CMS: ${res.status}`);
+      console.warn(`[CMS Helper] Directus blog endpoint HTTP ${res.status}`);
+      return [];
     }
 
-    const json = await res.json();
-    const rawItems = json.data || [];
+    const data = await res.json();
+    const rawArticles = data.data || [];
 
-    return rawItems.map((item: any) => {
-      const transId = item.translations?.find((t: any) => t.languages_code === 'id') || item.translations?.[0] || {};
-      const transEn = item.translations?.find((t: any) => t.languages_code === 'en') || item.translations?.[1] || transId;
+    return rawArticles.map((art: any) => {
+      const transId = art.translations?.find((t: any) => t.languages_code === 'id') || art.translations?.[0] || {};
+      const transEn = art.translations?.find((t: any) => t.languages_code === 'en') || art.translations?.[1] || transId;
 
-      const slug = transId.slug || transEn.slug || item.id;
-      const originalUrl = `https://radyalabs.com/id/blog/${slug}`;
+      const catTransId = art.category_id?.translations?.find((t: any) => t.languages_code === 'id') || art.category_id?.translations?.[0] || {};
+      const catTransEn = art.category_id?.translations?.find((t: any) => t.languages_code === 'en') || catTransId;
 
-      // Dynamic Bilingual Category Resolution from Directus Category Translations
-      const catTransId = item.category_id?.translations?.find((t: any) => t.languages_code === 'id') || item.category_id?.translations?.[0];
-      const catTransEn = item.category_id?.translations?.find((t: any) => t.languages_code === 'en') || item.category_id?.translations?.[1] || catTransId;
+      const categoryNameID = catTransId.name || 'INSIGHT';
+      const categoryNameEN = catTransEn.name || categoryNameID;
 
-      const categoryNameId = catTransId?.category_name || item.category_id?.title || item.category_id?.name || 'Berita';
-      const categoryNameEn = catTransEn?.category_name || categoryNameId;
+      const tagNames = (art.tags || [])
+        .map((t: any) => {
+          const tagTrans = t.tags_id?.translations?.find((tr: any) => tr.languages_code === 'id') || t.tags_id?.translations?.[0];
+          return tagTrans?.name || '';
+        })
+        .filter(Boolean);
 
-      const category = {
-        ID: categoryNameId,
-        EN: categoryNameEn,
-      };
+      const coverImage = art.thumbnail
+        ? `${DIRECTUS_CMS_URL}/assets/${art.thumbnail}`
+        : 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80';
 
-      // Cover Image Resolution
-      let image = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80';
-      if (item.cover_image) {
-        const imageId = typeof item.cover_image === 'string' ? item.cover_image : item.cover_image.id;
-        if (imageId) {
-          image = `${DIRECTUS_CMS_URL}/assets/${imageId}`;
-        }
-      }
-
-      // Format Date
-      let dateStr = '2026';
-      if (item.date_published) {
-        try {
-          const d = new Date(item.date_published);
-          dateStr = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-        } catch {
-          dateStr = String(item.date_published);
-        }
-      }
-
-      // Extract Tags from Directus relational tags_id
-      const tags: string[] = [];
-      if (Array.isArray(item.tags)) {
-        item.tags.forEach((t: any) => {
-          const tagObj = t.tags_id || t;
-          const tagTransId = tagObj?.translations?.find((tr: any) => tr.languages_code === 'id') || tagObj?.translations?.[0];
-          const tagTitle = tagTransId?.title || tagObj?.title || tagObj?.name || (typeof tagObj === 'string' ? tagObj : null);
-          if (tagTitle && !tags.includes(tagTitle)) {
-            tags.push(tagTitle);
-          }
-        });
-      }
-
-      // Estimate Reading Time
-      const wordCount = (transId.content || '').replace(/<[^>]*>/g, '').split(/\s+/).length;
-      const readMinutes = Math.max(3, Math.ceil(wordCount / 200));
+      const publishedDate = art.date_created
+        ? new Date(art.date_created).toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          })
+        : 'Mei 2026';
 
       return {
-        id: item.id,
-        slug,
-        originalUrl,
-        category,
-        date: dateStr,
-        readTime: `${readMinutes} min read`,
-        image,
-        tags,
+        id: art.id,
+        slug: transId.slug || String(art.id),
         title: {
           ID: transId.title || 'Artikel Radya Labs',
           EN: transEn.title || transId.title || 'Radya Labs Article',
         },
         summary: {
-          ID: transId.short_description || transId.title || '',
-          EN: transEn.short_description || transEn.title || transId.short_description || '',
+          ID: transId.meta_description || transId.excerpt || '',
+          EN: transEn.meta_description || transEn.excerpt || transId.meta_description || '',
         },
         content: {
-          ID: transId.content || transId.short_description || '',
-          EN: transEn.content || transEn.short_description || transId.content || '',
+          ID: transId.content || '',
+          EN: transEn.content || transId.content || '',
         },
+        category: {
+          ID: categoryNameID.toUpperCase(),
+          EN: categoryNameEN.toUpperCase(),
+        },
+        date: publishedDate,
+        readTime: '5 min read',
+        image: coverImage,
+        tags: tagNames.length > 0 ? tagNames : ['Technology', 'Software Architecture'],
       };
     });
   } catch (error) {
@@ -321,55 +328,37 @@ export async function fetchLiveCmsArticles(): Promise<InsightArticle[]> {
 }
 
 /**
- * Fetch live testimonials directly from Radya Labs Directus CMS (https://admin.radyalabs.com)
+ * Fetch live testimonials directly from Radya Labs Directus CMS
  */
 export async function fetchLiveCmsTestimonials(): Promise<Testimonial[]> {
   try {
-    const endpoint = `${DIRECTUS_CMS_URL}/items/testimonial?fields=*,translations.*,avatar.*&limit=100`;
+    const endpoint = `${DIRECTUS_CMS_URL}/items/testimonial?fields=*,translations.*,client_id.*&limit=20`;
     const res = await fetch(endpoint, {
       next: { revalidate: 300 },
     });
 
     if (!res.ok) {
-      throw new Error(`Directus CMS error HTTP ${res.status}`);
+      return [];
     }
 
-    const json = await res.json();
-    const rawItems = json.data || [];
+    const data = await res.json();
+    const raw = data.data || [];
 
-    return rawItems.map((item: any) => {
-      const tEn = item.translations?.find((t: any) => t.languages_code === 'en') || item.translations?.[0] || {};
-      const tId = item.translations?.find((t: any) => t.languages_code === 'id') || item.translations?.[1] || tEn;
-
-      let role = item.role || 'Client Leader';
-      let company = 'Client Organization';
-
-      if (item.role) {
-        if (item.role.includes(' at ')) {
-          const parts = item.role.split(' at ');
-          role = parts[0].trim();
-          company = parts[1].trim();
-        } else if (item.role.includes(',')) {
-          const parts = item.role.split(',');
-          role = parts[0].trim();
-          company = parts.slice(1).join(',').trim();
-        }
-      }
-
-      const avatarId = item.avatar?.id || (typeof item.avatar === 'string' ? item.avatar : null);
-      const avatar = avatarId
-        ? `${DIRECTUS_CMS_URL}/assets/${avatarId}`
-        : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80';
+    return raw.map((item: any) => {
+      const transId = item.translations?.find((t: any) => t.languages_code === 'id') || item.translations?.[0] || {};
+      const transEn = item.translations?.find((t: any) => t.languages_code === 'en') || item.translations?.[1] || transId;
 
       return {
         id: item.id,
-        name: item.name || 'Client Leader',
-        role,
-        company,
-        avatar,
+        name: item.author_name || 'Executive Leader',
+        role: item.author_role || 'VP of Technology',
+        company: item.client_id?.name || item.company_name || 'Enterprise Client',
+        avatar: item.author_avatar
+          ? `${DIRECTUS_CMS_URL}/assets/${item.author_avatar}`
+          : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
         quote: {
-          ID: tId.testimony_text || tEn.testimony_text || '',
-          EN: tEn.testimony_text || tId.testimony_text || '',
+          ID: transId.quote || '',
+          EN: transEn.quote || transId.quote || '',
         },
         rating: 5,
       };
