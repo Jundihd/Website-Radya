@@ -3092,6 +3092,69 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
     readTime: '4 min read',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
     tags: ['DevOps', 'Terraform', 'CI/CD Automation', 'Infrastructure']
+  },
+  {
+    id: 'art-4',
+    slug: 'membangun-aplikasi-mobile-dan-web-high-throughput',
+    title: {
+      ID: 'Membangun Aplikasi Mobile & Web High-Throughput untuk Jutaan Pengguna',
+      EN: 'Building High-Throughput Mobile & Progressive Web Applications'
+    },
+    summary: {
+      ID: 'Arsitektur frontend dan backend modern yang mampu melayani jutaan pengguna aktif harian dengan respon di bawah 100 milidetik.',
+      EN: 'Modern frontend and API gateway engineering designed to serve millions of daily active users with sub-100ms response latencies.'
+    },
+    content: {
+      ID: 'Aplikasi skala nasional menuntut penanganan concurrency tinggi dan efisiensi memori. Dengan memadukan React Native / Flutter pada mobile dan Next.js pada web platform, Radya Labs merancang sistem yang mampu menangani lonjakan trafik tanpa hambatan...\n\nPelajari pendekatan teknis Radya Labs...',
+      EN: 'National-scale platforms require extreme concurrency handling and memory efficiency. Combining cross-platform mobile frameworks with SSR web architectures ensures seamless user experiences during peak traffic events...\n\nDiscover our technical architecture...'
+    },
+    category: { ID: 'MOBILE & WEB', EN: 'MOBILE & WEB' },
+    date: '01 Mei 2026',
+    readTime: '5 min read',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&auto=format&fit=crop&q=80',
+    tags: ['Mobile Development', 'React Native', 'Next.js', 'High Concurrency']
+  },
+  {
+    id: 'art-5',
+    slug: 'standar-keamanan-iso-27001-dan-owasp-pada-perangkat-lunak-enterprise',
+    title: {
+      ID: 'Standar Keamanan ISO 27001 & OWASP pada Perangkat Lunak Enterprise',
+      EN: 'ISO 27001 & OWASP Standards in Enterprise Software Architecture'
+    },
+    summary: {
+      ID: 'Penerapan prinsip DevSecOps dan perlindungan data sensitif untuk memenuhi regulasi sektor keuangan dan publik.',
+      EN: 'Embedding DevSecOps principles, zero-trust protocols, and data protection mechanisms compliant with financial regulations.'
+    },
+    content: {
+      ID: 'Keamanan informasi adalah pilar utama dalam pembangunan arsitektur perangkat lunak enterprise. Radya Labs menerapkan standar ISO 27001 serta pengujian kerentanan OWASP Top 10 secara berkala dalam setiap siklus rilis...\n\nLihat panduan keamanan terapan dari tim kami...',
+      EN: 'Information security is a foundational requirement in enterprise engineering. Radya Labs integrates ISO 27001 compliance standards and OWASP Top 10 vulnerability mitigations into continuous deployment workflows...\n\nReview our security compliance guidelines...'
+    },
+    category: { ID: 'CYBERSECURITY', EN: 'CYBERSECURITY' },
+    date: '25 Apr 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&auto=format&fit=crop&q=80',
+    tags: ['ISO 27001', 'Cybersecurity', 'DevSecOps', 'Compliance']
+  },
+  {
+    id: 'art-6',
+    slug: 'otomasi-intelligent-document-processing-berbasis-ai-ocr',
+    title: {
+      ID: 'Otomasi Document Intelligence Berbasis AI OCR untuk Operasi Finansial',
+      EN: 'Automating Document Intelligence: AI OCR for Financial Workflows'
+    },
+    summary: {
+      ID: 'Ekstraksi data otomatis dari dokumen cetak, faktur, dan formulir dengan akurasi tinggi menggunakan model Deep Learning.',
+      EN: 'Extracting structured data from paper forms, invoices, and IDs with near-100% precision utilizing custom Deep Learning models.'
+    },
+    content: {
+      ID: 'Proses manual ekstraksi data dokumen enterprise memerlukan waktu dan rawan kesalahan. Solusi AI OCR Radya Labs mengotomatisasi pemrosesan ribuan dokumen dalam hitungan menit secara presisi dan terintegrasi langsung ke ERP/CRM perusahaan...\n\nSimak hasil implementasi nyata solusi AI OCR kami...',
+      EN: 'Manual data entry across high-volume paper documents incurs latency and high error rates. Radya Labs AI OCR solutions automate document ingestion with high precision directly into enterprise ERP and CRM platforms...\n\nRead our real-world implementation case study...'
+    },
+    category: { ID: 'AI & OCR', EN: 'AI & OCR' },
+    date: '18 Apr 2026',
+    readTime: '4 min read',
+    image: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=800&auto=format&fit=crop&q=80',
+    tags: ['AI OCR', 'Document Intelligence', 'Deep Learning', 'Workflow Automation']
   }
 ];
 

@@ -13,7 +13,6 @@ interface InsightsSectionProps {
 
 export const InsightsSection: React.FC<InsightsSectionProps> = ({
   language,
-  onSelectArticle,
 }) => {
   const [articles, setArticles] = useState<InsightArticle[]>(INSIGHTS_ARTICLES);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -48,6 +47,8 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
     }
   };
 
+  const top5Articles = articles.slice(0, 5);
+
   return (
     <section id="insight" className="py-24 bg-[#F8FAFC] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,19 +68,27 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
             </p>
           </div>
 
-          {/* Navigation Controls */}
+          {/* Navigation Controls & See All Link */}
           <div className="flex items-center gap-3 self-start lg:self-end">
-            <div className="flex items-center gap-2 bg-white p-1 rounded-2xl border border-slate-200 shadow-xs">
+            <Link
+              href="/insight"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-bold text-[#1793E8] shadow-2xs hover:shadow-xs transition-all"
+            >
+              <span>{language === 'ID' ? 'Lihat Semua Artikel' : 'See All Articles'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+
+            <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-slate-200 shadow-2xs">
               <button
                 onClick={() => scroll('left')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#1793E8] text-slate-700 hover:text-white transition-all shadow-2xs hover:scale-105 active:scale-95"
+                className="p-2 rounded-xl bg-slate-50 hover:bg-[#1793E8] text-slate-700 hover:text-white transition-all shadow-2xs hover:scale-105 active:scale-95"
                 title={language === 'ID' ? 'Geser Kiri' : 'Scroll Left'}
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => scroll('right')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#1793E8] text-slate-700 hover:text-white transition-all shadow-2xs hover:scale-105 active:scale-95"
+                className="p-2 rounded-xl bg-slate-50 hover:bg-[#1793E8] text-slate-700 hover:text-white transition-all shadow-2xs hover:scale-105 active:scale-95"
                 title={language === 'ID' ? 'Geser Kanan' : 'Scroll Right'}
               >
                 <ChevronRight className="w-5 h-5" />
@@ -88,13 +97,14 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
           </div>
         </div>
 
-        {/* Horizontal Carousel Track - Pre-rendered on Server for Crawlers & SEO */}
+        {/* Horizontal Carousel Track: 5 Latest Articles + 6th Card: "See More Articles" */}
         <div className="mb-20 relative">
           <div
             ref={scrollContainerRef}
             className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4 px-1"
           >
-            {articles.map((art) => {
+            {/* 1 - 5 Latest Articles */}
+            {top5Articles.map((art) => {
               const articleHref = `/insight/${art.slug || art.id}`;
               return (
                 <article
@@ -180,13 +190,45 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
                 </article>
               );
             })}
+
+            {/* 6th Card: "See More Articles" Link Card */}
+            <div className="w-[85vw] sm:w-[350px] md:w-[370px] shrink-0 snap-start group bg-gradient-to-br from-[#0F172A] via-slate-900 to-[#1793E8] rounded-3xl border border-slate-800 p-8 shadow-xl flex flex-col justify-between text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#1793E8]/20 rounded-full blur-2xl pointer-events-none" />
+              
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#29B6F6] flex items-center justify-center mb-6 border border-white/10">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#29B6F6]">
+                  {language === 'ID' ? 'ARSIP ARTIKEL LENGKAP' : 'FULL ARTICLE ARCHIVE'}
+                </span>
+                <h3 className="text-2xl font-extrabold mt-2 mb-3 leading-snug">
+                  {language === 'ID'
+                    ? 'Jelajahi 79+ Artikel & Insight Teknikal'
+                    : 'Explore 79+ Technical Articles & Insights'}
+                </h3>
+                <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                  {language === 'ID'
+                    ? 'Akses koleksi lengkap artikel arsitektur cloud native, implementasi AI, dan panduan DevOps dari tim engineer Radya Labs.'
+                    : 'Access our full collection of cloud native architecture, AI implementations, and DevOps playbooks written by Radya Labs engineers.'}
+                </p>
+              </div>
+
+              <Link
+                href="/insight"
+                className="w-full py-3.5 px-6 rounded-2xl bg-gradient-radya text-white font-bold text-sm flex items-center justify-between shadow-lg hover:brightness-110 transition-all group-hover:translate-x-1"
+              >
+                <span>{language === 'ID' ? 'Lihat Semua Artikel' : 'See More Articles'}</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
 
           {/* Scroll Indicator Footer */}
           <div className="flex items-center justify-between mt-4 text-xs font-semibold text-slate-400 px-2">
-            <span>{language === 'ID' ? `Menampilkan ${articles.length} Artikel Blog` : `Showing ${articles.length} Blog Articles`}</span>
+            <span>{language === 'ID' ? `Menampilkan 5 Artikel Terbaru & Kartu Arsip` : `Showing 5 Latest Articles & Archive Link`}</span>
             <span className="flex items-center gap-1 text-[#1793E8]">
-              <span>← {language === 'ID' ? 'Geser untuk artikel lain' : 'Swipe/scroll for more'} →</span>
+              <span>← {language === 'ID' ? 'Geser untuk artikel lain & opsi See More' : 'Swipe for more & See More option'} →</span>
             </span>
           </div>
         </div>
