@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { Language, CaseStudy } from '@/types';
 import { CASE_STUDIES } from '@/lib/data';
@@ -8,7 +8,6 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Globe
 } from 'lucide-react';
 
 interface CaseStudiesSectionProps {
@@ -68,7 +67,7 @@ const CardHeroImageCarousel: React.FC<CardHeroImageCarouselProps> = ({
         </span>
       </div>
 
-      {/* Multi-Image Dots Indicator (Top Right - only if multiple photos) */}
+      {/* Multi-Image Dots Indicator */}
       {images.length > 1 && (
         <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 shadow-sm">
           {images.map((_, dotIdx) => (
@@ -82,7 +81,7 @@ const CardHeroImageCarousel: React.FC<CardHeroImageCarouselProps> = ({
         </div>
       )}
 
-      {/* Client Name & Industry Tag (Bottom) */}
+      {/* Client Name & Industry Tag */}
       <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-30 pointer-events-none">
         <span className="text-base sm:text-lg font-black text-white tracking-wide uppercase drop-shadow-md truncate max-w-[65%]">
           {client}
@@ -97,13 +96,9 @@ const CardHeroImageCarousel: React.FC<CardHeroImageCarouselProps> = ({
 
 export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   language,
-  onSelectCaseStudy,
-  onOpenContact,
 }) => {
   const [studies, setStudies] = useState<CaseStudy[]>(CASE_STUDIES);
-  const [isLiveCms, setIsLiveCms] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const total = studies.length;
 
   useEffect(() => {
     let isMounted = true;
@@ -114,7 +109,6 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           const data = await res.json();
           if (isMounted && data.portfolios && data.portfolios.length > 0) {
             setStudies(data.portfolios);
-            setIsLiveCms(data.isLive ?? true);
           }
         }
       } catch (err) {
@@ -126,6 +120,32 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
       isMounted = false;
     };
   }, []);
+
+  // Filter 5 target portfolios requested by user: ANBK, OJK, Imuni, BioAudit, Anteraja
+  const top5Portfolios = useMemo(() => {
+    const targetKeys = ['anbk', 'sikepo', 'imuni', 'bioaudit', 'anteraja-aware'];
+    const matched: CaseStudy[] = [];
+
+    targetKeys.forEach((key) => {
+      const found = studies.find(
+        (s) => s.id === key || s.slug === key || (s.client && s.client.toLowerCase().includes(key))
+      );
+      if (found && !matched.some((m) => m.id === found.id)) {
+        matched.push(found);
+      }
+    });
+
+    // Fill up to 5 if needed from remaining studies
+    if (matched.length < 5) {
+      studies.forEach((s) => {
+        if (matched.length < 5 && !matched.some((m) => m.id === s.id)) {
+          matched.push(s);
+        }
+      });
+    }
+
+    return matched.slice(0, 5);
+  }, [studies]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -146,12 +166,12 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-3">
-              {language === 'ID' ? '25+ Sistem Berjalan Aktif di Produksi' : '25 Systems Currently Running in Production'}
+              {language === 'ID' ? '25+ Sistem Berjalan Aktif di Produksi' : '25+ Systems Currently Running in Production'}
             </h2>
             <p className="text-slate-300 text-sm max-w-2xl">
               {language === 'ID'
-                ? 'Perbankan, pemerintah, farmasi, pertambangan, logistik. Filter berdasarkan industri Anda.'
-                : 'Banking, government, pharmaceutical, mining, logistics. Filter by your industry.'}
+                ? 'Perbankan, pemerintah, farmasi, pertambangan, logistik. Rekam jejak implementasi skala nasional Radya Labs.'
+                : 'Banking, government, pharmaceutical, mining, logistics. Explore Radya Labs national mission-critical projects.'}
             </p>
           </div>
 
@@ -176,13 +196,14 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           </div>
         </div>
 
-        {/* 3-Card Horizontal Carousel Track */}
+        {/* 5 Portfolios + 6th Card: "See More Portfolios" */}
         <div className="relative mb-12">
           <div
             ref={scrollContainerRef}
             className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4 px-1"
           >
-            {studies.map((study) => {
+            {/* 1 - 5 Selected Case Studies */}
+            {top5Portfolios.map((study) => {
               const categoryText = typeof study.category === 'object' ? (study.category[language] || study.category.ID) : study.category;
               const cardImages = study.images && study.images.length > 0
                 ? study.images
@@ -246,34 +267,60 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                 </Link>
               );
             })}
+
+            {/* 6th Card: "See More Portfolios" Link Card */}
+            <div className="w-[88vw] sm:w-[350px] md:w-[370px] lg:w-[380px] shrink-0 snap-start group bg-gradient-to-br from-[#0F172A] via-slate-900 to-[#1793E8] rounded-3xl border border-slate-800 p-8 shadow-xl flex flex-col justify-between text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#1793E8]/20 rounded-full blur-2xl pointer-events-none" />
+              
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-white/10 text-[#29B6F6] flex items-center justify-center mb-6 border border-white/10">
+                  <Briefcase className="w-6 h-6" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#29B6F6]">
+                  {language === 'ID' ? 'ARSIP PORTOFOLIO LENGKAP' : 'FULL PORTFOLIO ARCHIVE'}
+                </span>
+                <h3 className="text-2xl font-extrabold mt-2 mb-3 leading-snug">
+                  {language === 'ID'
+                    ? 'Jelajahi 25+ Portofolio & Studi Kasus Enterprise'
+                    : 'Explore 25+ Enterprise Case Studies & Portfolios'}
+                </h3>
+                <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                  {language === 'ID'
+                    ? 'Lihat rekam jejak arsitektur sistem skala nasional yang kami bangun untuk perbankan, pemerintah, farmasi, dan logistik.'
+                    : 'Explore our complete record of mission-critical systems engineered for banking, government, pharmaceuticals, and logistics.'}
+                </p>
+              </div>
+
+              <Link
+                href="/portofolio"
+                className="w-full py-3.5 px-6 rounded-2xl bg-gradient-radya text-white font-bold text-sm flex items-center justify-between shadow-lg hover:brightness-110 transition-all group-hover:translate-x-1"
+              >
+                <span>{language === 'ID' ? 'Lihat Semua Portofolio' : 'See More Portfolios'}</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
           </div>
 
           {/* Indicator Track Footer */}
-          <div className="flex items-center justify-between mt-4 text-xs font-semibold text-slate-400 px-2">
-            <span>{language === 'ID' ? `Menampilkan ${total} Studi Kasus Portofolio` : `Showing ${total} Enterprise Case Studies`}</span>
+          <div className="flex items-center justify-end mt-4 text-xs font-semibold text-slate-400 px-2">
             <span className="flex items-center gap-1 text-[#29B6F6]">
-              <span>← {language === 'ID' ? 'Geser untuk portofolio lain' : 'Swipe/scroll for more'} →</span>
+              <span>← {language === 'ID' ? 'Geser untuk portofolio lain' : 'Swipe for more'} →</span>
             </span>
           </div>
         </div>
 
         {/* Bottom Action Button */}
         <div className="flex justify-center mt-6">
-          <button
-            onClick={() => {
-              if (onOpenContact) {
-                onOpenContact();
-              }
-            }}
-            className="bg-gradient-radya text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-lg shadow-[#1793E8]/30 hover:shadow-xl hover:shadow-[#1793E8]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 group"
+          <Link
+            href="/portofolio"
+            className="bg-gradient-radya text-white font-bold text-xs sm:text-sm px-8 py-4 rounded-full shadow-lg shadow-[#1793E8]/30 hover:shadow-xl hover:shadow-[#1793E8]/45 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 group"
           >
-            <span>{language === 'ID' ? 'Lihat Portofolio Lainnya' : 'View More Portfolios'}</span>
+            <span>{language === 'ID' ? 'Lihat Semua Portofolio (25+)' : 'View All Portfolios (25+)'}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
         </div>
 
       </div>
     </section>
   );
 };
-

@@ -68,16 +68,8 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
             </p>
           </div>
 
-          {/* Navigation Controls & See All Link */}
+          {/* Navigation Controls */}
           <div className="flex items-center gap-3 self-start lg:self-end">
-            <Link
-              href="/insight"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-bold text-[#1793E8] shadow-2xs hover:shadow-xs transition-all"
-            >
-              <span>{language === 'ID' ? 'Lihat Semua Artikel' : 'See All Articles'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
             <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-slate-200 shadow-2xs">
               <button
                 onClick={() => scroll('left')}
@@ -225,10 +217,9 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({
           </div>
 
           {/* Scroll Indicator Footer */}
-          <div className="flex items-center justify-between mt-4 text-xs font-semibold text-slate-400 px-2">
-            <span>{language === 'ID' ? `Menampilkan 5 Artikel Terbaru & Kartu Arsip` : `Showing 5 Latest Articles & Archive Link`}</span>
+          <div className="flex items-center justify-end mt-4 text-xs font-semibold text-slate-400 px-2">
             <span className="flex items-center gap-1 text-[#1793E8]">
-              <span>← {language === 'ID' ? 'Geser untuk artikel lain & opsi See More' : 'Swipe for more & See More option'} →</span>
+              <span>← {language === 'ID' ? 'Geser untuk artikel lain' : 'Swipe for more'} →</span>
             </span>
           </div>
         </div>

@@ -67,12 +67,6 @@ export const VideoSection: React.FC<VideoSectionProps> = ({ language }) => {
               {/* Dark Overlay with Mesh Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 group-hover:from-black/70 transition-colors" />
 
-              {/* Top Banner Tag */}
-              <div className="absolute top-6 left-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-lg">
-                <Sparkles className="w-3.5 h-3.5 text-[#29B6F6]" />
-                <span>{language === 'ID' ? 'Tonton Profil Radya Labs (2 Menit)' : 'Watch Company Video (2 Mins)'}</span>
-              </div>
-
               {/* Pulsing Play Button */}
               <div className="relative z-10 flex flex-col items-center gap-3">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-radya p-0.5 shadow-2xl group-hover:scale-110 active:scale-95 transition-all duration-300">
