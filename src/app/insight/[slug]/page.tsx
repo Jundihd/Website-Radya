@@ -4,7 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { INSIGHTS_ARTICLES } from '@/lib/data';
+import { fetchLiveCmsArticles } from '@/lib/directus';
 import { COMPANY_CONFIG } from '@/lib/company-info';
+import { InsightArticle } from '@/types';
 import {
   ArrowLeft,
   Calendar,
@@ -15,7 +17,6 @@ import {
   PhoneCall,
   ArrowRight,
   ChevronRight,
-  Share2,
   Tag,
 } from 'lucide-react';
 
@@ -25,30 +26,72 @@ interface PageProps {
   };
 }
 
-// Helper to convert string to URL slug
+export const revalidate = 300; // Revalidate every 5 minutes
+export const dynamicParams = true; // Allow dynamic article slugs from CMS
+
+// Helper to convert any string or URL to normalized comparison slug
 function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+  if (!text) return '';
+  try {
+    const decoded = decodeURIComponent(text);
+    return decoded
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  } catch {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
 }
 
-// Generate static routes for all articles at build time (SSG)
+// Fetch both CMS articles and static fallback articles
+async function getAllArticles(): Promise<InsightArticle[]> {
+  try {
+    const cmsArticles = await fetchLiveCmsArticles();
+    if (cmsArticles && cmsArticles.length > 0) {
+      const combined = [...cmsArticles];
+      INSIGHTS_ARTICLES.forEach((art) => {
+        if (!combined.some((c) => c.id === art.id || (art.slug && c.slug === art.slug))) {
+          combined.push(art);
+        }
+      });
+      return combined;
+    }
+  } catch (err) {
+    console.error('Error fetching articles for insight page:', err);
+  }
+  return INSIGHTS_ARTICLES;
+}
+
+// Robust article lookup by slug, id, or title (handling dashes, spaces, and URL encoding)
+function findArticle(targetSlug: string, articles: InsightArticle[]): InsightArticle | undefined {
+  const normalizedTarget = slugify(targetSlug);
+  return articles.find((a) => {
+    if (a.slug === targetSlug || a.id === targetSlug) return true;
+    if (a.slug && slugify(a.slug) === normalizedTarget) return true;
+    if (a.id && slugify(a.id) === normalizedTarget) return true;
+    if (a.title?.ID && slugify(a.title.ID) === normalizedTarget) return true;
+    if (a.title?.EN && slugify(a.title.EN) === normalizedTarget) return true;
+    return false;
+  });
+}
+
+// Generate static routes for pre-rendering at build time
 export async function generateStaticParams() {
-  return INSIGHTS_ARTICLES.map((article) => ({
+  const articles = await getAllArticles();
+  return articles.map((article) => ({
     slug: article.slug || slugify(article.title.ID) || article.id,
   }));
 }
 
 // Generate Dynamic SEO & OpenGraph Metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const article = INSIGHTS_ARTICLES.find(
-    (a) =>
-      a.slug === params.slug ||
-      a.id === params.slug ||
-      slugify(a.title.ID) === params.slug
-  );
+  const articles = await getAllArticles();
+  const article = findArticle(params.slug, articles);
 
   if (!article) {
     return {
@@ -103,13 +146,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function InsightDetailPage({ params }: PageProps) {
-  const article = INSIGHTS_ARTICLES.find(
-    (a) =>
-      a.slug === params.slug ||
-      a.id === params.slug ||
-      slugify(a.title.ID) === params.slug
-  );
+export default async function InsightDetailPage({ params }: PageProps) {
+  const articles = await getAllArticles();
+  const article = findArticle(params.slug, articles);
 
   if (!article) {
     notFound();
@@ -175,7 +214,7 @@ export default function InsightDetailPage({ params }: PageProps) {
     ],
   };
 
-  // Split content by line breaks for clean paragraph rendering
+  const hasHtmlTags = /<[a-z][\s\S]*>/i.test(article.content.ID);
   const paragraphs = article.content.ID.split('\n\n').filter((p) => p.trim());
 
   return (
@@ -271,31 +310,42 @@ export default function InsightDetailPage({ params }: PageProps) {
               </div>
             </div>
 
-            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-medium bg-slate-100/60 p-5 rounded-2xl border border-slate-200/60">
-              {article.summary.ID}
-            </p>
+            {article.summary.ID && (
+              <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-medium bg-slate-100/60 p-5 rounded-2xl border border-slate-200/60">
+                {article.summary.ID}
+              </p>
+            )}
           </header>
 
           {/* Featured Cover Image */}
-          <div className="relative w-full h-[320px] sm:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 mb-10 bg-slate-900">
-            <Image
-              src={article.image}
-              alt={article.title.ID}
-              fill
-              sizes="(max-width: 1024px) 100vw, 1024px"
-              className="object-cover"
-              priority
-            />
-          </div>
+          {article.image && (
+            <div className="relative w-full h-[320px] sm:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 mb-10 bg-slate-900">
+              <Image
+                src={article.image}
+                alt={article.title.ID}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
 
           {/* Article Body Content */}
-          <article className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-base sm:text-lg mb-12 space-y-6">
-            {paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-slate-700 leading-relaxed font-normal">
-                {paragraph}
-              </p>
-            ))}
-          </article>
+          {hasHtmlTags ? (
+            <article
+              className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-base sm:text-lg mb-12"
+              dangerouslySetInnerHTML={{ __html: article.content.ID }}
+            />
+          ) : (
+            <article className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-base sm:text-lg mb-12 space-y-6">
+              {paragraphs.map((paragraph, index) => (
+                <p key={index} className="text-slate-700 leading-relaxed font-normal">
+                  {paragraph}
+                </p>
+              ))}
+            </article>
+          )}
 
           {/* Article Tags */}
           {article.tags && article.tags.length > 0 && (
