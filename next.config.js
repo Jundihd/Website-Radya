@@ -39,12 +39,12 @@ const nextConfig = {
       },
       {
         source: '/blog/:slug',
-        destination: '/#insight',
+        destination: '/insight/:slug',
         permanent: true,
       },
       {
         source: '/en/blog/:slug',
-        destination: '/#insight',
+        destination: '/insight/:slug',
         permanent: true,
       },
     ];

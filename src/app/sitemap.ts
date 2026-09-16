@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { CASE_STUDIES } from '@/lib/data';
 import { COMPANY_CONFIG } from '@/lib/company-info';
+import { getAllPosts } from '@/lib/posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = COMPANY_CONFIG.url;
@@ -16,6 +17,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Dynamic Insight Article Routes (MD-first)
+  const insightRoutes: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+    url: `${baseUrl}/insight/${post.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
   // Dynamic Portfolio Case Study Routes
   const caseStudyRoutes: MetadataRoute.Sitemap = CASE_STUDIES.filter((study) =>
     Boolean(study.slug)
@@ -26,5 +35,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...routes, ...caseStudyRoutes];
+  return [...routes, ...insightRoutes, ...caseStudyRoutes];
 }

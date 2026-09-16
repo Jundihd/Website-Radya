@@ -4,6 +4,7 @@ import { INSIGHTS_ARTICLES } from '@/lib/data';
 import { fetchLiveCmsArticles } from '@/lib/directus';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 import { InsightArticle } from '@/types';
+import { getAllPosts, postToInsightArticle, mergeArticlesWithMarkdown } from '@/lib/posts';
 import { InsightListingClientView } from './InsightListingClientView';
 
 export const revalidate = 300; // Revalidate every 5 minutes
@@ -31,23 +32,16 @@ export const metadata: Metadata = {
   },
 };
 
-// Fetch both CMS articles and static fallback articles
+// MD-first: MD > Directus > statis fallback
 async function getAllArticles(): Promise<InsightArticle[]> {
   try {
+    const mdPosts = getAllPosts().map(postToInsightArticle);
     const cmsArticles = await fetchLiveCmsArticles();
-    if (cmsArticles && cmsArticles.length > 0) {
-      const combined = [...cmsArticles];
-      INSIGHTS_ARTICLES.forEach((art) => {
-        if (!combined.some((c) => c.id === art.id || (art.slug && c.slug === art.slug))) {
-          combined.push(art);
-        }
-      });
-      return combined;
-    }
+    return mergeArticlesWithMarkdown(mdPosts, cmsArticles, INSIGHTS_ARTICLES);
   } catch (err) {
     console.error('Error fetching articles for insight hub page:', err);
+    return INSIGHTS_ARTICLES;
   }
-  return INSIGHTS_ARTICLES;
 }
 
 export default async function InsightHubPage() {

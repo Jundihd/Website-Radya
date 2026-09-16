@@ -5,6 +5,7 @@ import { INSIGHTS_ARTICLES } from '@/lib/data';
 import { fetchLiveCmsArticles } from '@/lib/directus';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 import { InsightArticle } from '@/types';
+import { getAllPosts, postToInsightArticle, mergeArticlesWithMarkdown, markdownToHtml, getPostBySlug } from '@/lib/posts';
 import { InsightArticleClientView } from './InsightArticleClientView';
 
 interface PageProps {
@@ -14,7 +15,7 @@ interface PageProps {
 }
 
 export const revalidate = 300; // Revalidate every 5 minutes
-export const dynamicParams = true; // Allow dynamic article slugs from CMS
+export const dynamicParams = true; // Allow dynamic article slugs from MD/CMS
 
 // Helper to convert any string or URL to normalized comparison slug
 function slugify(text: string): string {
@@ -35,23 +36,16 @@ function slugify(text: string): string {
   }
 }
 
-// Fetch both CMS articles and static fallback articles
+// MD-first: MD > Directus > statis fallback
 async function getAllArticles(): Promise<InsightArticle[]> {
   try {
+    const mdPosts = getAllPosts().map(postToInsightArticle);
     const cmsArticles = await fetchLiveCmsArticles();
-    if (cmsArticles && cmsArticles.length > 0) {
-      const combined = [...cmsArticles];
-      INSIGHTS_ARTICLES.forEach((art) => {
-        if (!combined.some((c) => c.id === art.id || (art.slug && c.slug === art.slug))) {
-          combined.push(art);
-        }
-      });
-      return combined;
-    }
+    return mergeArticlesWithMarkdown(mdPosts, cmsArticles, INSIGHTS_ARTICLES);
   } catch (err) {
     console.error('Error fetching articles for insight page:', err);
+    return INSIGHTS_ARTICLES;
   }
-  return INSIGHTS_ARTICLES;
 }
 
 // Robust article lookup by slug, id, or title (handling dashes, spaces, and URL encoding)
@@ -141,6 +135,13 @@ export default async function InsightDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  // Render Markdown -> HTML server-side (MD-first)
+  // MD posts have markdown in content.ID; Directus/static have HTML already
+  const isMarkdown = !/<[a-z][\s\S]*>/i.test(article.content.ID);
+  const contentHtml = isMarkdown
+    ? await markdownToHtml(article.content.ID)
+    : article.content.ID;
+
   // Article Schema JSON-LD (TechArticle)
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -185,7 +186,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
         '@type': 'ListItem',
         position: 2,
         name: 'Insight & Artikel',
-        item: `${COMPANY_CONFIG.url}/#insight`,
+        item: `${COMPANY_CONFIG.url}/insight`,
       },
       {
         '@type': 'ListItem',
@@ -207,7 +208,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <InsightArticleClientView article={article} />
+      <InsightArticleClientView article={article} contentHtml={contentHtml} />
     </>
   );
 }

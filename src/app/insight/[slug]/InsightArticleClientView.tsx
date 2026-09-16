@@ -19,9 +19,10 @@ import {
 
 interface InsightArticleClientViewProps {
   article: InsightArticle;
+  contentHtml?: string;
 }
 
-export const InsightArticleClientView: React.FC<InsightArticleClientViewProps> = ({ article }) => {
+export const InsightArticleClientView: React.FC<InsightArticleClientViewProps> = ({ article, contentHtml }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   const categoryName =
@@ -29,8 +30,11 @@ export const InsightArticleClientView: React.FC<InsightArticleClientViewProps> =
       ? article.category.ID
       : article.category;
 
-  const hasHtmlTags = /<[a-z][\s\S]*>/i.test(article.content.ID);
-  const paragraphs = article.content.ID.split('\n\n').filter((p) => p.trim());
+  // Gunakan contentHtml yang sudah di-render server-side (MD->HTML),
+  // fallback ke deteksi HTML mentah / paragraf split lama.
+  const renderedHtml = contentHtml || null;
+  const hasHtmlTags = renderedHtml ? true : /<[a-z][\s\S]*>/i.test(article.content.ID);
+  const paragraphs = (renderedHtml || article.content.ID).split('\n\n').filter((p) => p.trim());
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans">
@@ -140,7 +144,7 @@ export const InsightArticleClientView: React.FC<InsightArticleClientViewProps> =
         {hasHtmlTags ? (
           <article
             className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-base sm:text-lg mb-12"
-            dangerouslySetInnerHTML={{ __html: article.content.ID }}
+            dangerouslySetInnerHTML={{ __html: renderedHtml || article.content.ID }}
           />
         ) : (
           <article className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-base sm:text-lg mb-12 space-y-6">
