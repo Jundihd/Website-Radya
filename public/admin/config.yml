@@ -1,0 +1,48 @@
+# DRAFT poin 4 — Decap CMS (git-based) untuk blog writer. Belum live.
+# Prasyarat aktivasi:
+#  1. Buat GitHub OAuth App (https://github.com/settings/developers),
+#     Authorization callback URL = <oauth-provider>/callback
+#     (pakai decap oauth provider, mis. netlify auth atau self-hosted
+#     https://github.com/decapcms/decap-cms/tree/master/packages/decap-cms-app#external-oauth-clients).
+#  2. Isi backend.base_url di bawah dengan URL OAuth provider tersebut.
+#  3. Catatan deploy: repo ini deploy via Azure pipeline (Docker), BUKAN Vercel/Netlify,
+#     jadi artikel baru live dalam hitungan menit (tunggu build image), bukan detik.
+backend:
+  name: github
+  repo: Jundihd/Website-Radya
+  branch: main
+  base_url: https://OAUTH-PROVIDER-URL # TODO: isi saat aktivasi
+
+# Biarkan di local repo agar image ikut ter-commit (repo tetap ringan: max ~500KB/file, webp disarankan)
+media_folder: public/images/blog
+public_folder: /images/blog
+
+# Draft -> review -> publish sebelum tayang (sesuai kebutuhan tim non-teknis)
+publish_mode: editorial_workflow
+
+collections:
+  - name: posts
+    label: Artikel Blog (ID + EN)
+    label_singular: Artikel
+    folder: content/posts
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    editor:
+      preview: true
+    fields:
+      - { label: 'Slug (URL /insight/<slug>, jangan diubah setelah publish)', name: slug, widget: string }
+      - { label: 'Judul (ID)', name: title_id, widget: string }
+      - { label: 'Judul (EN)', name: title_en, widget: string, required: false }
+      - { label: 'Ringkasan (ID)', name: excerpt_id, widget: text, required: false }
+      - { label: 'Ringkasan (EN)', name: excerpt_en, widget: text, required: false }
+      - { label: 'Tanggal', name: date, widget: date, format: 'YYYY-MM-DD', required: false }
+      - { label: 'Penulis', name: author, widget: string, default: 'Radya Labs Engineering Team' }
+      - { label: 'Cover', name: cover, widget: image, required: false }
+      - { label: 'Kategori (ID)', name: category_id, widget: string, default: 'INSIGHT' }
+      - { label: 'Kategori (EN)', name: category_en, widget: string, required: false }
+      - { label: 'Tags', name: tags, widget: list, required: false }
+      - { label: 'Published', name: published, widget: boolean, default: true }
+      - { label: 'Konten (EN) — Markdown', name: body_en, widget: markdown, required: false }
+      - { label: 'Konten (ID) — Markdown (editor utama di bawah)', name: body, widget: markdown }
