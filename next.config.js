@@ -38,6 +38,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/blog',
+        destination: '/insight',
+        permanent: true,
+      },
+      {
+        source: '/en/blog',
+        destination: '/insight',
+        permanent: true,
+      },
+      {
         source: '/blog/:slug',
         destination: '/insight/:slug',
         permanent: true,

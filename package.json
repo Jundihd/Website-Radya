@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:blog": "node scripts/export-directus-to-md.mjs"
   },
   "dependencies": {
     "@contentsquare/tag-sdk": "^1.1.0",

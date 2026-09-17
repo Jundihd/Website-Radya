@@ -32,15 +32,13 @@ export const metadata: Metadata = {
   },
 };
 
-// MD-first: MD > Directus > statis fallback
+// Git-based Markdown CMS: Membaca langsung dari content/posts/*.md
 async function getAllArticles(): Promise<InsightArticle[]> {
   try {
-    const mdPosts = getAllPosts().map(postToInsightArticle);
-    const cmsArticles = await fetchLiveCmsArticles();
-    return mergeArticlesWithMarkdown(mdPosts, cmsArticles, INSIGHTS_ARTICLES);
+    return getAllPosts().map(postToInsightArticle);
   } catch (err) {
     console.error('Error fetching articles for insight hub page:', err);
-    return INSIGHTS_ARTICLES;
+    return [];
   }
 }
 

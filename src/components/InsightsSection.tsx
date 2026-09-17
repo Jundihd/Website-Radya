@@ -8,15 +8,24 @@ import { BookOpen, ArrowRight, Clock, Calendar, ChevronDown, ChevronLeft, Chevro
 
 interface InsightsSectionProps {
   language: Language;
+  initialArticles?: InsightArticle[];
   onSelectArticle?: (article: InsightArticle) => void;
 }
 
 export const InsightsSection: React.FC<InsightsSectionProps> = ({
   language,
+  initialArticles = [],
 }) => {
-  const [articles, setArticles] = useState<InsightArticle[]>(INSIGHTS_ARTICLES);
+  const [articles, setArticles] = useState<InsightArticle[]>(initialArticles);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Sync with initialArticles if provided
+  useEffect(() => {
+    if (initialArticles && initialArticles.length > 0) {
+      setArticles(initialArticles);
+    }
+  }, [initialArticles]);
 
   // Background non-blocking sync for CMS articles if available
   useEffect(() => {
