@@ -2628,6 +2628,464 @@ export const CASE_STUDIES: CaseStudy[] = [
       "/images/portfolio/cqms-1.png",
       "/images/portfolio/cqms-2.png"
     ]
+  },
+  {
+    "id": "muraqaba",
+    "slug": "muraqaba",
+    "client": "Muraqaba",
+    "logo": "MURAQABA",
+    "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80"
+    ],
+    "category": {
+      "ID": "MOBILE APP & WELLNESS",
+      "EN": "MOBILE APP & WELLNESS"
+    },
+    "title": {
+      "ID": "Muraqaba",
+      "EN": "Muraqaba"
+    },
+    "summary": {
+      "ID": "Aplikasi meditasi untuk memudahkan setiap orang untuk bermeditasi dengan audio-audio yang menenangkan",
+      "EN": "Meditation app to make it easier for everyone to meditate with calming audios"
+    },
+    "challenge": {
+      "ID": "Target utama dari Muraqaba Apps ini ada user Muslim di seluruh dunia, khususnya amerika atau negara dengan muslim yang minoritas maupun mayoritas.",
+      "EN": "The main target of Muraqaba Apps is Muslim users throughout the world, especially America or countries with Muslim minorities or majorities."
+    },
+    "solution": {
+      "ID": "Membuat aplikasi meditasi dengan sistem pengkategorian agar user bisa memilih metode meditasi dengan kebutuhan rohani yang ingin dicapai, misalnya menyelesaikan proble stress atau kecemasan berlebih pada jiwa.",
+      "EN": "Create a meditation application with a categorization system so that users can choose a meditation method according to the spiritual needs they want to achieve, for example, solving problems of stress or excessive anxiety in the soul."
+    },
+    "metrics": [
+      {
+        "value": "Global",
+        "label": {
+          "ID": "Jangkauan Pengguna Muslim",
+          "EN": "Global Muslim Reach"
+        }
+      },
+      {
+        "value": "Audio",
+        "label": {
+          "ID": "Meditasi Terpandu",
+          "EN": "Guided Meditation Audio"
+        }
+      },
+      {
+        "value": "Kategori",
+        "label": {
+          "ID": "Metode Sesuai Kebutuhan",
+          "EN": "Categorized Methods"
+        }
+      }
+    ],
+    "tags": [
+      "Mobile App",
+      "Wellness",
+      "Audio Streaming",
+      "Meditation"
+    ],
+    "industry": "Health & Wellness",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Meditasi Terpandu",
+          "EN": "Guided Meditation"
+        },
+        "description": {
+          "ID": "Koleksi audio menenangkan untuk membantu pengguna bermeditasi dan mengurangi stres.",
+          "EN": "A collection of calming audios to help users meditate and reduce mental stress."
+        }
+      },
+      {
+        "name": {
+          "ID": "Kategorisasi Metode",
+          "EN": "Method Categorization"
+        },
+        "description": {
+          "ID": "Pengguna dapat memilih metode meditasi sesuai kebutuhan rohani yang ingin dicapai.",
+          "EN": "Users can pick a meditation method matching the spiritual need they want to achieve."
+        }
+      }
+    ],
+    "deliverables": [
+      "Mobile App (iOS & Android)",
+      "Audio Content System",
+      "Meditation Category Module"
+    ],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "risk-management-risma",
+    "slug": "risk-management-risma",
+    "client": "Binus University",
+    "logo": "BINUS UNIVERSITY",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&auto=format&fit=crop&q=80"
+    ],
+    "category": {
+      "ID": "RISK MANAGEMENT & GRC",
+      "EN": "RISK MANAGEMENT & GRC"
+    },
+    "title": {
+      "ID": "Risk Management (RISMA)",
+      "EN": "Risk Management (RISMA)"
+    },
+    "summary": {
+      "ID": "Layanan teknologi informasi yang bertujuan untuk membantu dalam pemantauan manajemen risiko untuk lingkungan bisnis unit BINUS University. Layanan ini dapat menyimpan data aspects, data risk rating dan data interested parties sehingga dapat menjadi pedoman pembuatan kumpulan skema risk atau biasa disebut dengan Risk Register yang telah ditambahkan pada tahun berjalan. Risk Management Binus ini atau dikenal RISMA sudah berdasarkan Standar ISO 31000:2018.",
+      "EN": "Information technology services that aim to assist in monitoring risk management for the BINUS University business unit environment. This service can store aspects data, risk rating data and interested parties data so that it can be a guideline for creating a collection of risk schemes or commonly called the Risk Register which has been added in the current year. This Binus Risk Management or known as RISMA is based on the ISO 31000:2018 Standard."
+    },
+    "challenge": {
+      "ID": "Berdasarkan faktanya Group Business BINUS University sebelum adanya aplikasi RISMA, dalam pemenuhan tata kelola resiko atau dalam hal risk management masih menggunakan data manual spreadsheet application. Belum adanya tata kelola secara layanan teknologi informasi yang dikelola oleh divisi QMC (Quality Management Center).",
+      "EN": "Based on the fact that BINUS University Business Group before the RISMA application, in fulfilling risk governance or in terms of risk management still uses manual spreadsheet application data. There is no governance in information technology services managed by the QMC (Quality Management Center) division."
+    },
+    "solution": {
+      "ID": "Kebutuhan akan pemenuhan pembangunan layanan teknologi informasi RISMA (Risk Management) BINUS menjadi solusi pemenuhan salah satu program kerja divisi QMC.",
+      "EN": "The need to fulfill the development of RISMA (Risk Management) BINUS information technology services is a solution to fulfill one of the QMC division's work programs."
+    },
+    "metrics": [
+      {
+        "value": "198",
+        "label": {
+          "ID": "Departemen Terkelola",
+          "EN": "Managed Departments"
+        }
+      },
+      {
+        "value": "ISO 31000",
+        "label": {
+          "ID": "Standar Manajemen Risiko",
+          "EN": "Risk Management Standard"
+        }
+      },
+      {
+        "value": "Digital",
+        "label": {
+          "ID": "Risk Register Terpusat",
+          "EN": "Centralized Risk Register"
+        }
+      }
+    ],
+    "tags": [
+      "Risk Management",
+      "GRC",
+      "ISO 31000",
+      "Web Portal",
+      "Higher Education"
+    ],
+    "industry": "Education & Governance",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Risk Register",
+          "EN": "Risk Register"
+        },
+        "description": {
+          "ID": "Penyimpanan data aspects, risk rating, dan interested parties sebagai pedoman skema risiko tahun berjalan.",
+          "EN": "Storage of aspects, risk rating, and interested parties data guiding the current-year risk scheme collection."
+        }
+      },
+      {
+        "name": {
+          "ID": "Risk Approval Workflow",
+          "EN": "Risk Approval Workflow"
+        },
+        "description": {
+          "ID": "Alur entry dan approval risiko untuk administrator, risk coordinator, manajer, dan stakeholder.",
+          "EN": "Risk entry and approval flows for administrators, risk coordinators, managers, and stakeholders."
+        }
+      }
+    ],
+    "deliverables": [
+      "Risk Management Web Portal",
+      "Risk Register Module",
+      "Approval Workflow Engine",
+      "ISO 31000 Compliance Setup"
+    ],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "curriculum-management-system",
+    "slug": "curriculum-management-system",
+    "client": "Binus University",
+    "logo": "BINUS UNIVERSITY",
+    "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1000&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1000&auto=format&fit=crop&q=80"
+    ],
+    "category": {
+      "ID": "EDUCATION PLATFORM",
+      "EN": "EDUCATION PLATFORM"
+    },
+    "title": {
+      "ID": "Curriculum Management System",
+      "EN": "Curriculum Management System"
+    },
+    "summary": {
+      "ID": "Aplikasi yang dibuat untuk membantu BINUS University mengembangkan dan menyusun kurikulum setiap tahunnya. Pembuatan kurikulum dilakukan dengan persetujuan berbagai pihak melalui aplikasi. Aplikasi ini juga membantu menyiapkan data master dan mengekspor data dalam bentuk pdf atau excel",
+      "EN": "Application created to help BINUS University develop and compile a curriculum every year. Curriculum creation is made with the approval of various parties through the application. The application also helps prepare master data and export data in pdf or excel form"
+    },
+    "challenge": {
+      "ID": "Diperlukannya perubahan pada aplikasi curriculum mapping yang sudah ada, dikarenakan ada beberapa proses bisnis yang tidak tercakup pada aplikasi tersebut, selain itu aplikasi curriculum mapping yang lama dirasa kurang user friendly sehingga diperlukan re-layouting aplikasi curriculum mapping yang lama. Selain itu diperlukannya integrasi dengan sistem CMS dan website curriculum",
+      "EN": "Changes are needed to the existing curriculum mapping application, because there are several business processes that are not covered in the application, in addition, the old curriculum mapping application is considered less user friendly so that a re-layout of the old curriculum mapping application is needed. In addition, integration with the CMS system and curriculum website is needed."
+    },
+    "solution": {
+      "ID": "User dapat melakukan pembuatan curriculum menggunakan system yang sebelumnya masih menggunakan atau dikerjakan secara manual dimana rentan terjadi kesalahan dan pemborosan kertas tentunya. Maka diharapkan adanya system ini maka akan meminimalisir kesalahan dalam pembuatan curriculum serta meminimalisir pula penggunaan kertas sehingga dapat menekan biaya yang dikeluarkan.",
+      "EN": "Users can create a curriculum using a system that previously still used or was done manually where it is prone to errors and waste of paper of course. So it is hoped that this system will minimize errors in creating a curriculum and also minimize the use of paper so that it can reduce the costs incurred."
+    },
+    "metrics": [
+      {
+        "value": "Tahunan",
+        "label": {
+          "ID": "Penyusunan Kurikulum",
+          "EN": "Annual Curriculum Cycle"
+        }
+      },
+      {
+        "value": "Multi-pihak",
+        "label": {
+          "ID": "Alur Persetujuan",
+          "EN": "Multi-party Approval"
+        }
+      },
+      {
+        "value": "PDF/Excel",
+        "label": {
+          "ID": "Ekspor Data Master",
+          "EN": "Master Data Export"
+        }
+      }
+    ],
+    "tags": [
+      "EdTech",
+      "Curriculum",
+      "Web Portal",
+      "Higher Education",
+      "CMS Integration"
+    ],
+    "industry": "Education & Curriculum",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Penyusunan Kurikulum",
+          "EN": "Curriculum Authoring"
+        },
+        "description": {
+          "ID": "Pembuatan kurikulum tahunan dengan persetujuan berbagai pihak melalui aplikasi.",
+          "EN": "Annual curriculum creation with multi-party approvals processed inside the application."
+        }
+      },
+      {
+        "name": {
+          "ID": "Master Data & Ekspor",
+          "EN": "Master Data & Export"
+        },
+        "description": {
+          "ID": "Penyiapan data master dan ekspor data dalam bentuk PDF atau Excel.",
+          "EN": "Master data preparation with exports available in PDF or Excel formats."
+        }
+      }
+    ],
+    "deliverables": [
+      "Curriculum Web Portal",
+      "Approval Workflow Module",
+      "Master Data Manager",
+      "CMS & Website Integration"
+    ],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1000&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "mitsubishi-mira-chatbot",
+    "slug": "mitsubishi-mira-chatbot",
+    "client": "Mitsubishi Motors",
+    "logo": "MITSUBISHI MOTORS",
+    "image": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1000&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1000&auto=format&fit=crop&q=80"
+    ],
+    "category": {
+      "ID": "AI CHATBOT & AUTOMOTIVE",
+      "EN": "AI CHATBOT & AUTOMOTIVE"
+    },
+    "title": {
+      "ID": "Mitsubishi Mira Chatbot",
+      "EN": "Mitsubishi Mira Chatbot"
+    },
+    "summary": {
+      "ID": "Mira adalah chatbot dari Mitsubishi untuk membantu pelanggan melihat produk, memesan layanan, dan test drive. Chatbot digunakan di Whatsapp, aplikasi seluler, dan Situs Web",
+      "EN": "Mira is a chatbot from Mitsubishi to help customer view product, book a service and test drive. The chatbot deployed on Whatsapp, mobile apps, and Website"
+    },
+    "challenge": {
+      "ID": "Aplikasi ini ditargetkan untuk rilis dan dapat digunakan pada tahun 2021. Target pengguna aplikasi chatbot adalah para customers dari Mitsubishi.",
+      "EN": "This application is targeted for release and can be used in 2021. The target users of the chatbot application are Mitsubishi customers."
+    },
+    "solution": {
+      "ID": "Dalam memenuhi kebutuhan dari latar belakang masalah yang telah dijelaskan, diperlukan sistem yang dapat menangani pelanggan secara realtime. Sistem yang dimaksud adalah Chatbot dengan teknologi yang digunakan adalah AI (Artificial intelligence)",
+      "EN": "In meeting the needs of the background of the problems that have been explained, a system is needed that can handle customers in real time. The system in question is Chatbot with the technology used is AI (Artificial intelligence)"
+    },
+    "metrics": [
+      {
+        "value": "3 Kanal",
+        "label": {
+          "ID": "WhatsApp, App & Web",
+          "EN": "WhatsApp, App & Web"
+        }
+      },
+      {
+        "value": "Realtime",
+        "label": {
+          "ID": "Layanan Pelanggan AI",
+          "EN": "Realtime AI Service"
+        }
+      },
+      {
+        "value": "Test Drive",
+        "label": {
+          "ID": "Booking & Produk",
+          "EN": "Booking & Catalog"
+        }
+      }
+    ],
+    "tags": [
+      "AI Chatbot",
+      "WhatsApp",
+      "Automotive",
+      "Customer Service",
+      "Conversational AI"
+    ],
+    "industry": "Automotive & Transport",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Katalog Produk",
+          "EN": "Product Catalog"
+        },
+        "description": {
+          "ID": "Pelanggan dapat melihat produk kendaraan Mitsubishi melalui chatbot.",
+          "EN": "Customers can browse Mitsubishi vehicle products directly inside the chatbot."
+        }
+      },
+      {
+        "name": {
+          "ID": "Booking Service & Test Drive",
+          "EN": "Service & Test Drive Booking"
+        },
+        "description": {
+          "ID": "Pemesanan layanan bengkel dan jadwal test drive secara realtime.",
+          "EN": "Realtime workshop service and test drive scheduling."
+        }
+      }
+    ],
+    "deliverables": [
+      "AI Chatbot Engine",
+      "WhatsApp Integration",
+      "Mobile App & Website Widget",
+      "Product & Booking Flows"
+    ],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1000&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "bumame-app",
+    "slug": "bumame-app",
+    "client": "Bumame",
+    "logo": "BUMAME",
+    "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000&auto=format&fit=crop&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000&auto=format&fit=crop&q=80"
+    ],
+    "category": {
+      "ID": "HEALTHCARE MOBILE APP",
+      "EN": "HEALTHCARE MOBILE APP"
+    },
+    "title": {
+      "ID": "Bumame App 2.0",
+      "EN": "Bumame App 2.0"
+    },
+    "summary": {
+      "ID": "Bumame Apps 2.0 merupakan aplikasi yang memungkinan pengguna untuk dapat melakukan pemesanan produk secara online. Produk atau jasa yang dapat dipesan seperti MCU, Home Care Service, tes Antigen dan juga PCR. Pengguna juga dapat melakukan monitor dari hasil tes yang sudah dilakukan melalui aplikasi tanpa harus datang ke lokasi.",
+      "EN": "Bumame Apps 2.0 is an application that allows users to order products online. Products or services that can be ordered include MCU, Home Care Service, Antigen tests and also PCR. Users can also monitor the results of tests that have been carried out through the application without having to come to the location."
+    },
+    "challenge": {
+      "ID": "Bumame Apps 2.0 dengan versi terbaru 2.0 sudah dapat digunakan oleh pengguna pada pertengahan februari 2023. Kedepannya aplikasi ini akan dikembangkan lagi dengan menampilkan artikel-artikel yang berisi informasi-informasi yang bermanfaat dan juga memberikan promosi ataupun diskon yang menarik untuk pelanggan.",
+      "EN": "Bumame Apps 2.0 with the latest version 2.0 can be used by users in mid-February 2023. In the future, this application will be further developed by displaying articles containing useful information and also providing attractive promotions or discounts for customers."
+    },
+    "solution": {
+      "ID": "Melakukan pengembangan aplikasi untuk memudahkan pelanggan dalam melakukan pemesaan produk atau jasa secara online seperti MCU, Home Care Service, tes Antigen dan juga PCR tanpa harus datang ke lokasi.",
+      "EN": "Developing applications to make it easier for customers to order products or services online such as MCU, Home Care Service, Antigen tests and PCR without having to come to the location."
+    },
+    "metrics": [
+      {
+        "value": "Online",
+        "label": {
+          "ID": "Pemesanan MCU & Tes",
+          "EN": "Online MCU & Test Booking"
+        }
+      },
+      {
+        "value": "Remote",
+        "label": {
+          "ID": "Monitor Hasil Tes",
+          "EN": "Remote Result Monitoring"
+        }
+      },
+      {
+        "value": "Home Care",
+        "label": {
+          "ID": "Layanan ke Rumah",
+          "EN": "Home Care Service"
+        }
+      }
+    ],
+    "tags": [
+      "Healthcare",
+      "Mobile App",
+      "Online Booking",
+      "Telemedicine",
+      "Diagnostics"
+    ],
+    "industry": "Healthcare & Diagnostics",
+    "featuresList": [
+      {
+        "name": {
+          "ID": "Pemesanan Online",
+          "EN": "Online Ordering"
+        },
+        "description": {
+          "ID": "Pemesanan MCU, Home Care Service, tes Antigen, dan PCR secara online.",
+          "EN": "Online ordering for MCU, Home Care Service, Antigen tests, and PCR."
+        }
+      },
+      {
+        "name": {
+          "ID": "Monitor Hasil Tes",
+          "EN": "Test Result Monitoring"
+        },
+        "description": {
+          "ID": "Pengguna dapat memantau hasil tes yang sudah dilakukan tanpa harus datang ke lokasi.",
+          "EN": "Users can monitor completed test results remotely without visiting the location."
+        }
+      }
+    ],
+    "deliverables": [
+      "Mobile App (iOS & Android)",
+      "Online Booking Engine",
+      "Test Result Module",
+      "Promo & Article System"
+    ],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000&auto=format&fit=crop&q=80"
+    ]
   }
 ];
 

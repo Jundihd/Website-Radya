@@ -1,9 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { CASE_STUDIES } from '@/lib/data';
-import { fetchLiveCmsPortfolios, deduplicatePortfolios } from '@/lib/directus';
 import { COMPANY_CONFIG } from '@/lib/company-info';
-import { CaseStudy } from '@/types';
 import { PortfolioListingClientView } from './PortfolioListingClientView';
 
 export const revalidate = 300; // Revalidate every 5 minutes
@@ -31,23 +29,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Fetch live CMS portfolios and merge with static CASE_STUDIES without any duplicates
-async function getAllPortfolios(): Promise<CaseStudy[]> {
-  try {
-    const cmsPortfolios = await fetchLiveCmsPortfolios();
-    return deduplicatePortfolios([...CASE_STUDIES, ...cmsPortfolios]);
-  } catch (err) {
-    console.error('Error fetching portfolios for portfolio hub page:', err);
-  }
-  return deduplicatePortfolios(CASE_STUDIES);
-}
-
+// Fully static portfolio hub — all case studies live in src/lib/data.ts.
 export default async function PortfolioHubPage() {
-  const portfolios = await getAllPortfolios();
-
   return (
     <>
-      <PortfolioListingClientView initialPortfolios={portfolios} />
+      <PortfolioListingClientView initialPortfolios={CASE_STUDIES} />
     </>
   );
 }

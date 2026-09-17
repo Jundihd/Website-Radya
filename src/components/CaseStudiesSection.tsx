@@ -97,29 +97,9 @@ const CardHeroImageCarousel: React.FC<CardHeroImageCarouselProps> = ({
 export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   language,
 }) => {
-  const [studies, setStudies] = useState<CaseStudy[]>(CASE_STUDIES);
+  // Fully static — data lives in src/lib/data.ts (synced from CMS, no live fetch).
+  const studies: CaseStudy[] = CASE_STUDIES;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    async function loadCmsPortfolios() {
-      try {
-        const res = await fetch('/api/cms');
-        if (res.ok) {
-          const data = await res.json();
-          if (isMounted && data.portfolios && data.portfolios.length > 0) {
-            setStudies(data.portfolios);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to load CMS portfolios:', err);
-      }
-    }
-    loadCmsPortfolios();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   // Filter 5 target portfolios requested by user: ANBK, OJK, Imuni, BioAudit, Anteraja
   const top5Portfolios = useMemo(() => {

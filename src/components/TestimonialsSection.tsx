@@ -1,36 +1,16 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { Language, Testimonial } from '@/types';
+import React from 'react';
+import { Language } from '@/types';
 import { TESTIMONIALS } from '@/lib/data';
-import { Star, Quote, Award } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 
 interface TestimonialsSectionProps {
   language: Language;
 }
 
 export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ language }) => {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(TESTIMONIALS);
-
-  useEffect(() => {
-    let isMounted = true;
-    async function loadCmsTestimonials() {
-      try {
-        const res = await fetch('/api/cms');
-        if (res.ok) {
-          const data = await res.json();
-          if (isMounted && data.testimonials && data.testimonials.length > 0) {
-            setTestimonials(data.testimonials);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to load CMS testimonials:', err);
-      }
-    }
-    loadCmsTestimonials();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  // Fully static — data lives in src/lib/data.ts (synced from CMS, no live fetch).
+  const testimonials = TESTIMONIALS;
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">

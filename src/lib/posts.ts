@@ -113,7 +113,7 @@ function estimateReadTime(markdown: string): string {
   return `${Math.max(1, Math.round(words / 200))} min read`;
 }
 
-/** Pool cover fallback (diselaraskan dengan directus.ts) untuk post tanpa cover. */
+/** Pool cover fallback untuk post tanpa cover. */
 const POST_FALLBACK_IMAGES = [
   'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80',
   'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80',

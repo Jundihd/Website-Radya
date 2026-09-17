@@ -2,7 +2,6 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { CASE_STUDIES } from '@/lib/data';
-import { fetchLiveCmsPortfolios } from '@/lib/directus';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 import { CaseStudy } from '@/types';
 import { CaseStudyClientView } from './CaseStudyClientView';
@@ -13,33 +12,14 @@ interface PageProps {
   };
 }
 
-// Consolidate all static and live CMS portfolios
-async function getAllPortfolios(): Promise<CaseStudy[]> {
-  try {
-    const cmsPortfolios = await fetchLiveCmsPortfolios();
-    const merged = [...CASE_STUDIES];
-    if (cmsPortfolios && cmsPortfolios.length > 0) {
-      cmsPortfolios.forEach((cmsItem) => {
-        const idx = merged.findIndex(
-          (p) => p.id === cmsItem.id || p.slug === cmsItem.slug || p.id === cmsItem.slug
-        );
-        if (idx !== -1) {
-          merged[idx] = { ...merged[idx], ...cmsItem };
-        } else {
-          merged.push(cmsItem);
-        }
-      });
-    }
-    return merged;
-  } catch (err) {
-    console.error('Error fetching portfolios for detail page:', err);
-  }
+// Fully static — all portfolios live in src/lib/data.ts (no live CMS fetch).
+function getAllPortfolios(): CaseStudy[] {
   return CASE_STUDIES;
 }
 
 // Find study by slug or ID with robust decoding
-async function findStudy(slugParam: string): Promise<CaseStudy | undefined> {
-  const all = await getAllPortfolios();
+function findStudy(slugParam: string): CaseStudy | undefined {
+  const all = getAllPortfolios();
   if (!slugParam) return undefined;
 
   const raw = slugParam.toLowerCase().trim();
@@ -60,7 +40,7 @@ async function findStudy(slugParam: string): Promise<CaseStudy | undefined> {
 
 // Generate static routes for all case studies at build time (SSG)
 export async function generateStaticParams() {
-  const all = await getAllPortfolios();
+  const all = getAllPortfolios();
   const paths: { slug: string }[] = [];
 
   all.forEach((study) => {
@@ -73,7 +53,7 @@ export async function generateStaticParams() {
 
 // Generate Dynamic SEO & OpenGraph Metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const study = await findStudy(params.slug);
+  const study = findStudy(params.slug);
 
   if (!study) {
     return {
@@ -132,8 +112,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function CaseStudyDetailPage({ params }: PageProps) {
-  const study = await findStudy(params.slug);
+export default function CaseStudyDetailPage({ params }: PageProps) {
+  const study = findStudy(params.slug);
 
   if (!study) {
     notFound();
