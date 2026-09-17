@@ -1,11 +1,9 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { INSIGHTS_ARTICLES } from '@/lib/data';
-import { fetchLiveCmsArticles } from '@/lib/directus';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 import { InsightArticle } from '@/types';
-import { getAllPosts, postToInsightArticle, mergeArticlesWithMarkdown, markdownToHtml, getPostBySlug } from '@/lib/posts';
+import { getAllPosts, postToInsightArticle, markdownToHtml } from '@/lib/posts';
 import { InsightArticleClientView } from './InsightArticleClientView';
 
 interface PageProps {
