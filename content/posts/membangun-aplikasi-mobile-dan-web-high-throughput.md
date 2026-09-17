@@ -9,7 +9,7 @@ excerpt_en: Modern frontend and API gateway engineering designed to serve millio
   daily active users with sub-100ms response latencies.
 date: '2026-05-01'
 author: Radya Labs Engineering Team
-cover: https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&auto=format&fit=crop&q=80
+cover: /images/blog/membangun-aplikasi-mobile-dan-web-high-throughput.jpg
 category_id: MOBILE & WEB
 category_en: MOBILE & WEB
 tags:

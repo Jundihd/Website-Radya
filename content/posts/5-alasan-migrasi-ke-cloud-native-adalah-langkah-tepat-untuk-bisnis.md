@@ -9,7 +9,7 @@ excerpt_en: Why containerized Kubernetes microservices and serverless paradigms 
   essential for resilient, cost-optimized enterprise computing.
 date: '2026-05-15'
 author: Radya Labs Engineering Team
-cover: https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80
+cover: /images/blog/5-alasan-migrasi-ke-cloud-native-adalah-langkah-tepat-untuk-bisnis.jpg
 category_id: CLOUD NATIVE
 category_en: CLOUD NATIVE
 tags:

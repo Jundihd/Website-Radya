@@ -9,7 +9,7 @@ excerpt_en: Embedding DevSecOps principles, zero-trust protocols, and data prote
   mechanisms compliant with financial regulations.
 date: '2026-04-25'
 author: Radya Labs Engineering Team
-cover: https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&auto=format&fit=crop&q=80
+cover: /images/blog/standar-keamanan-iso-27001-dan-owasp-pada-perangkat-lunak-enterprise.jpg
 category_id: CYBERSECURITY
 category_en: CYBERSECURITY
 tags:

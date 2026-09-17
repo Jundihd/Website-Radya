@@ -9,7 +9,7 @@ excerpt_en: Extracting structured data from paper forms, invoices, and IDs with
   near-100% precision utilizing custom Deep Learning models.
 date: '2026-04-18'
 author: Radya Labs Engineering Team
-cover: https://images.unsplash.com/photo-1450133064473-71024230f91b?w=800&auto=format&fit=crop&q=80
+cover: /images/blog/otomasi-intelligent-document-processing-berbasis-ai-ocr.jpg
 category_id: AI & OCR
 category_en: AI & OCR
 tags:

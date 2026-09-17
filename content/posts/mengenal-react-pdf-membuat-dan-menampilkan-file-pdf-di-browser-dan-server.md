@@ -9,7 +9,8 @@ excerpt_id: ''
 excerpt_en: ''
 date: '2025-02-11'
 author: Radya Labs Engineering Team
-cover: ''
+cover: >-
+  /images/blog/mengenal-react-pdf-membuat-dan-menampilkan-file-pdf-di-browser-dan-server.jpg
 category_id: INSIGHT
 category_en: INSIGHT
 tags:

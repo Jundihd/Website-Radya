@@ -146,7 +146,7 @@ async function main() {
 
     const bodyId = htmlToMarkdown(transId.content);
     const bodyEnRaw = htmlToMarkdown(transEn.content);
-    const cover = await tryDownloadCover(art.thumbnail, slug);
+    const cover = await tryDownloadCover(art.cover_image, slug);
     const dateIso = (art.date_created || art.date_updated || '').slice(0, 10);
 
     const frontmatter = {

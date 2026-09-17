@@ -9,7 +9,7 @@ excerpt_en: Implementing Infrastructure as Code (IaC), automated testing gates, 
   continuous observability for rapid, zero-defect release cycles.
 date: '2026-05-08'
 author: Radya Labs Engineering Team
-cover: https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80
+cover: /images/blog/devops-best-practices-untuk-mempercepat-delivery-aplikasi-enterprise.jpg
 category_id: DEVOPS & INFRA
 category_en: DEVOPS & INFRA
 tags:

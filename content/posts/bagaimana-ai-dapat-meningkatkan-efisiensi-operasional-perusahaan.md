@@ -9,7 +9,7 @@ excerpt_en: A practical framework for adopting Generative AI and ML to streamlin
   document pipelines, customer engagement, and predictive decisioning.
 date: '2026-05-22'
 author: Radya Labs Engineering Team
-cover: https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80
+cover: /images/blog/bagaimana-ai-dapat-meningkatkan-efisiensi-operasional-perusahaan.jpg
 category_id: AI & INOVASI
 category_en: AI & INNOVATION
 tags:

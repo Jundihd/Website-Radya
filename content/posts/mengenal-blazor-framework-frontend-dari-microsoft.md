@@ -7,7 +7,7 @@ excerpt_id: ''
 excerpt_en: ''
 date: '2025-03-07'
 author: Radya Labs Engineering Team
-cover: ''
+cover: /images/blog/mengenal-blazor-framework-frontend-dari-microsoft.jpg
 category_id: INSIGHT
 category_en: INSIGHT
 tags:

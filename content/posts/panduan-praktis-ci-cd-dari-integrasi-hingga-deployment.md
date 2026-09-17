@@ -7,7 +7,7 @@ excerpt_id: ''
 excerpt_en: ''
 date: '2025-02-11'
 author: Radya Labs Engineering Team
-cover: ''
+cover: /images/blog/panduan-praktis-ci-cd-dari-integrasi-hingga-deployment.jpg
 category_id: INSIGHT
 category_en: INSIGHT
 tags:
