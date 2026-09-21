@@ -19,8 +19,12 @@ import { InsightArticle } from '@/types';
  * ---
  * slug: "judul-artikel"
  * directus_id: 12
+ * status: "published"            # published | draft | archived | under_review
+ *                                # (menggantikan published: true sejak Studio Editor)
  * title_id: "Judul ID"
  * title_en: "Title EN"
+ * subtitle_id: "Subjudul ID"     # opsional (dari Studio Editor)
+ * subtitle_en: "Subtitle EN"     # opsional (dari Studio Editor)
  * excerpt_id: "Ringkasan ID"
  * excerpt_en: "Summary EN"
  * date: "2026-09-16"
@@ -29,7 +33,6 @@ import { InsightArticle } from '@/types';
  * category_id: "AI & INOVASI"
  * category_en: "AI & INNOVATION"
  * tags: ["AI", "LLM"]
- * published: true
  * body_en: |
  *   English markdown content...
  * ---
@@ -41,8 +44,12 @@ export const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 export interface PostFrontmatter {
   slug?: string;
   directus_id?: number | string;
+  /** Status gaya Studio Editor. Menggantikan `published` (tetap didukung legacy). */
+  status?: 'published' | 'draft' | 'archived' | 'under_review' | string;
   title_id?: string;
   title_en?: string;
+  subtitle_id?: string;
+  subtitle_en?: string;
   excerpt_id?: string;
   excerpt_en?: string;
   date?: string;
@@ -51,6 +58,7 @@ export interface PostFrontmatter {
   category_id?: string;
   category_en?: string;
   tags?: string[];
+  /** Legacy (file lama). File baru memakai `status`. */
   published?: boolean;
   body_en?: string;
 }
@@ -76,6 +84,19 @@ function parsePostFile(fileName: string): BlogPost | null {
   return { slug, frontmatter: fm, contentId, contentEn };
 }
 
+/**
+ * Satu post tampil di listing/sitemap hanya jika:
+ * - file baru (ada `status`): status === 'published'
+ * - file lama (tanpa `status`): published !== false
+ */
+export function isPostVisible(fm: PostFrontmatter): boolean {
+  if (!fm.title_id) return false;
+  if (typeof fm.status === 'string' && fm.status.trim() !== '') {
+    return fm.status.trim().toLowerCase() === 'published';
+  }
+  return fm.published !== false;
+}
+
 /** Baca semua post published, sort tanggal terbaru dulu. Aman dipanggil saat folder belum ada. */
 export function getAllPosts(): BlogPost[] {
   if (!fs.existsSync(POSTS_DIR)) return [];
@@ -90,7 +111,7 @@ export function getAllPosts(): BlogPost[] {
       }
     })
     .filter((p): p is BlogPost => p !== null)
-    .filter((p) => p.frontmatter.published !== false && p.frontmatter.title_id);
+    .filter((p) => isPostVisible(p.frontmatter));
   return posts.sort((a, b) => {
     const ta = Date.parse(a.frontmatter.date || '') || 0;
     const tb = Date.parse(b.frontmatter.date || '') || 0;
