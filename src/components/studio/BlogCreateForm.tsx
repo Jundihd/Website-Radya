@@ -31,6 +31,7 @@ import {
   Eye,
   PenLine,
   AlertTriangle,
+  Sparkles,
 } from 'lucide-react';
 import {
   POST_STATUSES,
@@ -41,6 +42,7 @@ import {
   type PostStatus,
   type StudioPostFields,
 } from '@/lib/studio-md';
+import { AiCreatePanel, type AiReady } from './AiCreatePanel';
 
 /* ---------------------------------- kecil ---------------------------------- */
 
@@ -268,6 +270,26 @@ export function BlogCreateForm() {
   const [message, setMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
   const [copied, setCopied] = useState(false);
   const coverInputRef = useRef<HTMLInputElement>(null);
+  // --- AI ---
+  const [aiBrief, setAiBrief] = useState('');
+  const [aiLength, setAiLength] = useState<'short' | 'medium' | 'long'>('medium');
+  const [aiReady, setAiReady] = useState<AiReady | null>(null);
+  const [aiBusy, setAiBusy] = useState<'excerpt' | 'contentId' | 'contentEn' | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetch('/api/studio/ai-status')
+      .then((r) => (r.ok ? r.json() : { configured: false }))
+      .then((d) => {
+        if (alive) setAiReady({ configured: Boolean(d.configured), provider: d.provider, model: d.model });
+      })
+      .catch(() => {
+        if (alive) setAiReady({ configured: false });
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   const set = useCallback(
     <K extends keyof StudioPostFields>(key: K, value: StudioPostFields[K]) => {
@@ -315,6 +337,138 @@ export function BlogCreateForm() {
       set('tags', [...fields.tags, t]);
     }
     setTagInput('');
+  }
+
+  /** Terapkan hasil AI hanya ke field yang masih kosong (tidak menimpa ketikan manual). */
+  function applyAiPatch(patch: Partial<StudioPostFields>): string[] {
+    const filled: string[] = [];
+    setFields((prev) => {
+      const next = { ...prev };
+      const fillText = (
+        key: 'titleId' | 'titleEn' | 'subtitleId' | 'subtitleEn' | 'excerptId' | 'excerptEn' | 'contentId' | 'contentEn',
+        label: string,
+      ) => {
+        const v = patch[key];
+        if (typeof v === 'string' && v.trim() && !next[key].trim()) {
+          next[key] = v.trim();
+          filled.push(label);
+        }
+      };
+      fillText('titleId', 'judul ID');
+      fillText('titleEn', 'judul EN');
+      fillText('subtitleId', 'subtitle ID');
+      fillText('subtitleEn', 'subtitle EN');
+      fillText('excerptId', 'excerpt ID');
+      fillText('excerptEn', 'excerpt EN');
+      fillText('contentId', 'konten ID');
+      fillText('contentEn', 'konten EN');
+      if (Array.isArray(patch.tags) && patch.tags.length > 0) {
+        const fresh = patch.tags
+          .map((t) => String(t).trim())
+          .filter((t) => t && !next.tags.some((x) => x.toLowerCase() === t.toLowerCase()));
+        if (fresh.length > 0) {
+          next.tags = [...next.tags, ...fresh];
+          filled.push(`${fresh.length} tag`);
+        }
+      }
+      if (next.categoryId.trim().toUpperCase() === 'INSIGHT' && patch.categoryId?.trim()) {
+        next.categoryId = patch.categoryId.trim();
+        filled.push('kategori');
+      }
+      if (next.categoryEn.trim().toUpperCase() === 'INSIGHT' && patch.categoryEn?.trim()) {
+        next.categoryEn = patch.categoryEn.trim();
+      }
+      return next;
+    });
+    return filled;
+  }
+
+  async function handleAiExcerpt() {
+    if (!fields.titleId.trim() || !fields.titleEn.trim()) {
+      setMessage({ type: 'err', text: 'Isi Title ID & EN dulu sebelum generate Short Description.' });
+      return;
+    }
+    if (!fields.contentId.trim() && !fields.contentEn.trim()) {
+      setMessage({
+        type: 'err',
+        text: 'Isi Content dulu (atau pakai Create with AI di atas) agar excerpt nyambung dengan isi.',
+      });
+      return;
+    }
+    setAiBusy('excerpt');
+    setMessage(null);
+    try {
+      const res = await fetch('/api/studio/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task: 'excerpt',
+          titleId: fields.titleId,
+          titleEn: fields.titleEn,
+          contentId: fields.contentId,
+          contentEn: fields.contentEn,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage({ type: 'err', text: data.error || 'Generate excerpt gagal.' });
+        return;
+      }
+      setFields((prev) => ({
+        ...prev,
+        excerptId: prev.excerptId.trim() ? prev.excerptId : data.excerptId,
+        excerptEn: prev.excerptEn.trim() ? prev.excerptEn : data.excerptEn,
+      }));
+      setMessage({ type: 'ok', text: 'Short Description terisi dari AI. Silakan review.' });
+    } catch {
+      setMessage({ type: 'err', text: 'Generate excerpt gagal (jaringan).' });
+    } finally {
+      setAiBusy(null);
+    }
+  }
+
+  async function handleAiContent(lang: 'ID' | 'EN') {
+    if (!fields.titleId.trim() || !fields.titleEn.trim()) {
+      setMessage({ type: 'err', text: 'Isi Title ID & EN dulu sebelum generate content.' });
+      return;
+    }
+    const key = lang === 'ID' ? 'contentId' : 'contentEn';
+    if (fields[key].trim()) {
+      setMessage({
+        type: 'err',
+        text: `Content ${lang} sudah terisi — kosongkan dulu jika ingin generate ulang.`,
+      });
+      return;
+    }
+    setAiBusy(lang === 'ID' ? 'contentId' : 'contentEn');
+    setMessage(null);
+    try {
+      const res = await fetch('/api/studio/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task: 'content',
+          lang,
+          length: aiLength,
+          titleId: fields.titleId,
+          titleEn: fields.titleEn,
+          excerptId: fields.excerptId,
+          excerptEn: fields.excerptEn,
+          brief: aiBrief,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage({ type: 'err', text: data.error || 'Generate content gagal.' });
+        return;
+      }
+      set(key, data.content);
+      setMessage({ type: 'ok', text: `Content ${lang} terisi dari AI. Silakan review & edit.` });
+    } catch {
+      setMessage({ type: 'err', text: 'Generate content gagal (jaringan).' });
+    } finally {
+      setAiBusy(null);
+    }
   }
 
   async function uploadCover(file: File) {
@@ -485,6 +639,17 @@ export function BlogCreateForm() {
       </header>
 
       <main className="mx-auto max-w-6xl space-y-8 px-4 py-8">
+        <AiCreatePanel
+          titleId={fields.titleId}
+          titleEn={fields.titleEn}
+          brief={aiBrief}
+          onBriefChange={setAiBrief}
+          length={aiLength}
+          onLengthChange={setAiLength}
+          aiReady={aiReady}
+          onApply={applyAiPatch}
+        />
+
         {/* Status */}
         <section>
           <Label>Status</Label>
@@ -661,7 +826,21 @@ export function BlogCreateForm() {
 
         {/* Translations */}
         <section>
-          <Label required>Translations</Label>
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="text-sm font-extrabold text-white">
+              Translations <span className="text-[#29B6F6]">*</span>
+            </span>
+            <button
+              type="button"
+              onClick={handleAiExcerpt}
+              disabled={aiBusy !== null || aiReady !== null && !aiReady.configured}
+              title="Generate Short Description ID+EN dari judul & konten"
+              className="ml-auto flex items-center gap-1.5 rounded-lg border border-violet-400/40 px-3 py-1.5 text-xs font-bold text-violet-200 transition hover:bg-violet-500/20 disabled:opacity-40"
+            >
+              {aiBusy === 'excerpt' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+              Generate Short Description
+            </button>
+          </div>
           <div className="grid gap-6 lg:grid-cols-2">
             {/* EN */}
             <div className="space-y-5 rounded-2xl border border-[#1793E8]/20 bg-[#0e141d] p-5">
@@ -698,7 +877,22 @@ export function BlogCreateForm() {
                 />
               </div>
               <div>
-                <Label required>Content<LangBadge lang="EN" /></Label>
+                <div className="mb-1.5 flex items-center gap-2">
+                  <span className="text-sm font-extrabold text-white">
+                    Content <span className="text-[#29B6F6]">*</span>
+                  </span>
+                  <LangBadge lang="EN" />
+                  <button
+                    type="button"
+                    onClick={() => handleAiContent('EN')}
+                    disabled={aiBusy !== null || aiReady !== null && !aiReady.configured}
+                    title="Generate draf Content English dari judul (+ brief di panel AI)"
+                    className="ml-auto flex items-center gap-1 rounded-md border border-violet-400/40 px-2 py-1 text-[11px] font-bold text-violet-200 transition hover:bg-violet-500/20 disabled:opacity-40"
+                  >
+                    {aiBusy === 'contentEn' ? <Loader2 className="h-3 w-3 animate-spin" /> : <Sparkles className="h-3 w-3" />}
+                    Generate
+                  </button>
+                </div>
                 <MarkdownBox
                   value={fields.contentEn}
                   onChange={(v) => set('contentEn', v)}
@@ -742,7 +936,22 @@ export function BlogCreateForm() {
                 />
               </div>
               <div>
-                <Label required>Content<LangBadge lang="ID" /></Label>
+                <div className="mb-1.5 flex items-center gap-2">
+                  <span className="text-sm font-extrabold text-white">
+                    Content <span className="text-[#29B6F6]">*</span>
+                  </span>
+                  <LangBadge lang="ID" />
+                  <button
+                    type="button"
+                    onClick={() => handleAiContent('ID')}
+                    disabled={aiBusy !== null || aiReady !== null && !aiReady.configured}
+                    title="Generate draf Content Indonesia dari judul (+ brief di panel AI)"
+                    className="ml-auto flex items-center gap-1 rounded-md border border-violet-400/40 px-2 py-1 text-[11px] font-bold text-violet-200 transition hover:bg-violet-500/20 disabled:opacity-40"
+                  >
+                    {aiBusy === 'contentId' ? <Loader2 className="h-3 w-3 animate-spin" /> : <Sparkles className="h-3 w-3" />}
+                    Generate
+                  </button>
+                </div>
                 <MarkdownBox
                   value={fields.contentId}
                   onChange={(v) => set('contentId', v)}
