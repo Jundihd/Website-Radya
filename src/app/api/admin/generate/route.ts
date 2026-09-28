@@ -6,8 +6,6 @@ import {
   type AiLength,
 } from '@/lib/studio-ai';
 
-// Diproteksi middleware (401 jika belum login).
-// Body: { task, ...input } -> hasil JSON per task.
 export async function POST(req: Request) {
   let body: Record<string, unknown>;
   try {
@@ -20,7 +18,6 @@ export async function POST(req: Request) {
   const str = (v: unknown) => (typeof v === 'string' ? v : '');
   const length: AiLength =
     body.length === 'short' || body.length === 'long' ? body.length : 'medium';
-
   const apiKey = str(body.apiKey);
 
   try {

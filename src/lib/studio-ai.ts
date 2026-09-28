@@ -17,8 +17,13 @@ export interface AiConfig {
   baseUrl: string; // khusus provider openai
 }
 
-export function getAiConfig(): AiConfig | null {
-  const apiKey = (process.env.STUDIO_AI_API_KEY || '').trim();
+export function getAiConfig(customKey?: string): AiConfig | null {
+  const apiKey = (
+    customKey ||
+    process.env.GEMINI_API_KEY ||
+    process.env.STUDIO_AI_API_KEY ||
+    ''
+  ).trim();
   if (!apiKey) return null;
   const provider: AiProvider =
     (process.env.STUDIO_AI_PROVIDER || '').trim().toLowerCase() === 'openai'
@@ -26,7 +31,7 @@ export function getAiConfig(): AiConfig | null {
       : 'gemini';
   const model =
     (process.env.STUDIO_AI_MODEL || '').trim() ||
-    (provider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini');
+    (provider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini');
   const baseUrl =
     (process.env.STUDIO_AI_BASE_URL || '').trim().replace(/\/+$/, '') ||
     'https://api.openai.com/v1';
@@ -180,31 +185,51 @@ async function callGemini(
   prompt: string,
   temperature: number,
 ): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cfg.model)}:generateContent?key=${encodeURIComponent(cfg.apiKey)}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: WRITER_RULES }] },
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature,
-        responseMimeType: 'application/json',
-      },
-    }),
-  });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => '');
-    throw new Error(`Gemini HTTP ${res.status}: ${errText.slice(0, 300)}`);
+  const modelsToTry = [
+    cfg.model,
+    'gemini-2.0-flash',
+    'gemini-1.5-flash',
+    'gemini-1.5-pro',
+  ].filter((m, i, arr) => Boolean(m) && arr.indexOf(m) === i);
+
+  let lastError: Error | null = null;
+
+  for (const model of modelsToTry) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(cfg.apiKey)}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: WRITER_RULES }] },
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature,
+            responseMimeType: 'application/json',
+          },
+        }),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text().catch(() => '');
+        throw new Error(`Gemini (${model}) HTTP ${res.status}: ${errText.slice(0, 300)}`);
+      }
+
+      const data = (await res.json()) as {
+        candidates?: { content?: { parts?: { text?: string }[] } }[];
+      };
+      const text = data.candidates?.[0]?.content?.parts
+        ?.map((p) => p.text || '')
+        .join('');
+      if (!text) throw new Error(`Gemini (${model}) mengembalikan respons kosong.`);
+      return text;
+    } catch (err: any) {
+      lastError = err;
+      console.warn(`[Gemini Fallback] Model ${model} gagal (${err.message}). Mencoba fallback model berikutnya...`);
+    }
   }
-  const data = (await res.json()) as {
-    candidates?: { content?: { parts?: { text?: string }[] } }[];
-  };
-  const text = data.candidates?.[0]?.content?.parts
-    ?.map((p) => p.text || '')
-    .join('');
-  if (!text) throw new Error('Gemini mengembalikan respons kosong.');
-  return text;
+
+  throw lastError || new Error('Google Gemini API gagal memproses permintaan.');
 }
 
 async function callOpenAiCompatible(
@@ -243,11 +268,12 @@ async function callOpenAiCompatible(
 async function runJsonPrompt(
   prompt: string,
   temperature: number,
+  customApiKey?: string,
 ): Promise<Record<string, unknown>> {
-  const cfg = getAiConfig();
+  const cfg = getAiConfig(customApiKey);
   if (!cfg) {
     throw new Error(
-      'STUDIO_AI_API_KEY belum diset di environment server. Lihat .env.example bagian Studio AI.',
+      'Google Gemini API Key belum diset. Isi GEMINI_API_KEY di file .env.local atau masukkan langsung melalui panel.',
     );
   }
   const raw =
@@ -274,10 +300,10 @@ export interface GeneratedFullPost {
 }
 
 export async function generateFullPost(
-  input: FullBriefInput,
+  input: FullBriefInput & { apiKey?: string },
 ): Promise<GeneratedFullPost> {
   if (!input.brief.trim()) throw new Error('Brief wajib diisi.');
-  const json = await runJsonPrompt(buildFullBlogPrompt(input), 0.8);
+  const json = await runJsonPrompt(buildFullBlogPrompt(input), 0.8, input.apiKey);
   return {
     titleId: asStr(json.title_id),
     titleEn: asStr(json.title_en),
@@ -294,15 +320,16 @@ export async function generateFullPost(
 }
 
 export async function generateExcerpts(
-  input: ExcerptInput,
+  input: ExcerptInput & { apiKey?: string },
 ): Promise<{ excerptId: string; excerptEn: string }> {
-  const json = await runJsonPrompt(buildExcerptPrompt(input), 0.5);
+  const json = await runJsonPrompt(buildExcerptPrompt(input), 0.5, input.apiKey);
   return { excerptId: asStr(json.excerpt_id), excerptEn: asStr(json.excerpt_en) };
 }
 
 export async function generateContent(
-  input: ContentInput,
+  input: ContentInput & { apiKey?: string },
 ): Promise<{ content: string }> {
-  const json = await runJsonPrompt(buildContentPrompt(input), 0.8);
+  const json = await runJsonPrompt(buildContentPrompt(input), 0.8, input.apiKey);
   return { content: asStr(json.content) };
 }
+

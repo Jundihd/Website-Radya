@@ -29,7 +29,10 @@ import {
   Sparkles,
   Save,
   Check,
+  Wand2,
+  X,
 } from 'lucide-react';
+import { AiImageGenerator } from '@/components/studio/AiImageGenerator';
 
 interface BlogPostSummary {
   slug: string;
@@ -104,6 +107,15 @@ export default function AdminBlogCmsPage() {
   // Status & Feedback State
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string; url?: string } | null>(null);
+
+  // AI Integration State
+  const [coverMode, setCoverMode] = useState<'ai' | 'preset'>('ai');
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [aiBrief, setAiBrief] = useState('');
+  const [aiGenerateCover, setAiGenerateCover] = useState(true);
+  const [aiGenerating, setAiGenerating] = useState(false);
+  const [aiStatusStep, setAiStatusStep] = useState('');
+  const [aiError, setAiError] = useState('');
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -220,6 +232,77 @@ export default function AdminBlogCmsPage() {
       textarea.focus();
       textarea.setSelectionRange(start + prefix.length, start + prefix.length + selectedText.length);
     }, 50);
+  };
+
+  const handleGenerateAiDraft = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (aiBrief.trim().length < 20) {
+      setAiError('Brief minimal 20 karakter agar AI memahami topik.');
+      return;
+    }
+    setAiGenerating(true);
+    setAiError('');
+    setAiStatusStep('1/2: Menulis artikel lengkap dengan Google Gemini API...');
+
+    try {
+      const res = await fetch('/api/admin/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task: 'full',
+          brief: aiBrief,
+          length: 'medium',
+          titleHintId: titleId,
+          titleHintEn: titleEn,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Gagal generate artikel dengan Gemini.');
+      }
+
+      if (data.titleId) setTitleId(data.titleId);
+      if (data.titleEn) setTitleEn(data.titleEn);
+      if (!isSlugManual && data.titleId) setSlug(slugify(data.titleId));
+      if (data.excerptId) setExcerptId(data.excerptId);
+      if (data.excerptEn) setExcerptEn(data.excerptEn);
+      if (data.contentId) setBodyId(data.contentId);
+      if (data.contentEn) setBodyEn(data.contentEn);
+      if (Array.isArray(data.tags)) setTagsInput(data.tags.join(', '));
+      if (data.categoryId) setCategoryId(data.categoryId);
+
+      if (aiGenerateCover) {
+        setAiStatusStep('2/2: Merender cover gambar dengan AI (aotianzz.xyz)...');
+        try {
+          const imgRes = await fetch('/api/admin/generate-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: `Futuristic clean minimal editorial illustration for enterprise tech blog post about "${data.titleId || aiBrief}". Clean corporate aesthetic, glowing digital neon accents, 4k resolution, no text overlay.`,
+              slug: slugify(data.titleId || 'blog'),
+            }),
+          });
+          const imgData = await imgRes.json();
+          if (imgRes.ok && imgData.cover) {
+            setCover(imgData.cover);
+          }
+        } catch (imgErr) {
+          console.warn('[Admin AI Image] Error:', imgErr);
+        }
+      }
+
+      setShowAiModal(false);
+      setFeedback({
+        type: 'success',
+        message: 'Draf artikel berhasil dibuat oleh Google Gemini AI!',
+      });
+    } catch (err: any) {
+      setAiError(err.message || 'Gagal memproses draf AI.');
+    } finally {
+      setAiGenerating(false);
+      setAiStatusStep('');
+    }
   };
 
   const handleSaveArticle = async (e: React.FormEvent) => {
@@ -563,6 +646,14 @@ export default function AdminBlogCmsPage() {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
+                  onClick={() => setShowAiModal(true)}
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm hover:brightness-110 transition-all"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Tulis dengan AI (Gemini)</span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => setViewMode('list')}
                   className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50 transition-colors"
                 >
@@ -885,48 +976,99 @@ export default function AdminBlogCmsPage() {
 
                 {/* Cover Image */}
                 <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-2xs space-y-4">
-                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">
-                    Cover Image
-                  </h3>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-600 mb-1">
-                      URL Cover Image
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="https://... atau /images/blog/..."
-                      value={cover}
-                      onChange={(e) => setCover(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#1793E8]"
-                    />
-                  </div>
-
-                  <div>
-                    <span className="block text-[11px] font-bold text-slate-400 mb-2">
-                      Pilih Preset Gambar:
-                    </span>
-                    <div className="grid grid-cols-2 gap-2">
-                      {PRESET_COVERS.map((preset, idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => setCover(preset.url)}
-                          className={`p-1.5 rounded-xl border text-[11px] font-semibold text-left transition-all ${
-                            cover === preset.url
-                              ? 'border-[#1793E8] bg-[#1793E8]/10 text-[#1793E8]'
-                              : 'border-slate-200 hover:border-slate-300 text-slate-600'
-                          }`}
-                        >
-                          {preset.label}
-                        </button>
-                      ))}
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">
+                      Cover Image
+                    </h3>
+                    <div className="flex rounded-lg bg-slate-100 p-0.5 text-xs font-semibold">
+                      <button
+                        type="button"
+                        onClick={() => setCoverMode('ai')}
+                        className={`rounded-md px-2.5 py-1 transition ${
+                          coverMode === 'ai'
+                            ? 'bg-white text-slate-900 shadow-2xs'
+                            : 'text-slate-500 hover:text-slate-800'
+                        }`}
+                      >
+                        ✨ AI Image
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCoverMode('preset')}
+                        className={`rounded-md px-2.5 py-1 transition ${
+                          coverMode === 'preset'
+                            ? 'bg-white text-slate-900 shadow-2xs'
+                            : 'text-slate-500 hover:text-slate-800'
+                        }`}
+                      >
+                        🖼️ Preset / URL
+                      </button>
                     </div>
                   </div>
 
                   {cover && (
-                    <div className="mt-2 relative h-32 rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
+                    <div className="relative h-36 rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 group">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={cover} alt="Preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setCover('')}
+                        className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/60 text-white hover:bg-black/80 transition"
+                        title="Hapus gambar"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                      <div className="absolute bottom-1 left-2 text-[10px] text-white/80 bg-black/60 px-2 py-0.5 rounded font-mono truncate max-w-[90%]">
+                        {cover}
+                      </div>
+                    </div>
+                  )}
+
+                  {coverMode === 'ai' ? (
+                    <AiImageGenerator
+                      apiEndpoint="/api/admin/generate-image"
+                      slug={slug}
+                      titleHint={titleId || titleEn}
+                      briefHint={excerptId}
+                      onImageGenerated={(url) => setCover(url)}
+                      compact={true}
+                    />
+                  ) : (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1">
+                          URL Cover Image
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="https://... atau /images/blog/..."
+                          value={cover}
+                          onChange={(e) => setCover(e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#1793E8]"
+                        />
+                      </div>
+
+                      <div>
+                        <span className="block text-[11px] font-bold text-slate-400 mb-2">
+                          Pilih Preset Gambar:
+                        </span>
+                        <div className="grid grid-cols-2 gap-2">
+                          {PRESET_COVERS.map((preset, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => setCover(preset.url)}
+                              className={`p-1.5 rounded-xl border text-[11px] font-semibold text-left transition-all ${
+                                cover === preset.url
+                                  ? 'border-[#1793E8] bg-[#1793E8]/10 text-[#1793E8]'
+                                  : 'border-slate-200 hover:border-slate-300 text-slate-600'
+                              }`}
+                            >
+                              {preset.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -954,6 +1096,105 @@ export default function AdminBlogCmsPage() {
               </div>
             </div>
           </form>
+        )}
+
+        {/* Modal AI Draft Generator */}
+        {showAiModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
+            <div className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl border border-slate-100 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-100 text-violet-600">
+                    <Sparkles className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <h3 className="text-sm font-extrabold text-slate-900">
+                      Generate Artikel dengan Google Gemini
+                    </h3>
+                    <p className="text-[11px] text-slate-500">
+                      AI menuliskan draf judul, excerpt, dan konten markdown lengkap.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAiModal(false)}
+                  disabled={aiGenerating}
+                  className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleGenerateAiDraft} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+                    Brief / Topik Artikel *
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    value={aiBrief}
+                    onChange={(e) => setAiBrief(e.target.value)}
+                    placeholder="Contoh: Artikel teknis tentang implementasi Microservices dengan Next.js dan Apache Kafka, bahas arsitektur, tantangan skalabilitas, dan praktik terbaik engineering..."
+                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs leading-relaxed text-slate-800 outline-none focus:ring-2 focus:ring-violet-500"
+                  />
+                  <p className="mt-1 text-[11px] text-slate-400">
+                    Minimal 20 karakter agar hasil draf artikel relevan & mendalam.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <input
+                    type="checkbox"
+                    id="adminAiGenerateCover"
+                    checked={aiGenerateCover}
+                    onChange={(e) => setAiGenerateCover(e.target.checked)}
+                    className="rounded border-slate-300 text-violet-600 focus:ring-0 cursor-pointer"
+                  />
+                  <label htmlFor="adminAiGenerateCover" className="text-xs font-semibold text-slate-700 cursor-pointer select-none">
+                    Generate Foto Cover otomatis dengan AI Image API (aotianzz.xyz)
+                  </label>
+                </div>
+
+                {aiStatusStep && (
+                  <div className="flex items-center gap-2 rounded-xl bg-violet-50 border border-violet-100 p-3 text-xs font-semibold text-violet-700 animate-pulse">
+                    <RefreshCw className="w-4 h-4 animate-spin text-violet-600" />
+                    <span>{aiStatusStep}</span>
+                  </div>
+                )}
+
+                {aiError && (
+                  <div className="rounded-xl bg-rose-50 border border-rose-100 p-3 text-xs text-rose-700 font-semibold">
+                    {aiError}
+                  </div>
+                )}
+
+                <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowAiModal(false)}
+                    disabled={aiGenerating}
+                    className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 text-xs font-bold hover:bg-slate-50 transition"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={aiGenerating}
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold flex items-center gap-2 shadow hover:brightness-110 disabled:opacity-50 transition"
+                  >
+                    {aiGenerating ? (
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-3.5 h-3.5" />
+                    )}
+                    <span>{aiGenerating ? 'Sedang Menulis...' : 'Mulai Generate Draf'}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         )}
       </main>
     </div>

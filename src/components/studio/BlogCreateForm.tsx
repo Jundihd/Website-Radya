@@ -43,6 +43,7 @@ import {
   type StudioPostFields,
 } from '@/lib/studio-md';
 import { AiCreatePanel, type AiReady } from './AiCreatePanel';
+import { AiImageGenerator } from './AiImageGenerator';
 
 /* ---------------------------------- kecil ---------------------------------- */
 
@@ -269,6 +270,7 @@ export function BlogCreateForm() {
   const [confirmOverwrite, setConfirmOverwrite] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
   const [copied, setCopied] = useState(false);
+  const [coverTab, setCoverTab] = useState<'ai' | 'upload'>('ai');
   const coverInputRef = useRef<HTMLInputElement>(null);
   // --- AI ---
   const [aiBrief, setAiBrief] = useState('');
@@ -377,6 +379,10 @@ export function BlogCreateForm() {
       }
       if (next.categoryEn.trim().toUpperCase() === 'INSIGHT' && patch.categoryEn?.trim()) {
         next.categoryEn = patch.categoryEn.trim();
+      }
+      if (typeof patch.cover === 'string' && patch.cover.trim() && !next.cover.trim()) {
+        next.cover = patch.cover.trim();
+        filled.push('cover');
       }
       return next;
     });
@@ -717,69 +723,117 @@ export function BlogCreateForm() {
 
         {/* Cover */}
         <section>
-          <Label>Cover Image</Label>
-          <div className="rounded-xl border border-white/10 bg-[#12161f] p-4">
-            {fields.cover ? (
-              <div className="relative overflow-hidden rounded-xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={fields.cover} alt="Cover preview" className="max-h-72 w-full object-cover" />
-                <button
-                  type="button"
-                  onClick={() => {
-                    set('cover', '');
-                    setCoverFile(null);
-                  }}
-                  className="absolute right-3 top-3 rounded-lg bg-black/60 p-2 text-white transition hover:bg-black/80"
-                  title="Hapus cover"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            ) : (
+          <div className="flex items-center justify-between mb-1.5">
+            <Label>Cover Image</Label>
+            <div className="flex rounded-lg bg-white/5 p-0.5 text-xs font-semibold">
               <button
                 type="button"
-                onClick={() => coverInputRef.current?.click()}
-                className="flex w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-white/15 px-4 py-10 text-sm text-slate-400 transition hover:border-[#1793E8]/60 hover:text-slate-200"
+                onClick={() => setCoverTab('ai')}
+                className={`rounded-md px-3 py-1 transition ${
+                  coverTab === 'ai'
+                    ? 'bg-sky-500 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
               >
-                {uploadingCover ? (
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                ) : (
-                  <ImagePlus className="h-6 w-6" />
-                )}
-                {uploadingCover ? 'Mengupload…' : 'Klik untuk upload gambar cover (JPG/PNG/WebP, maks 5 MB)'}
+                ✨ AI Generator
               </button>
-            )}
-            <input
-              ref={coverInputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
-              className="hidden"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (f) {
-                  setCoverFile(f);
-                  uploadCover(f);
-                }
-                e.target.value = '';
-              }}
-            />
-            <div className="mt-3 flex items-center gap-2">
-              <input
-                value={coverFile ? '' : fields.cover}
-                onChange={(e) => {
-                  set('cover', e.target.value);
+              <button
+                type="button"
+                onClick={() => setCoverTab('upload')}
+                className={`rounded-md px-3 py-1 transition ${
+                  coverTab === 'upload'
+                    ? 'bg-sky-500 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                📁 Upload / URL
+              </button>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-white/10 bg-[#12161f] p-4 space-y-3">
+            {fields.cover ? (
+              <div className="relative overflow-hidden rounded-xl border border-white/10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={fields.cover} alt="Cover preview" className="max-h-72 w-full object-cover" />
+                <div className="absolute right-3 top-3 flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      set('cover', '');
+                      setCoverFile(null);
+                    }}
+                    className="rounded-lg bg-black/70 p-2 text-white transition hover:bg-black/90 shadow"
+                    title="Hapus cover"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="absolute bottom-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[11px] text-slate-300 backdrop-blur-xs font-mono">
+                  {fields.cover}
+                </div>
+              </div>
+            ) : null}
+
+            {coverTab === 'ai' ? (
+              <AiImageGenerator
+                slug={fields.slug}
+                titleHint={fields.titleId || fields.titleEn}
+                briefHint={aiBrief}
+                onImageGenerated={(coverUrl) => {
+                  set('cover', coverUrl);
                   setCoverFile(null);
                 }}
-                placeholder="…atau tempel URL gambar (https://…)"
-                className={inputCls}
               />
-              {fields.cover && !coverFile && (
-                <span className="shrink-0 text-xs text-slate-500">URL manual</span>
-              )}
-            </div>
-            <p className="mt-1.5 text-xs italic text-slate-500">
-              Opsional — kosongkan untuk memakai cover otomatis.
-            </p>
+            ) : (
+              <div>
+                {!fields.cover && (
+                  <button
+                    type="button"
+                    onClick={() => coverInputRef.current?.click()}
+                    className="flex w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-white/15 px-4 py-10 text-sm text-slate-400 transition hover:border-[#1793E8]/60 hover:text-slate-200"
+                  >
+                    {uploadingCover ? (
+                      <Loader2 className="h-6 w-6 animate-spin" />
+                    ) : (
+                      <ImagePlus className="h-6 w-6" />
+                    )}
+                    {uploadingCover ? 'Mengupload…' : 'Klik untuk upload gambar cover (JPG/PNG/WebP, maks 5 MB)'}
+                  </button>
+                )}
+                <input
+                  ref={coverInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) {
+                      setCoverFile(f);
+                      uploadCover(f);
+                    }
+                    e.target.value = '';
+                  }}
+                />
+                <div className="mt-3 flex items-center gap-2">
+                  <input
+                    value={coverFile ? '' : fields.cover}
+                    onChange={(e) => {
+                      set('cover', e.target.value);
+                      setCoverFile(null);
+                    }}
+                    placeholder="…atau tempel URL gambar (https://…)"
+                    className={inputCls}
+                  />
+                  {fields.cover && !coverFile && (
+                    <span className="shrink-0 text-xs text-slate-500">URL manual</span>
+                  )}
+                </div>
+                <p className="mt-1.5 text-xs italic text-slate-500">
+                  Opsional — kosongkan untuk memakai cover otomatis.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
