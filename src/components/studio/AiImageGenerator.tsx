@@ -16,7 +16,7 @@ import {
   AVAILABLE_IMAGE_MODELS,
   DEFAULT_IMAGE_MODEL,
   type ImageModelOption,
-} from '@/lib/studio-image';
+} from '@/lib/studio-image-models';
 
 interface AiImageGeneratorProps {
   slug?: string;

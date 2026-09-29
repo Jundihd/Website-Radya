@@ -15,7 +15,7 @@ import type { StudioPostFields } from '@/lib/studio-md';
 import {
   AVAILABLE_IMAGE_MODELS,
   DEFAULT_IMAGE_MODEL,
-} from '@/lib/studio-image';
+} from '@/lib/studio-image-models';
 
 export interface AiReady {
   configured: boolean;
