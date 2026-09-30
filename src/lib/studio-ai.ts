@@ -31,7 +31,7 @@ export function getAiConfig(customKey?: string): AiConfig | null {
       : 'gemini';
   const model =
     (process.env.STUDIO_AI_MODEL || '').trim() ||
-    (provider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini');
+    (provider === 'gemini' ? 'gemini-3.5-flash-lite' : 'gpt-4o-mini');
   const baseUrl =
     (process.env.STUDIO_AI_BASE_URL || '').trim().replace(/\/+$/, '') ||
     'https://api.openai.com/v1';
@@ -187,9 +187,10 @@ async function callGemini(
 ): Promise<string> {
   const modelsToTry = [
     cfg.model,
-    'gemini-2.0-flash',
-    'gemini-1.5-flash',
-    'gemini-1.5-pro',
+    'gemini-3.5-flash-lite',
+    'gemini-3.5-flash',
+    'gemini-flash-latest',
+    'gemini-3.8-flash',
   ].filter((m, i, arr) => Boolean(m) && arr.indexOf(m) === i);
 
   let lastError: Error | null = null;
@@ -226,6 +227,7 @@ async function callGemini(
     } catch (err: any) {
       lastError = err;
       console.warn(`[Gemini Fallback] Model ${model} gagal (${err.message}). Mencoba fallback model berikutnya...`);
+      await new Promise((r) => setTimeout(r, 600));
     }
   }
 
