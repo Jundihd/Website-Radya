@@ -54,11 +54,22 @@ export async function POST(req: Request) {
             ? 'gif'
             : 'svg';
 
-  const dir = path.join(process.cwd(), 'public', 'images', 'blog');
-  fs.mkdirSync(dir, { recursive: true });
-  const fileName = `${slug}.${ext}`;
   const buffer = Buffer.from(await file.arrayBuffer());
-  fs.writeFileSync(path.join(dir, fileName), buffer);
+  const fileName = `${slug}.${ext}`;
+  let coverUrl = `/images/blog/${fileName}`;
 
-  return NextResponse.json({ cover: `/images/blog/${fileName}` });
+  try {
+    const dir = path.join(process.cwd(), 'public', 'images', 'blog');
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, fileName), buffer);
+  } catch (fsErr: any) {
+    if (fsErr.code === 'EROFS' || fsErr.message?.includes('read-only')) {
+      console.warn('[Upload Cover] Read-only filesystem terdeteksi (Vercel/Serverless). Menggunakan Data URL base64.');
+      coverUrl = `data:${file.type};base64,${buffer.toString('base64')}`;
+    } else {
+      throw fsErr;
+    }
+  }
+
+  return NextResponse.json({ cover: coverUrl });
 }

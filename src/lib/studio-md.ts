@@ -95,8 +95,8 @@ export function validatePostFields(f: StudioPostFields): PostValidation {
   if (!f.date || !/^\d{4}-\d{2}-\d{2}$/.test(f.date)) {
     errors.push('Date Published wajib format YYYY-MM-DD.');
   }
-  if (f.cover && !/^(https?:\/\/|\/)/.test(f.cover)) {
-    errors.push('Cover harus berupa URL http(s) atau path lokal (/images/...).');
+  if (f.cover && !/^(https?:\/\/|\/|data:image\/)/.test(f.cover)) {
+    errors.push('Cover harus berupa URL http(s), path lokal (/images/...), atau data image.');
   }
   return { valid: errors.length === 0, errors };
 }

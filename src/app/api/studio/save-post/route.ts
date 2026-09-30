@@ -61,25 +61,39 @@ export async function POST(req: Request) {
     );
   }
 
-  fs.mkdirSync(POSTS_DIR, { recursive: true });
-  const filePath = path.join(POSTS_DIR, `${normalized.slug}.md`);
-  if (fs.existsSync(filePath) && !payload.overwrite) {
-    return NextResponse.json(
-      {
-        error: `File ${normalized.slug}.md sudah ada. Ganti slug atau izinkan timpa.`,
-        exists: true,
-      },
-      { status: 409 },
-    );
+  try {
+    fs.mkdirSync(POSTS_DIR, { recursive: true });
+    const filePath = path.join(POSTS_DIR, `${normalized.slug}.md`);
+    if (fs.existsSync(filePath) && !payload.overwrite) {
+      return NextResponse.json(
+        {
+          error: `File ${normalized.slug}.md sudah ada. Ganti slug atau izinkan timpa.`,
+          exists: true,
+        },
+        { status: 409 },
+      );
+    }
+
+    const markdown = buildPostMarkdown(normalized);
+    fs.writeFileSync(filePath, markdown, 'utf8');
+
+    return NextResponse.json({
+      ok: true,
+      slug: normalized.slug,
+      file: `content/posts/${normalized.slug}.md`,
+      status: normalized.status,
+    });
+  } catch (err: any) {
+    if (err.code === 'EROFS' || err.message?.includes('read-only')) {
+      return NextResponse.json(
+        {
+          error:
+            'Server berjalan di read-only filesystem (Vercel/Serverless). Gunakan tombol "Unduh .md" atau "Salin .md" di bar atas untuk menyimpan dan memasukkan artikel ke repositori Git.',
+          isReadOnly: true,
+        },
+        { status: 403 },
+      );
+    }
+    throw err;
   }
-
-  const markdown = buildPostMarkdown(normalized);
-  fs.writeFileSync(filePath, markdown, 'utf8');
-
-  return NextResponse.json({
-    ok: true,
-    slug: normalized.slug,
-    file: `content/posts/${normalized.slug}.md`,
-    status: normalized.status,
-  });
 }

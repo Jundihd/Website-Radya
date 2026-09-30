@@ -757,6 +757,14 @@ export function BlogCreateForm() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={fields.cover} alt="Cover preview" className="max-h-72 w-full object-cover" />
                 <div className="absolute right-3 top-3 flex items-center gap-1.5">
+                  <a
+                    href={fields.cover}
+                    download={`${fields.slug || 'blog-cover'}.png`}
+                    className="rounded-lg bg-black/70 p-2 text-white transition hover:bg-black/90 shadow"
+                    title="Unduh foto cover"
+                  >
+                    <Download className="h-4 w-4" />
+                  </a>
                   <button
                     type="button"
                     onClick={() => {
@@ -769,8 +777,8 @@ export function BlogCreateForm() {
                     <X className="h-4 w-4" />
                   </button>
                 </div>
-                <div className="absolute bottom-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[11px] text-slate-300 backdrop-blur-xs font-mono">
-                  {fields.cover}
+                <div className="absolute bottom-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[11px] text-slate-300 backdrop-blur-xs font-mono max-w-[85%] truncate">
+                  {fields.cover.startsWith('data:image') ? 'Data Image (AI Cover Base64)' : fields.cover}
                 </div>
               </div>
             ) : null}

@@ -137,10 +137,6 @@ export async function generateBlogImage(
     );
   }
 
-  // Save image to /public/images/blog/
-  const dir = path.join(process.cwd(), 'public', 'images', 'blog');
-  fs.mkdirSync(dir, { recursive: true });
-
   const rawSlug = String(options.slug || 'ai-cover')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -150,9 +146,24 @@ export async function generateBlogImage(
   const timestamp = Date.now().toString(36);
   const randomSuffix = Math.random().toString(36).slice(2, 6);
   const fileName = `${rawSlug || 'ai-cover'}-${timestamp}-${randomSuffix}.png`;
-  const filePath = path.join(dir, fileName);
 
-  fs.writeFileSync(filePath, imageBuffer);
+  let coverUrl = `/images/blog/${fileName}`;
+
+  // Coba simpan ke /public/images/blog/ jika filesystem writable (lokal / container)
+  // Bila di serverless/Vercel (EROFS read-only filesystem), otomatis fallback ke Base64 Data URL
+  try {
+    const dir = path.join(process.cwd(), 'public', 'images', 'blog');
+    fs.mkdirSync(dir, { recursive: true });
+    const filePath = path.join(dir, fileName);
+    fs.writeFileSync(filePath, imageBuffer);
+  } catch (fsErr: any) {
+    if (fsErr.code === 'EROFS' || fsErr.message?.includes('read-only')) {
+      console.warn('[Studio Image] Read-only filesystem terdeteksi (Vercel/Serverless). Menggunakan Data URL base64.');
+      coverUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`;
+    } else {
+      throw fsErr;
+    }
+  }
 
   const switched = usedModel !== requestedModel;
   const switchReason = switched
@@ -161,7 +172,7 @@ export async function generateBlogImage(
 
   return {
     ok: true,
-    cover: `/images/blog/${fileName}`,
+    cover: coverUrl,
     requestedModel,
     usedModel,
     switched,
