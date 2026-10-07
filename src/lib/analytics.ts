@@ -1,3 +1,7 @@
+export const GTM_ID =
+  process.env.NEXT_PUBLIC_GTM_ID ||
+  'GTM-5GQVZ7X2';
+
 export const GA_MEASUREMENT_ID =
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ||
   process.env.NEXT_PUBLIC_GA_ID ||
