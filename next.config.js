@@ -38,8 +38,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/career',
-        destination: '/id/career',
+        source: '/id/career',
+        destination: '/career',
         permanent: true,
       },
       {

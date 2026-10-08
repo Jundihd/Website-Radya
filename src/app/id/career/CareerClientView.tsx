@@ -137,70 +137,6 @@ export const CareerClientView: React.FC = () => {
         </div>
       </aside>
 
-      {/* ======================================================== */}
-      {/* STICKY HEADER / NAVBAR KHAS RADYA LABS                   */}
-      {/* ======================================================== */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-20">
-          {/* Logo Brand */}
-          <Link href="/" className="flex items-center gap-2 group" aria-label="Radya Labs Beranda">
-            <Image
-              src="/images/logos/radya-logo.png"
-              alt="Radya Labs"
-              width={160}
-              height={36}
-              className="h-8 sm:h-9 w-auto object-contain"
-              priority
-            />
-          </Link>
-
-          {/* Navigasi Desktop */}
-          <nav aria-label="Navigasi Karier" className="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600">
-            <Link href="/" className="hover:text-[#1793E8] transition-colors">
-              Beranda
-            </Link>
-            <a href="#hero" className="hover:text-[#1793E8] transition-colors">
-              Tentang Kru
-            </a>
-            <a href="#pilar" className="hover:text-[#1793E8] transition-colors">
-              Pilar Budaya
-            </a>
-            <a href="#cerita" className="hover:text-[#1793E8] transition-colors">
-              Cerita Founder
-            </a>
-            <a href="#benefit" className="hover:text-[#1793E8] transition-colors">
-              Benefit
-            </a>
-            <a href="#testimoni" className="hover:text-[#1793E8] transition-colors">
-              Testimoni
-            </a>
-            <a href="#lowongan" className="text-[#1793E8] font-bold border-b-2 border-[#1793E8] pb-1">
-              Lowongan
-            </a>
-            <a href="#proses" className="hover:text-[#1793E8] transition-colors">
-              Proses
-            </a>
-          </nav>
-
-          {/* Action CTA */}
-          <div className="flex items-center gap-3">
-            <a
-              href="#lowongan"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#1793E8] px-3 py-2 rounded-lg transition-colors"
-            >
-              Lihat Posisi
-            </a>
-            <a
-              href="#kontak"
-              className="bg-gradient-radya text-white text-xs sm:text-sm font-bold px-4 sm:px-5 py-2.5 rounded-full shadow-sm hover:brightness-110 hover:-translate-y-0.5 transition-all flex items-center gap-1.5"
-            >
-              <Mail className="w-3.5 h-3.5" />
-              <span>Kirim CV Spontan</span>
-            </a>
-          </div>
-        </div>
-      </header>
-
       <main>
         {/* ======================================================== */}
         {/* SECTION 1: #hero                                         */}
@@ -216,10 +152,19 @@ export const CareerClientView: React.FC = () => {
               {/* Kolom Kiri: Pesan Utama & CTA */}
               <div className="lg:col-span-7 space-y-6">
                 
-                {/* Badge Tagline */}
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800">
-                  <Sparkles className="w-3.5 h-3.5 text-[#1793E8]" />
-                  <span>Karier & Budaya Tim di Radya Labs</span>
+                {/* Brand Logo & Tagline */}
+                <div className="flex items-center gap-3 pb-1">
+                  <Image
+                    src="/images/logos/radya-logo.png"
+                    alt="Radya Labs"
+                    width={150}
+                    height={34}
+                    className="h-8 w-auto object-contain"
+                    priority
+                  />
+                  <span className="text-xs font-semibold text-slate-400 pl-3 border-l border-slate-200">
+                    Karier &amp; Budaya Tim
+                  </span>
                 </div>
 
                 {/* H1 Heading */}
