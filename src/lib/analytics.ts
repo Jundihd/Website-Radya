@@ -2,47 +2,49 @@ export const GTM_ID =
   process.env.NEXT_PUBLIC_GTM_ID ||
   'GTM-5GQVZ7X2';
 
-export const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ||
-  process.env.NEXT_PUBLIC_GA_ID ||
-  'G-FLJ8758H31';
-
 export const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID || '';
 export const HOTJAR_SNIPPET_VERSION = process.env.NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION || '6';
 
-// Global types for Google Analytics & dataLayer window objects
+// Global types for Google Tag Manager dataLayer & window objects
 declare global {
   interface Window {
+    dataLayer?: any[];
     gtag?: (
       command: 'config' | 'event' | 'js' | 'set',
       targetIdOrAction: string | Date,
       configOrParams?: Record<string, any>
     ) => void;
-    dataLayer?: any[];
   }
 }
 
 /**
- * Send pageview to Google Analytics
+ * Send pageview to GTM dataLayer & Hotjar
  */
 export const pageview = (url: string) => {
-  if (typeof window !== 'undefined' && window.gtag && GA_MEASUREMENT_ID) {
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      page_path: url,
-    });
-  }
-  // Inform Hotjar of virtual page change
-  if (typeof window !== 'undefined' && window.hj) {
-    window.hj('stateChange', url);
+  if (typeof window !== 'undefined') {
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'page_view',
+        page_path: url,
+      });
+    }
+    // Inform Hotjar of virtual page change
+    if (window.hj) {
+      window.hj('stateChange', url);
+    }
   }
 };
 
 /**
- * Send custom event to Google Analytics
+ * Send custom event to Google Tag Manager (GTM) via dataLayer
  */
 export const trackEvent = (action: string, params: Record<string, any> = {}) => {
-  if (typeof window !== 'undefined' && window.gtag && GA_MEASUREMENT_ID) {
-    window.gtag('event', action, params);
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: action,
+      ...params,
+    });
   }
 };
 
