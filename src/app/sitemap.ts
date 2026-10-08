@@ -7,13 +7,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = COMPANY_CONFIG.url;
   const currentDate = new Date();
 
-  // Core Homepage Route
+  // Core Homepage & Career Route
   const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/id/career`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
   ];
 
