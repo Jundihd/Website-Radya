@@ -29,13 +29,40 @@ export function getAiConfig(customKey?: string): AiConfig | null {
     (process.env.STUDIO_AI_PROVIDER || '').trim().toLowerCase() === 'openai'
       ? 'openai'
       : 'gemini';
+  const rawModel = (process.env.STUDIO_AI_MODEL || '').trim();
   const model =
-    (process.env.STUDIO_AI_MODEL || '').trim() ||
+    normalizeGeminiModel(rawModel) ||
     (provider === 'gemini' ? 'gemini-3.5-flash-lite' : 'gpt-4o-mini');
   const baseUrl =
     (process.env.STUDIO_AI_BASE_URL || '').trim().replace(/\/+$/, '') ||
     'https://api.openai.com/v1';
   return { provider, apiKey, model, baseUrl };
+}
+
+/**
+ * Model lama (1.x / 2.0 / tanpa versi) sudah di-retire Google dan
+ * mengembalikan 404 `models/... is not found for API version v1beta`.
+ * Normalisasi ke model aktif agar env lama tidak bikin fitur mati.
+ */
+function normalizeGeminiModel(raw: string): string {
+  const m = (raw || '').trim();
+  if (!m) return '';
+  const lower = m.toLowerCase();
+  const legacyPatterns = [
+    'gemini-1.0',
+    'gemini-1.5',
+    'gemini-2.0',
+    'gemini-pro',
+    'gemini-1-5',
+    'gemini-1_5',
+  ];
+  if (legacyPatterns.some((p) => lower.includes(p))) {
+    console.warn(
+      `[Studio AI] Model "${m}" sudah retire (404). Otomatis memakai "gemini-3.5-flash-lite". Update STUDIO_AI_MODEL di env.`,
+    );
+    return 'gemini-3.5-flash-lite';
+  }
+  return m;
 }
 
 /* ------------------------------- prompting ------------------------------- */
@@ -185,12 +212,15 @@ async function callGemini(
   prompt: string,
   temperature: number,
 ): Promise<string> {
+  // Model aktif per docs Google 2026 (GA). Urutan = murah/cepat dulu.
+  // Lihat: https://ai.google.dev/gemini-api/docs/models
   const modelsToTry = [
     cfg.model,
     'gemini-3.5-flash-lite',
+    'gemini-3.1-flash-lite',
     'gemini-3.5-flash',
-    'gemini-flash-latest',
-    'gemini-3.8-flash',
+    'gemini-2.5-flash-lite',
+    'gemini-2.5-flash',
   ].filter((m, i, arr) => Boolean(m) && arr.indexOf(m) === i);
 
   let lastError: Error | null = null;
@@ -213,7 +243,10 @@ async function callGemini(
 
       if (!res.ok) {
         const errText = await res.text().catch(() => '');
-        throw new Error(`Gemini (${model}) HTTP ${res.status}: ${errText.slice(0, 300)}`);
+        const hint = res.status === 404
+          ? ' Model tidak ditemukan (kemungkinan retire). Cek https://ai.google.dev/gemini-api/docs/models untuk daftar aktif.'
+          : '';
+        throw new Error(`Gemini (${model}) HTTP ${res.status}: ${errText.slice(0, 300)}${hint}`);
       }
 
       const data = (await res.json()) as {

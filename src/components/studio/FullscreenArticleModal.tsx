@@ -30,6 +30,7 @@ export interface FullscreenArticleData {
   excerptEn?: string;
   contentId: string;
   contentEn?: string;
+  directusId?: string;
   date?: string;
   author?: string;
   cover?: string;

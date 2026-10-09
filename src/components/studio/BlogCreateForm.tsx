@@ -9,14 +9,6 @@ import React, {
 } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Bold,
-  Italic,
-  Heading2,
-  Link2,
-  List,
-  ListOrdered,
-  Quote,
-  Code,
   Trash2,
   Plus,
   Download,
@@ -28,10 +20,9 @@ import {
   ImagePlus,
   X,
   RefreshCw,
-  Eye,
-  PenLine,
   AlertTriangle,
   Sparkles,
+  PencilLine,
 } from 'lucide-react';
 import {
   POST_STATUSES,
@@ -44,6 +35,8 @@ import {
 } from '@/lib/studio-md';
 import { AiCreatePanel, type AiReady } from './AiCreatePanel';
 import { AiImageGenerator } from './AiImageGenerator';
+import { StudioMarkdownEditor } from './StudioMarkdownEditor';
+import type { FullscreenArticleData } from './FullscreenArticleModal';
 
 /* ---------------------------------- kecil ---------------------------------- */
 
@@ -88,151 +81,18 @@ const STATUS_DOT: Record<PostStatus, string> = {
   under_review: 'bg-orange-700',
 };
 
-/* ------------------------------- markdown box ------------------------------ */
-
-function MarkdownBox({
-  value,
-  onChange,
-  placeholder,
-  minRows = 12,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  placeholder?: string;
-  minRows?: number;
-}) {
-  const [tab, setTab] = useState<'write' | 'preview'>('write');
-  const [html, setHtml] = useState('');
-  const [loadingPreview, setLoadingPreview] = useState(false);
-  const areaRef = useRef<HTMLTextAreaElement>(null);
-
-  const wrap = useCallback(
-    (before: string, after = '', placeholderText = 'teks') => {
-      const el = areaRef.current;
-      if (!el) return;
-      const { selectionStart: s, selectionEnd: e } = el;
-      const selected = value.slice(s, e) || placeholderText;
-      const next =
-        value.slice(0, s) + before + selected + after + value.slice(e);
-      onChange(next);
-      requestAnimationFrame(() => {
-        el.focus();
-        el.setSelectionRange(s + before.length, s + before.length + selected.length);
-      });
-    },
-    [value, onChange],
-  );
-
-  const linePrefix = useCallback(
-    (prefix: string) => {
-      const el = areaRef.current;
-      if (!el) return;
-      const { selectionStart: s } = el;
-      const lineStart = value.lastIndexOf('\n', s - 1) + 1;
-      const next =
-        value.slice(0, lineStart) + prefix + value.slice(lineStart);
-      onChange(next);
-      requestAnimationFrame(() => {
-        el.focus();
-        el.setSelectionRange(s + prefix.length, s + prefix.length);
-      });
-    },
-    [value, onChange],
-  );
-
-  async function openPreview() {
-    setTab('preview');
-    setLoadingPreview(true);
-    try {
-      const res = await fetch('/api/studio/preview', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ markdown: value }),
-      });
-      const data = await res.json();
-      setHtml(res.ok ? data.html || '<p><em>Konten kosong.</em></p>' : '<p>Gagal render preview.</p>');
-    } catch {
-      setHtml('<p>Gagal render preview.</p>');
-    } finally {
-      setLoadingPreview(false);
-    }
-  }
-
-  const tools = [
-    { icon: Bold, title: 'Bold', fn: () => wrap('**', '**') },
-    { icon: Italic, title: 'Italic', fn: () => wrap('_', '_') },
-    { icon: Heading2, title: 'Heading', fn: () => linePrefix('### ') },
-    { icon: Link2, title: 'Link', fn: () => wrap('[', '](https://)') },
-    { icon: List, title: 'Bullet list', fn: () => linePrefix('- ') },
-    { icon: ListOrdered, title: 'Numbered list', fn: () => linePrefix('1. ') },
-    { icon: Quote, title: 'Quote', fn: () => linePrefix('> ') },
-    { icon: Code, title: 'Inline code', fn: () => wrap('`', '`', 'kode') },
-  ];
-
-  return (
-    <div className="overflow-hidden rounded-xl border border-white/10">
-      <div className="flex items-center gap-1 border-b border-white/10 bg-[#151b26] px-2 py-1.5">
-        {tab === 'write' &&
-          tools.map(({ icon: Icon, title, fn }) => (
-            <button
-              key={title}
-              type="button"
-              title={title}
-              onClick={fn}
-              className="rounded-lg p-2 text-slate-300 transition hover:bg-white/10 hover:text-white"
-            >
-              <Icon className="h-4 w-4" />
-            </button>
-          ))}
-        <div className="ml-auto flex gap-1">
-          <button
-            type="button"
-            onClick={() => setTab('write')}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold ${
-              tab === 'write' ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <PenLine className="h-3.5 w-3.5" /> Tulis
-          </button>
-          <button
-            type="button"
-            onClick={openPreview}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold ${
-              tab === 'preview' ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Eye className="h-3.5 w-3.5" /> Preview
-          </button>
-        </div>
-      </div>
-      {tab === 'write' ? (
-        <textarea
-          ref={areaRef}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          rows={minRows}
-          className="w-full bg-[#0b0e14] px-4 py-3 font-mono text-[13px] leading-relaxed text-slate-100 outline-none placeholder:text-slate-500"
-        />
-      ) : (
-        <div className="max-h-[480px] min-h-[200px] overflow-y-auto bg-[#0b0e14] px-5 py-4">
-          {loadingPreview ? (
-            <p className="flex items-center gap-2 text-sm text-slate-400">
-              <Loader2 className="h-4 w-4 animate-spin" /> Merender preview…
-            </p>
-          ) : (
-            <article
-              className="prose-studio text-sm leading-relaxed text-slate-200"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
 /* --------------------------------- form utama ------------------------------ */
+
+export interface BlogCreateFormProps {
+  /** Jika diisi, form masuk mode edit: seluruh field dimuat dari artikel ini (4.3). */
+  initialArticle?: FullscreenArticleData | null;
+  /** Ubah nilai ini untuk memaksa reload initialArticle (mis. klik Edit dua kali). */
+  editNonce?: number;
+  /** Dipanggil setelah artikel berhasil disimpan (mis. untuk kembali ke direktori). */
+  onSaved?: (slug: string) => void;
+  /** Dipanggil saat user membatalkan mode edit. */
+  onCancelEdit?: () => void;
+}
 
 const EMPTY: StudioPostFields = {
   slug: '',
@@ -254,13 +114,70 @@ const EMPTY: StudioPostFields = {
   contentEn: '',
 };
 
-export function BlogCreateForm() {
+export function BlogCreateForm({
+  initialArticle = null,
+  editNonce = 0,
+  onSaved,
+  onCancelEdit,
+}: BlogCreateFormProps = {}) {
   const router = useRouter();
   const [fields, setFields] = useState<StudioPostFields>(() => ({
     ...EMPTY,
     directusId: generateDirectusId(),
   }));
   const [slugTouched, setSlugTouched] = useState(false);
+  // --- Mode edit (4.3): isEdit + slug file asal untuk overwrite/update ---
+  const [isEdit, setIsEdit] = useState(false);
+  const [originalSlug, setOriginalSlug] = useState('');
+
+  // Muat seluruh data artikel ke form saat masuk mode edit.
+  useEffect(() => {
+    if (!initialArticle) return;
+    const st = String(initialArticle.status || 'draft').toLowerCase();
+    const validStatus: PostStatus =
+      st === 'published' || st === 'archived' || st === 'under_review'
+        ? (st as PostStatus)
+        : 'draft';
+    setFields({
+      slug: initialArticle.slug,
+      directusId:
+        initialArticle.directusId?.trim() || generateDirectusId(),
+      status: validStatus,
+      titleId: initialArticle.titleId || '',
+      titleEn: initialArticle.titleEn || '',
+      subtitleId: initialArticle.subtitleId || '',
+      subtitleEn: initialArticle.subtitleEn || '',
+      excerptId: initialArticle.excerptId || '',
+      excerptEn: initialArticle.excerptEn || '',
+      date: initialArticle.date || new Date().toISOString().slice(0, 10),
+      author: initialArticle.author || '',
+      cover: initialArticle.cover || '',
+      categoryId: initialArticle.categoryId || 'INSIGHT',
+      categoryEn: initialArticle.categoryEn || 'INSIGHT',
+      tags: Array.isArray(initialArticle.tags) ? [...initialArticle.tags] : [],
+      contentId: initialArticle.contentId || '',
+      contentEn: initialArticle.contentEn || '',
+    });
+    setSlugTouched(true);
+    setIsEdit(true);
+    setOriginalSlug(initialArticle.slug);
+    setConfirmOverwrite(false);
+    setMessage({
+      type: 'ok',
+      text: `Mode edit: memuat artikel "${initialArticle.slug}". Menyimpan akan menimpa file yang sama.`,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialArticle, editNonce]);
+
+  function exitEditMode() {
+    setFields({ ...EMPTY, directusId: generateDirectusId() });
+    setSlugTouched(false);
+    setIsEdit(false);
+    setOriginalSlug('');
+    setConfirmOverwrite(false);
+    setMessage(null);
+    onCancelEdit?.();
+  }
   const [tagInput, setTagInput] = useState('');
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [uploadingCover, setUploadingCover] = useState(false);
@@ -513,7 +430,13 @@ export function BlogCreateForm() {
       const res = await fetch('/api/studio/save-post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fields, overwrite }),
+        // Mode edit selalu overwrite file asal (update), bukan cek duplikat.
+        body: JSON.stringify({
+          fields,
+          overwrite: isEdit ? true : overwrite,
+          isEdit,
+          originalSlug,
+        }),
       });
       const data = await res.json();
       if (res.status === 409) {
@@ -529,13 +452,17 @@ export function BlogCreateForm() {
         return;
       }
       setConfirmOverwrite(false);
+      // Sinkronkan penanda edit bila slug berubah saat update.
+      if (isEdit) setOriginalSlug(data.slug);
+      const gitMsg: string = data.git?.message ? ` ${data.git.message}` : '';
       setMessage({
         type: 'ok',
         text:
           data.status === 'published'
-            ? `Tersimpan & langsung tayang: /insight/${data.slug} (setelah deploy/rebuild).`
-            : `Tersimpan sebagai ${data.status}: content/posts/${data.slug}.md`,
+            ? `Tersimpan & langsung tayang: /insight/${data.slug}.${gitMsg}`
+            : `Tersimpan sebagai ${data.status}: content/posts/${data.slug}.md.${gitMsg}`,
       });
+      onSaved?.(data.slug);
     } catch {
       setMessage({ type: 'err', text: 'Gagal menyimpan (jaringan).' });
     } finally {
@@ -577,11 +504,17 @@ export function BlogCreateForm() {
       <header className="sticky top-0 z-20 border-b border-white/10 bg-[#0b0e14]/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
           <div>
-            <h1 className="text-lg font-extrabold tracking-tight">
-              Studio Blog Editor
+            <h1 className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
+              {isEdit && <PencilLine className="h-5 w-5 text-amber-300" />}
+              {isEdit ? `Edit Artikel: ${originalSlug}` : 'Studio Blog Editor'}
             </h1>
             <p className="text-xs text-slate-400">
               Tim media · output: <code className="text-slate-300">content/posts/&lt;slug&gt;.md</code>
+              {isEdit && (
+                <span className="ml-2 rounded-md bg-amber-500/15 px-2 py-0.5 font-bold text-amber-300">
+                  MODE UPDATE — menyimpan menimpa file asal
+                </span>
+              )}
             </p>
           </div>
           <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -600,6 +533,15 @@ export function BlogCreateForm() {
             >
               <Download className="h-4 w-4" /> Unduh .md
             </button>
+            {isEdit && (
+              <button
+                type="button"
+                onClick={exitEditMode}
+                className="flex items-center gap-1.5 rounded-xl border border-amber-400/40 px-3.5 py-2 text-xs font-bold text-amber-200 transition hover:bg-amber-500/20"
+              >
+                <X className="h-4 w-4" /> Batalkan Edit
+              </button>
+            )}
             <button
               type="button"
               onClick={() => handleSave(false)}
@@ -607,7 +549,7 @@ export function BlogCreateForm() {
               className="flex items-center gap-1.5 rounded-xl bg-[#1793E8] px-4 py-2 text-xs font-bold text-white transition hover:brightness-110 disabled:opacity-50"
             >
               {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              Simpan ke Server
+              {isEdit ? 'Update Artikel' : 'Simpan ke Server'}
             </button>
             <button
               type="button"
@@ -955,10 +897,11 @@ export function BlogCreateForm() {
                     Generate
                   </button>
                 </div>
-                <MarkdownBox
+                <StudioMarkdownEditor
                   value={fields.contentEn}
                   onChange={(v) => set('contentEn', v)}
                   placeholder="Tulis konten English (Markdown)…"
+                  slugHint={fields.slug || 'blog-content'}
                 />
                 <p className="mt-1.5 text-xs text-slate-500">{wordCount(fields.contentEn)} kata</p>
               </div>
@@ -1014,10 +957,11 @@ export function BlogCreateForm() {
                     Generate
                   </button>
                 </div>
-                <MarkdownBox
+                <StudioMarkdownEditor
                   value={fields.contentId}
                   onChange={(v) => set('contentId', v)}
                   placeholder="Tulis konten Indonesia (Markdown)…"
+                  slugHint={fields.slug || 'blog-content'}
                 />
                 <p className="mt-1.5 text-xs text-slate-500">{wordCount(fields.contentId)} kata</p>
               </div>

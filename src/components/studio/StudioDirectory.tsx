@@ -145,8 +145,33 @@ export function StudioDirectory({
     return c;
   }, [posts]);
 
-  // Handle Quick Status Change
+  // Minta konfirmasi untuk SEMUA perubahan status (4.2),
+  // lalu jalankan PATCH + auto-push Git setelah user menyetujui.
   async function handleStatusChange(slug: string, newStatus: PostStatus) {
+    const current = posts.find((p) => p.slug === slug);
+    const from = current ? String(current.status).toLowerCase() : '—';
+    if (from === newStatus) return;
+    const variant =
+      newStatus === 'archived'
+        ? ('danger' as const)
+        : newStatus === 'published'
+        ? ('warning' as const)
+        : ('primary' as const);
+    setConfirmModal({
+      isOpen: true,
+      title: 'Ubah Status Artikel',
+      message: `Ubah status artikel "${slug}" dari "${from}" menjadi "${newStatus}"? Perubahan ini akan disimpan ke file dan di-push ke Git.`,
+      confirmLabel: `Ya, Ubah ke ${newStatus}`,
+      variant,
+      action: async () => {
+        await executeStatusChange(slug, newStatus);
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+      },
+    });
+  }
+
+  async function executeStatusChange(slug: string, newStatus: PostStatus) {
+    setActionLoading(true);
     try {
       const res = await fetch('/api/studio/posts/status', {
         method: 'PATCH',
@@ -177,6 +202,8 @@ export function StudioDirectory({
       setTimeout(() => setFeedback(null), 5000);
     } catch {
       setFeedback({ type: 'err', text: 'Gagal mengubah status (jaringan).' });
+    } finally {
+      setActionLoading(false);
     }
   }
 

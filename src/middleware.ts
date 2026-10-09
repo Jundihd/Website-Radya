@@ -23,9 +23,7 @@ export async function middleware(req: NextRequest) {
     if (pathname === '/studio/login') {
       const token = req.cookies.get(STUDIO_COOKIE_NAME)?.value;
       if (await verifyStudioSession(token)) {
-        return NextResponse.redirect(
-          new URL('/studio/blog/create', req.url),
-        );
+        return NextResponse.redirect(new URL('/studio', req.url));
       }
     }
     return NextResponse.next();
