@@ -7,12 +7,21 @@ import {
   validatePostFields,
   type StudioPostFields,
 } from '@/lib/studio-md';
+import {
+  saveAndPushPostToGit,
+  deleteAndPushPostFromGit,
+} from '@/lib/studio-git';
 
 // Diproteksi middleware (401 jika belum login).
-// Body: { fields: StudioPostFields, overwrite?: boolean }
-// Server membangun ulang .md dari fields (sumber kebenaran tunggal).
+// Body: { fields: StudioPostFields, overwrite?: boolean, isEdit?: boolean, originalSlug?: string }
 export async function POST(req: Request) {
-  let payload: { fields?: StudioPostFields; overwrite?: boolean };
+  let payload: {
+    fields?: StudioPostFields;
+    overwrite?: boolean;
+    isEdit?: boolean;
+    originalSlug?: string;
+  };
+
   try {
     payload = await req.json();
   } catch {
@@ -62,38 +71,49 @@ export async function POST(req: Request) {
   }
 
   try {
-    fs.mkdirSync(POSTS_DIR, { recursive: true });
     const filePath = path.join(POSTS_DIR, `${normalized.slug}.md`);
-    if (fs.existsSync(filePath) && !payload.overwrite) {
-      return NextResponse.json(
-        {
-          error: `File ${normalized.slug}.md sudah ada. Ganti slug atau izinkan timpa.`,
-          exists: true,
-        },
-        { status: 409 },
-      );
+    const isEdit = Boolean(payload.isEdit);
+    const originalSlug = payload.originalSlug?.trim().toLowerCase();
+
+    // Cek duplikasi slug jika bukan edit atau jika slug berubah ke file lain yang sudah ada
+    if (!payload.overwrite && (!isEdit || (originalSlug && originalSlug !== normalized.slug))) {
+      if (fs.existsSync(filePath)) {
+        return NextResponse.json(
+          {
+            error: `File ${normalized.slug}.md sudah ada. Gunakan slug lain atau konfirmasi untuk menimpa.`,
+            exists: true,
+          },
+          { status: 409 },
+        );
+      }
+    }
+
+    // Jika mode edit dan slug diubah, hapus file lama dan push penghapusan
+    if (isEdit && originalSlug && originalSlug !== normalized.slug) {
+      await deleteAndPushPostFromGit(originalSlug);
     }
 
     const markdown = buildPostMarkdown(normalized);
-    fs.writeFileSync(filePath, markdown, 'utf8');
+    const gitResult = await saveAndPushPostToGit(
+      normalized.slug,
+      markdown,
+      isEdit ? 'update' : 'create',
+    );
 
     return NextResponse.json({
       ok: true,
       slug: normalized.slug,
       file: `content/posts/${normalized.slug}.md`,
       status: normalized.status,
+      git: gitResult,
     });
   } catch (err: any) {
-    if (err.code === 'EROFS' || err.message?.includes('read-only')) {
-      return NextResponse.json(
-        {
-          error:
-            'Server berjalan di read-only filesystem (Vercel/Serverless). Gunakan tombol "Unduh .md" atau "Salin .md" di bar atas untuk menyimpan dan memasukkan artikel ke repositori Git.',
-          isReadOnly: true,
-        },
-        { status: 403 },
-      );
-    }
-    throw err;
+    console.error('[API Studio Save Post] Error:', err);
+    return NextResponse.json(
+      {
+        error: err.message || 'Gagal menyimpan artikel.',
+      },
+      { status: 500 },
+    );
   }
 }

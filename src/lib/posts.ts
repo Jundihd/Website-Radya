@@ -123,9 +123,34 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
   return getAllPosts().find((p) => p.slug === slug);
 }
 
-/** Render Markdown -> HTML (dipakai halaman detail saat poin 3 di-wire). */
+/** Baca SEMUA post (published, draft, under_review, archived) untuk Studio Dashboard. */
+export function getAllStudioPosts(): BlogPost[] {
+  if (!fs.existsSync(POSTS_DIR)) return [];
+  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'));
+  const posts = files
+    .map((f) => {
+      try {
+        return parsePostFile(f);
+      } catch (err) {
+        console.warn(`[posts] Gagal parse ${f}:`, err);
+        return null;
+      }
+    })
+    .filter((p): p is BlogPost => p !== null);
+  return posts.sort((a, b) => {
+    const ta = Date.parse(a.frontmatter.date || '') || 0;
+    const tb = Date.parse(b.frontmatter.date || '') || 0;
+    return tb - ta;
+  });
+}
+
+export function getStudioPostBySlug(slug: string): BlogPost | undefined {
+  return getAllStudioPosts().find((p) => p.slug === slug);
+}
+
+/** Render Markdown -> HTML (mendukung tag HTML mentah seperti <u> dan <iframe> YouTube). */
 export async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await remark().use(html).process(markdown || '');
+  const result = await remark().use(html, { sanitize: false }).process(markdown || '');
   return result.toString();
 }
 
