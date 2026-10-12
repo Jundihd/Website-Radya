@@ -41,6 +41,26 @@ function q(s: string): string {
   return `"${String(s).replace(/["$`\\]/g, '')}"`;
 }
 
+/** Cek apakah mesin punya git identity; kalau tidak, commit memakai identitas fallback. */
+async function hasGitIdentity(): Promise<boolean> {
+  try {
+    const { stdout } = await execPromise('git config user.name && git config user.email', {
+      timeout: 15000,
+    });
+    return Boolean(stdout && stdout.trim());
+  } catch {
+    return false;
+  }
+}
+
+/** Commit dengan identitas mesin bila ada, fallback ke identitas Studio. */
+async function gitCommitStep(commitMsg: string): Promise<void> {
+  const identity = (await hasGitIdentity())
+    ? ''
+    : '-c user.name="Radya Labs Studio" -c user.email="studio@radya-labs.local" ';
+  await gitStep('commit', `git ${identity}commit -m ${q(commitMsg)}`, 60000);
+}
+
 const GITHUB_REPO = process.env.GITHUB_REPO || 'Jundihd/Website-Radya';
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
 
