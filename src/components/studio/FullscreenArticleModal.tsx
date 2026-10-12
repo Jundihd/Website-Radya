@@ -31,6 +31,7 @@ export interface FullscreenArticleData {
   contentId: string;
   contentEn?: string;
   directusId?: string;
+  time?: string;
   date?: string;
   author?: string;
   cover?: string;
@@ -315,12 +316,34 @@ export function FullscreenArticleModal({
               </span>
               <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
                 <Calendar className="h-3.5 w-3.5 text-[#1793E8]" />
-                <time>{article.date || 'Tanggal tidak diset'}</time>
+                <time>
+                  {article.date || 'Tanggal tidak diset'}
+                  {article.time ? ` · ${article.time}` : ''}
+                </time>
               </span>
               <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
                 <Clock className="h-3.5 w-3.5 text-[#1793E8]" />
                 {readTime}
               </span>
+              {(() => {
+                const d = (article.date || '').trim();
+                const t = (article.time || '').trim();
+                const hhmm = /^([01]\d|2[0-3]):[0-5]\d$/.test(t) ? t : '00:00';
+                const ts =
+                  /^\d{4}-\d{2}-\d{2}$/.test(d)
+                    ? Date.parse(`${d}T${hhmm}:00+07:00`)
+                    : NaN;
+                const scheduled =
+                  String(article.status || '').toLowerCase() === 'published' &&
+                  !Number.isNaN(ts) &&
+                  ts > Date.now();
+                return scheduled ? (
+                  <span className="flex items-center gap-1.5 rounded-full bg-sky-500/10 px-2.5 py-0.5 text-xs font-bold text-[#1793E8]">
+                    ⏰ Terjadwal tayang otomatis {d}
+                    {t ? ` ${t}` : ''} WIB
+                  </span>
+                ) : null;
+              })()}
             </div>
 
             <h1 className="mb-6 text-3xl font-extrabold tracking-tight text-[#0F172A] sm:text-4xl lg:text-5xl leading-tight">

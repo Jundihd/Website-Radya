@@ -38,6 +38,7 @@ export async function PATCH(request: NextRequest) {
       excerptId: fm.excerpt_id || '',
       excerptEn: fm.excerpt_en || '',
       date: fm.date || new Date().toISOString().slice(0, 10),
+      time: typeof fm.time === 'string' ? fm.time.trim() : '',
       author: fm.author || 'Radya Labs Engineering Team',
       cover: fm.cover || '',
       categoryId: fm.category_id || 'INSIGHT',

@@ -47,6 +47,7 @@ export async function POST(req: Request) {
     excerptId: String(fields.excerptId || ''),
     excerptEn: String(fields.excerptEn || ''),
     date: String(fields.date || ''),
+    time: String(fields.time || '').trim(),
     author: String(fields.author || ''),
     cover: String(fields.cover || ''),
     categoryId: String(fields.categoryId || ''),

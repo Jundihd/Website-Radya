@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 import { InsightArticle } from '@/types';
-import { getAllPosts, postToInsightArticle, markdownToHtml } from '@/lib/posts';
+import { getDuePosts, postToInsightArticle, markdownToHtml } from '@/lib/posts';
 import { InsightArticleClientView } from './InsightArticleClientView';
 
 interface PageProps {
@@ -35,9 +35,10 @@ function slugify(text: string): string {
 }
 
 // Git-based Markdown CMS: Membaca langsung dari content/posts/*.md
+// Hanya artikel yang sudah due — artikel terjadwal (masa depan) 404 sampai waktunya tiba.
 async function getAllArticles(): Promise<InsightArticle[]> {
   try {
-    return getAllPosts().map(postToInsightArticle);
+    return getDuePosts().map(postToInsightArticle);
   } catch (err) {
     console.error('Error fetching articles for insight page:', err);
     return [];

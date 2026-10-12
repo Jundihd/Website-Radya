@@ -105,6 +105,7 @@ const EMPTY: StudioPostFields = {
   excerptId: '',
   excerptEn: '',
   date: new Date().toISOString().slice(0, 10),
+  time: '',
   author: '',
   cover: '',
   categoryId: 'INSIGHT',
@@ -150,6 +151,7 @@ export function BlogCreateForm({
       excerptId: initialArticle.excerptId || '',
       excerptEn: initialArticle.excerptEn || '',
       date: initialArticle.date || new Date().toISOString().slice(0, 10),
+      time: initialArticle.time || '',
       author: initialArticle.author || '',
       cover: initialArticle.cover || '',
       categoryId: initialArticle.categoryId || 'INSIGHT',
@@ -1136,23 +1138,66 @@ export function BlogCreateForm({
           </div>
         </section>
 
-        {/* Date */}
+        {/* Date + Time */}
         <section>
-          <Label required>Date Published</Label>
-          <input
-            type="date"
-            value={fields.date}
-            onChange={(e) => set('date', e.target.value)}
-            className={`${inputCls} max-w-xs [color-scheme:dark]`}
-          />
-          {fields.date > new Date().toISOString().slice(0, 10) && (
-            <p className="mt-2 flex items-start gap-1.5 text-xs text-amber-300/90">
-              <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-              Tanggal masih di masa depan. Saat ini BELUM ada penjadwalan
-              otomatis: artikel berstatus Published tayang setelah deploy
-              berikutnya — bukan tepat di tanggal tersebut.
-            </p>
-          )}
+          <Label required>Date & Time Published</Label>
+          <div className="flex flex-wrap items-center gap-3">
+            <input
+              type="date"
+              value={fields.date}
+              onChange={(e) => set('date', e.target.value)}
+              className={`${inputCls} max-w-xs [color-scheme:dark]`}
+            />
+            <input
+              type="time"
+              value={fields.time}
+              onChange={(e) => set('time', e.target.value)}
+              className={`${inputCls} max-w-[160px] [color-scheme:dark]`}
+              title="Jam publish (opsional — penentu urutan di tanggal yang sama)"
+            />
+            {fields.time && (
+              <button
+                type="button"
+                onClick={() => set('time', '')}
+                className="rounded-lg border border-white/10 px-2.5 py-2 text-xs font-bold text-slate-400 transition hover:bg-white/10 hover:text-white"
+                title="Kosongkan jam"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+          <p className="mt-1.5 text-xs italic text-slate-500">
+            Zona waktu WIB. Urutan tampil di blog mengikuti tanggal + jam ini
+            (terbaru di atas), bukan urutan upload. Artikel lama dengan tanggal
+            lama muncul di bawah; isi jam untuk mengatur urutan artikel di hari
+            yang sama.
+          </p>
+          {(() => {
+            // Acuan WIB (sama dengan engine scheduling server).
+            const wibNow = new Date(Date.now() + (7 * 60 + new Date().getTimezoneOffset()) * 60000);
+            const pad = (n: number) => String(n).padStart(2, '0');
+            const today = `${wibNow.getFullYear()}-${pad(wibNow.getMonth() + 1)}-${pad(wibNow.getDate())}`;
+            const nowHM = `${pad(wibNow.getHours())}:${pad(wibNow.getMinutes())}`;
+            const isFuture =
+              fields.date > today ||
+              (fields.date === today && (fields.time || '00:00') > nowHM);
+            if (!isFuture) return null;
+            const when = `${fields.date}${fields.time ? ` ${fields.time}` : ''} WIB`;
+            return fields.status === 'published' ? (
+              <p className="mt-2 flex items-start gap-1.5 rounded-xl border border-sky-400/30 bg-sky-500/10 p-3 text-xs font-semibold text-sky-200">
+                <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                TERJADWAL OTOMATIS — artikel ini akan tayang sendiri pada {when} (±5
+                menit toleransi, tanpa perlu deploy ulang). Pastikan sudah
+                disimpan ke server.
+              </p>
+            ) : (
+              <p className="mt-2 flex items-start gap-1.5 text-xs text-amber-300/90">
+                <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                Waktu ({when}) masih di masa depan. Set status ke Published agar
+                otomatis terjadwal tayang — status lain tidak akan tayang.
+              </p>
+            );
+          })()}
         </section>
 
         {/* MD Preview */}

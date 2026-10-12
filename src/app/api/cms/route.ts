@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import { CASE_STUDIES, TESTIMONIALS } from '@/lib/data';
-import { getAllPosts, postToInsightArticle } from '@/lib/posts';
+import { getDuePosts, postToInsightArticle } from '@/lib/posts';
 
 export async function GET() {
   // Fully static — articles come from local Markdown, portfolios & testimonials
   // from src/lib/data.ts. No live Directus CMS fetch.
-  const articles = getAllPosts().map(postToInsightArticle);
+  // Hanya artikel yang sudah due (terjadwal yang waktunya tiba ikut muncul).
+  const articles = getDuePosts().map(postToInsightArticle);
 
   return NextResponse.json({
     status: 'static',

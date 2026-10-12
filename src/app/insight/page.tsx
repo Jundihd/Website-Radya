@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { COMPANY_CONFIG } from '@/lib/company-info';
 import { InsightArticle } from '@/types';
-import { getAllPosts, postToInsightArticle } from '@/lib/posts';
+import { getDuePosts, postToInsightArticle } from '@/lib/posts';
 import { InsightListingClientView } from './InsightListingClientView';
 
 export const revalidate = 300; // Revalidate every 5 minutes
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 // Git-based Markdown CMS: Membaca langsung dari content/posts/*.md
 async function getAllArticles(): Promise<InsightArticle[]> {
   try {
-    return getAllPosts().map(postToInsightArticle);
+    return getDuePosts().map(postToInsightArticle);
   } catch (err) {
     console.error('Error fetching articles for insight hub page:', err);
     return [];

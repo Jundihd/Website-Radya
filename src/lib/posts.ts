@@ -28,6 +28,7 @@ import { InsightArticle } from '@/types';
  * excerpt_id: "Ringkasan ID"
  * excerpt_en: "Summary EN"
  * date: "2026-09-16"
+ * time: "10:30"                # opsional (HH:MM) — penentu urutan di tanggal yang sama
  * author: "Nama Penulis"
  * cover: "/images/blog/judul-artikel.jpg"
  * category_id: "AI & INOVASI"
@@ -53,6 +54,8 @@ export interface PostFrontmatter {
   excerpt_id?: string;
   excerpt_en?: string;
   date?: string;
+  /** Jam publish opsional (HH:MM). Dipakai untuk urutan + tampilan bila diisi. */
+  time?: string;
   author?: string;
   cover?: string;
   category_id?: string;
@@ -97,7 +100,44 @@ export function isPostVisible(fm: PostFrontmatter): boolean {
   return fm.published !== false;
 }
 
-/** Baca semua post published, sort tanggal terbaru dulu. Aman dipanggil saat folder belum ada. */
+/**
+ * Zona waktu acuan scheduling = WIB (UTC+7), mengikuti tim redaksi.
+ * Input form tanggal+jam selalu diartikan sebagai waktu WIB.
+ *
+ * Urutan tampil publik = Date Published (+ Time bila diisi), terbaru dulu.
+ * BUKAN urutan upload/commit — artikel lama yang diposting dengan tanggal lama
+ * akan muncul di bawah, sesuai tanggalnya.
+ */
+export function postTimestamp(fm: PostFrontmatter): number {
+  const d = (fm.date || '').trim();
+  const t = (fm.time || '').trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+    const hhmm = /^([01]\d|2[0-3]):[0-5]\d$/.test(t) ? t : '00:00';
+    const parsed = Date.parse(`${d}T${hhmm}:00+07:00`);
+    if (!Number.isNaN(parsed)) return parsed;
+  }
+  return Date.parse(d) || 0;
+}
+
+/**
+ * Scheduling: artikel status published BARU dianggap tayang ("due")
+ * setelah timestamp WIB-nya lewat. Dipakai semua permukaan publik
+ * (beranda, /insight, detail, sitemap) sehingga artikel terjadwal
+ * otomatis muncul tanpa deploy ulang (didukung ISR 5 menit + cron).
+ */
+export function isPostDue(fm: PostFrontmatter, nowMs: number = Date.now()): boolean {
+  if (!isPostVisible(fm)) return false;
+  const ts = postTimestamp(fm);
+  if (!ts) return false;
+  return ts <= nowMs;
+}
+
+/** Varian getAllPosts yang hanya berisi artikel yang sudah due (siap tayang). */
+export function getDuePosts(nowMs: number = Date.now()): BlogPost[] {
+  return getAllPosts().filter((p) => isPostDue(p.frontmatter, nowMs));
+}
+
+/** Baca semua post published, sort tanggal (+jam) terbaru dulu. Aman dipanggil saat folder belum ada. */
 export function getAllPosts(): BlogPost[] {
   if (!fs.existsSync(POSTS_DIR)) return [];
   const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'));
@@ -112,11 +152,7 @@ export function getAllPosts(): BlogPost[] {
     })
     .filter((p): p is BlogPost => p !== null)
     .filter((p) => isPostVisible(p.frontmatter));
-  return posts.sort((a, b) => {
-    const ta = Date.parse(a.frontmatter.date || '') || 0;
-    const tb = Date.parse(b.frontmatter.date || '') || 0;
-    return tb - ta;
-  });
+  return posts.sort((a, b) => postTimestamp(b.frontmatter) - postTimestamp(a.frontmatter));
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
@@ -137,11 +173,7 @@ export function getAllStudioPosts(): BlogPost[] {
       }
     })
     .filter((p): p is BlogPost => p !== null);
-  return posts.sort((a, b) => {
-    const ta = Date.parse(a.frontmatter.date || '') || 0;
-    const tb = Date.parse(b.frontmatter.date || '') || 0;
-    return tb - ta;
-  });
+  return posts.sort((a, b) => postTimestamp(b.frontmatter) - postTimestamp(a.frontmatter));
 }
 
 export function getStudioPostBySlug(slug: string): BlogPost | undefined {
@@ -177,11 +209,15 @@ function fallbackCover(slug: string): string {
   return POST_FALLBACK_IMAGES[hash % POST_FALLBACK_IMAGES.length];
 }
 
-function formatDateId(dateIso?: string): string {
+function formatDateId(dateIso?: string, time?: string): string {
   if (!dateIso) return '';
   const d = new Date(dateIso);
   if (Number.isNaN(d.getTime())) return dateIso;
-  return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+  const dateStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+  const t = (time || '').trim();
+  // Tampilkan jam hanya bila diisi valid (HH:MM), mis. "12 Feb 2025 · 10:30".
+  if (/^([01]\d|2[0-3]):[0-5]\d$/.test(t)) return `${dateStr} · ${t}`;
+  return dateStr;
 }
 
 /**
@@ -200,7 +236,7 @@ export function postToInsightArticle(post: BlogPost): InsightArticle {
     summary: { ID: fm.excerpt_id || '', EN: fm.excerpt_en || fm.excerpt_id || '' },
     content: { ID: post.contentId, EN: post.contentEn },
     category: { ID: categoryId, EN: (fm.category_en || categoryId).toUpperCase() },
-    date: formatDateId(fm.date),
+    date: formatDateId(fm.date, fm.time),
     readTime: estimateReadTime(post.contentId),
     image: fm.cover || fallbackCover(post.slug),
     tags: fm.tags && fm.tags.length > 0 ? fm.tags : ['Technology'],

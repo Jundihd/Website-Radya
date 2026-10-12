@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { CASE_STUDIES } from '@/lib/data';
 import { COMPANY_CONFIG } from '@/lib/company-info';
-import { getAllPosts } from '@/lib/posts';
+import { getDuePosts } from '@/lib/posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = COMPANY_CONFIG.url;
@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Dynamic Insight Article Routes (MD-first)
-  const insightRoutes: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+  const insightRoutes: MetadataRoute.Sitemap = getDuePosts().map((post) => ({
     url: `${baseUrl}/insight/${post.slug}`,
     lastModified: currentDate,
     changeFrequency: 'monthly' as const,

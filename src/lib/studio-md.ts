@@ -24,6 +24,7 @@ export interface StudioPostFields {
   excerptId: string;
   excerptEn: string;
   date: string; // YYYY-MM-DD
+  time: string; // HH:MM (24 jam, opsional — menentukan urutan di tanggal yang sama)
   author: string;
   cover: string;
   categoryId: string;
@@ -95,6 +96,9 @@ export function validatePostFields(f: StudioPostFields): PostValidation {
   if (!f.date || !/^\d{4}-\d{2}-\d{2}$/.test(f.date)) {
     errors.push('Date Published wajib format YYYY-MM-DD.');
   }
+  if (f.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(f.time)) {
+    errors.push('Time Published wajib format HH:MM (00:00–23:59) atau dikosongkan.');
+  }
   if (f.cover && !/^(https?:\/\/|\/|data:image\/)/.test(f.cover)) {
     errors.push('Cover harus berupa URL http(s), path lokal (/images/...), atau data image.');
   }
@@ -121,6 +125,7 @@ export function buildPostMarkdown(f: StudioPostFields): string {
     `excerpt_id: ${yamlInline(f.excerptId)}`,
     `excerpt_en: ${yamlInline(f.excerptEn)}`,
     `date: ${yamlInline(f.date)}`,
+    `time: ${yamlInline((f.time || '').trim())}`,
     `author: ${yamlInline(f.author.trim() || DEFAULT_AUTHOR)}`,
     `cover: ${yamlInline(f.cover.trim())}`,
     `category_id: ${yamlInline(f.categoryId.toUpperCase())}`,

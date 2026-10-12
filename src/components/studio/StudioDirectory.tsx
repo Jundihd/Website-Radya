@@ -62,6 +62,25 @@ const STATUS_CONFIG: Record<
   },
 };
 
+/** Timestamp WIB (ms) dari tanggal+jam artikel; 0 bila tidak valid. */
+function dueTimestamp(post: { date?: string; time?: string }): number {
+  const d = (post.date || '').trim();
+  const t = (post.time || '').trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+    const hhmm = /^([01]\d|2[0-3]):[0-5]\d$/.test(t) ? t : '00:00';
+    const ts = Date.parse(`${d}T${hhmm}:00+07:00`);
+    if (!Number.isNaN(ts)) return ts;
+  }
+  return 0;
+}
+
+/** True bila artikel published tapi jadwalnya masih di masa depan. */
+function isScheduled(post: FullscreenArticleData): boolean {
+  if (String(post.status || '').toLowerCase() !== 'published') return false;
+  const ts = dueTimestamp(post);
+  return ts > 0 && ts > Date.now();
+}
+
 export function StudioDirectory({
   onNewArticle,
   onEditArticle,
@@ -449,13 +468,19 @@ export function StudioDirectory({
                   )}
 
                   {/* Status Overlay Badge */}
-                  <div className="absolute top-2.5 left-2.5">
+                  <div className="absolute top-2.5 left-2.5 flex flex-col items-start gap-1">
                     <span
                       className={`flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md ${statusConfig.badge}`}
                     >
                       <span className={`h-1.5 w-1.5 rounded-full ${statusConfig.dot}`} />
                       <span>{statusConfig.label}</span>
                     </span>
+                    {isScheduled(post) && (
+                      <span className="flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-950/80 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-sky-300 backdrop-blur-md">
+                        <Clock className="h-2.5 w-2.5" />
+                        <span>⏰ Terjadwal</span>
+                      </span>
+                    )}
                   </div>
 
                   {/* Category Pill Overlay */}

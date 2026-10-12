@@ -34,6 +34,7 @@ export async function GET(
       excerptId: fm.excerpt_id || '',
       excerptEn: fm.excerpt_en || '',
       date: fm.date || '',
+      time: typeof fm.time === 'string' ? fm.time.trim() : '',
       author: fm.author || 'Radya Labs Engineering Team',
       cover: fm.cover || '',
       categoryId: fm.category_id || 'INSIGHT',
