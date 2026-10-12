@@ -71,5 +71,16 @@ export async function POST(req: Request) {
     }
   }
 
+  // Fallback read-only (Vercel): file dikembalikan sebagai data-URL base64.
+  // Ini membuat artikel membengkak dan bisa menggagalkan preview & Git push,
+  // jadi client wajib menampilkan warning-nya.
+  if (coverUrl.startsWith('data:')) {
+    return NextResponse.json({
+      cover: coverUrl,
+      warning:
+        'Server berjalan read-only (Vercel) sehingga gambar disimpan sebagai data-URL base64 di dalam artikel. Artikel jadi sangat besar: preview bisa gagal dan Git push bisa ditolak. Sebaiknya pakai gambar via link URL (tab Link URL) atau upload dari Studio yang berjalan lokal.',
+    });
+  }
+
   return NextResponse.json({ cover: coverUrl });
 }

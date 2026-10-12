@@ -37,6 +37,14 @@ interface StudioMarkdownEditorProps {
   slugHint?: string;
 }
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 export function StudioMarkdownEditor({
   value,
   onChange,
@@ -266,14 +274,29 @@ export function StudioMarkdownEditor({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ markdown: value }),
       });
-      const data = await res.json();
-      setHtml(
-        res.ok
-          ? data.html || '<p><em>Konten kosong.</em></p>'
-          : '<p>Gagal render preview.</p>',
-      );
+      let data: { html?: string; error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = { error: 'Respon server tidak valid (bukan JSON).' };
+      }
+      if (res.status === 401) {
+        setHtml(
+          '<p><strong>Sesi login Studio habis.</strong> Silakan login ulang di <code>/studio/login</code>, lalu buka kembali editor ini.</p>',
+        );
+      } else {
+        setHtml(
+          res.ok
+            ? data.html || '<p><em>Konten kosong.</em></p>'
+            : `<p><strong>Gagal render preview.</strong> ${escapeHtml(
+                data.error || 'Penyebab tidak diketahui.',
+              )}</p>`,
+        );
+      }
     } catch {
-      setHtml('<p>Gagal render preview.</p>');
+      setHtml(
+        '<p><strong>Gagal render preview.</strong> Tidak dapat menghubungi server (jaringan).</p>',
+      );
     } finally {
       setLoadingPreview(false);
     }
@@ -581,6 +604,7 @@ function ImageInsertModal({
   const [altText, setAltText] = useState('');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [uploadWarning, setUploadWarning] = useState('');
 
   if (!isOpen) return null;
 
@@ -588,6 +612,7 @@ function ImageInsertModal({
     const file = e.target.files?.[0];
     if (!file) return;
     setError('');
+    setUploadWarning('');
     setUploading(true);
 
     try {
@@ -602,6 +627,16 @@ function ImageInsertModal({
       if (!res.ok) {
         throw new Error(data.error || 'Upload gagal.');
       }
+      // Server read-only (Vercel) mengembalikan data-URL base64 yang akan
+      // membuat artikel membengkak + preview gagal — tolak sejak di sini.
+      if (typeof data.cover === 'string' && data.cover.startsWith('data:')) {
+        setError(
+          'Upload di server ini hanya menghasilkan data-URL base64 yang merusak preview & Git push. ' +
+            (data.warning || 'Gunakan tab "Link URL Gambar" dengan link https, atau upload dari Studio lokal.'),
+        );
+        return;
+      }
+      if (data.warning) setUploadWarning(String(data.warning));
       setImageUrl(data.cover);
       if (!altText) setAltText(file.name.replace(/\.[^/.]+$/, ''));
     } catch (err: any) {
@@ -612,11 +647,20 @@ function ImageInsertModal({
   }
 
   function handleSave() {
-    if (!imageUrl.trim()) {
+    const url = imageUrl.trim();
+    if (!url) {
       setError('URL atau file gambar belum diisi.');
       return;
     }
-    onInsert(imageUrl.trim(), altText.trim());
+    // Data-URL base64 membuat markdown > batas preview (200rb karakter)
+    // dan bisa ditolak GitHub API — tolak dengan pesan yang jelas.
+    if (url.toLowerCase().startsWith('data:')) {
+      setError(
+        'Gambar base64/data-URL tidak didukung di tengah artikel: membuat preview gagal dan Git push ditolak. Pakai link URL https atau upload file gambar biasa.',
+      );
+      return;
+    }
+    onInsert(url, altText.trim());
   }
 
   return (
@@ -639,6 +683,12 @@ function ImageInsertModal({
         {error && (
           <p className="mt-3 rounded-lg bg-rose-500/15 p-2 text-xs font-semibold text-rose-300">
             {error}
+          </p>
+        )}
+
+        {uploadWarning && (
+          <p className="mt-3 rounded-lg bg-amber-500/15 p-2 text-xs font-semibold text-amber-300">
+            ⚠️ {uploadWarning}
           </p>
         )}
 

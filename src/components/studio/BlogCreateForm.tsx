@@ -178,6 +178,73 @@ export function BlogCreateForm({
     setMessage(null);
     onCancelEdit?.();
   }
+
+  /* --- Draf otomatis browser (localStorage): aman dari refresh (isu #4/#5) --- */
+  const DRAFT_KEY = 'radya-studio-draft-v1';
+  const [lastAutosave, setLastAutosave] = useState<string | null>(null);
+  const [draftRestored, setDraftRestored] = useState(false);
+  const draftTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Pulihkan draf lokal sekali saat mount (hanya mode buat baru).
+  useEffect(() => {
+    if (initialArticle) return;
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { savedAt?: string; fields?: Partial<StudioPostFields> };
+      const f = saved?.fields;
+      if (f && (f.titleId || f.titleEn || f.contentId || f.contentEn)) {
+        setFields((prev) => ({ ...prev, ...f, directusId: prev.directusId }));
+        setSlugTouched(true);
+        setDraftRestored(true);
+        setLastAutosave(saved.savedAt || null);
+        setMessage({
+          type: 'ok',
+          text: 'Draf lokal dipulihkan dari penyimpanan otomatis browser. Lanjutkan menulis, lalu Simpan ke Server.',
+        });
+      }
+    } catch {
+      // storage rusak/penuh — abaikan, mulai dari kosong
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Simpan otomatis (debounce 1 detik) setiap ada ketikan berarti.
+  useEffect(() => {
+    if (isEdit) return; // mode edit tidak menimpa draf buat-baru
+    const meaningful =
+      fields.titleId.trim() ||
+      fields.titleEn.trim() ||
+      fields.contentId.trim() ||
+      fields.contentEn.trim();
+    if (!meaningful) return;
+    if (draftTimer.current) clearTimeout(draftTimer.current);
+    draftTimer.current = setTimeout(() => {
+      try {
+        const savedAt = new Date().toLocaleTimeString('id-ID');
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ savedAt, fields }));
+        setLastAutosave(savedAt);
+      } catch {
+        // mode privat/storage penuh — abaikan
+      }
+    }, 1000);
+    return () => {
+      if (draftTimer.current) clearTimeout(draftTimer.current);
+    };
+  }, [fields, isEdit]);
+
+  function discardLocalDraft() {
+    try {
+      localStorage.removeItem(DRAFT_KEY);
+    } catch {
+      // abaikan
+    }
+    setFields({ ...EMPTY, directusId: generateDirectusId() });
+    setSlugTouched(false);
+    setLastAutosave(null);
+    setDraftRestored(false);
+    setMessage({ type: 'ok', text: 'Draf lokal dihapus. Form kembali kosong.' });
+  }
   const [tagInput, setTagInput] = useState('');
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [uploadingCover, setUploadingCover] = useState(false);
@@ -453,14 +520,47 @@ export function BlogCreateForm({
       }
       setConfirmOverwrite(false);
       // Sinkronkan penanda edit bila slug berubah saat update.
-      if (isEdit) setOriginalSlug(data.slug);
-      const gitMsg: string = data.git?.message ? ` ${data.git.message}` : '';
+      if (isEdit) {
+        setOriginalSlug(data.slug);
+      } else {
+        // Buat baru sukses → draf lokal tidak diperlukan lagi.
+        try {
+          localStorage.removeItem(DRAFT_KEY);
+        } catch {
+          // abaikan
+        }
+        setLastAutosave(null);
+        setDraftRestored(false);
+      }
+      const git = data.git || {};
+      const pushed =
+        git.success === true &&
+        (git.method === 'local_git' || git.method === 'github_api');
+      // Push gagal = TAMPILKAN MERAH, jangan sukses palsu. File boleh jadi
+      // sudah tersimpan, tapi artikel BELUM masuk website sampai push beres.
+      if (git.success === false || git.method === 'local_only' || git.method === 'failed') {
+        setMessage({
+          type: 'err',
+          text:
+            `File tersimpan, tetapi AUTO-PUSH GAGAL — artikel BELUM masuk ke website. ` +
+            `${git.message || 'Penyebab tidak diketahui.'} ` +
+            `Solusi: (1) buka Studio dari laptop (npm run dev) lalu simpan ulang — push dari lokal sudah terverifikasi; ` +
+            `(2) jika memakai Studio di Vercel, tambah env GITHUB_TOKEN di Vercel Dashboard → Redeploy.`,
+        });
+        onSaved?.(data.slug);
+        return;
+      }
+      const gitMsg: string = git.message ? ` ${git.message}` : '';
+      // Jelaskan 3 gerbang tayang agar tidak bingung: status, push, deploy.
+      const visibilityNote =
+        data.status === 'published'
+          ? pushed
+            ? `Akan tayang di /insight/${data.slug} setelah deploy Vercel berikutnya (±1–3 menit).`
+            : `Namun Git push TERTUNDA (hanya tersimpan lokal) — artikel BELUM muncul di website-radya.vercel.app sampai perubahan di-push ke GitHub.`
+          : `Status ${data.status} = TIDAK tayang di publik. Ubah ke Published (via Direktori Artikel) agar muncul di beranda & blog.`;
       setMessage({
         type: 'ok',
-        text:
-          data.status === 'published'
-            ? `Tersimpan & langsung tayang: /insight/${data.slug}.${gitMsg}`
-            : `Tersimpan sebagai ${data.status}: content/posts/${data.slug}.md.${gitMsg}`,
+        text: `Tersimpan: content/posts/${data.slug}.md. ${visibilityNote}${gitMsg}`,
       });
       onSaved?.(data.slug);
     } catch {
@@ -587,6 +687,23 @@ export function BlogCreateForm({
       </header>
 
       <main className="mx-auto max-w-6xl space-y-8 px-4 py-8">
+        {(lastAutosave || draftRestored) && !isEdit && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-xl border border-white/10 bg-[#12161f] px-4 py-2.5 text-xs text-slate-400">
+            <span>
+              💾 Draf tersimpan otomatis di browser
+              {lastAutosave ? ` · terakhir ${lastAutosave}` : ''} — aman walau
+              halaman di-refresh. Untuk menyimpan permanen ke server, pakai
+              tombol Simpan (status Draft = tersimpan tapi tidak tayang).
+            </span>
+            <button
+              type="button"
+              onClick={discardLocalDraft}
+              className="ml-auto rounded-lg border border-white/10 px-2.5 py-1 font-bold text-slate-300 transition hover:bg-white/10 hover:text-white"
+            >
+              Hapus draf lokal
+            </button>
+          </div>
+        )}
         <AiCreatePanel
           titleId={fields.titleId}
           titleEn={fields.titleEn}
@@ -694,6 +811,15 @@ export function BlogCreateForm({
           </div>
 
           <div className="rounded-xl border border-white/10 bg-[#12161f] p-4 space-y-3">
+            {fields.cover.startsWith('data:') && (
+              <p className="flex items-start gap-1.5 rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 text-xs font-semibold text-amber-200">
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                Cover tersimpan sebagai base64 di dalam artikel (server
+                read-only). File jadi sangat besar dan Git push bisa ditolak.
+                Sebaiknya ganti dengan link URL gambar atau upload ulang dari
+                Studio yang berjalan lokal.
+              </p>
+            )}
             {fields.cover ? (
               <div className="relative overflow-hidden rounded-xl border border-white/10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1019,6 +1145,14 @@ export function BlogCreateForm({
             onChange={(e) => set('date', e.target.value)}
             className={`${inputCls} max-w-xs [color-scheme:dark]`}
           />
+          {fields.date > new Date().toISOString().slice(0, 10) && (
+            <p className="mt-2 flex items-start gap-1.5 text-xs text-amber-300/90">
+              <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+              Tanggal masih di masa depan. Saat ini BELUM ada penjadwalan
+              otomatis: artikel berstatus Published tayang setelah deploy
+              berikutnya — bukan tepat di tanggal tersebut.
+            </p>
+          )}
         </section>
 
         {/* MD Preview */}

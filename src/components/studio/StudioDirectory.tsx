@@ -195,9 +195,12 @@ export function StudioDirectory({
       }
 
       const gitMsg = data.git?.message ? ` (${data.git.message})` : '';
+      const pushFailed = data.git && data.git.success === false;
       setFeedback({
-        type: 'ok',
-        text: `Status artikel "${slug}" diubah ke "${newStatus}".${gitMsg}`,
+        type: pushFailed ? 'err' : 'ok',
+        text: pushFailed
+          ? `Status "${slug}" diubah lokal, tetapi AUTO-PUSH GAGAL — perubahan belum masuk website.${gitMsg}`
+          : `Status artikel "${slug}" diubah ke "${newStatus}".${gitMsg}`,
       });
       setTimeout(() => setFeedback(null), 5000);
     } catch {
@@ -229,9 +232,12 @@ export function StudioDirectory({
           setPosts((prev) => prev.filter((p) => p.slug !== slug));
           if (previewArticle?.slug === slug) setPreviewArticle(null);
           setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+          const pushFailed = data.git && data.git.success === false;
           setFeedback({
-            type: 'ok',
-            text: `Artikel "${slug}" berhasil dihapus dan dipush ke Git.`,
+            type: pushFailed ? 'err' : 'ok',
+            text: pushFailed
+              ? `Artikel "${slug}" terhapus lokal, tetapi AUTO-PUSH GAGAL — file masih ada di GitHub. (${data.git?.message || 'cek koneksi/token'})`
+              : `Artikel "${slug}" berhasil dihapus dan dipush ke Git.`,
           });
           setTimeout(() => setFeedback(null), 5000);
         } catch {
