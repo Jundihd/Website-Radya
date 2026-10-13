@@ -287,10 +287,13 @@ export function BlogCreateForm({
   );
 
   // Slug otomatis dari judul ID sampai user mengubah manual.
+  // Dinonaktifkan penuh saat mode edit: slug dimuat dari artikel asal dan
+  // sepenuhnya manual (efek ini sempat menimpa slug hasil load dengan state
+  // basi di render yang sama → slug kosong + error "Slug wajib diisi").
   useEffect(() => {
-    if (!slugTouched) set('slug', slugify(fields.titleId));
+    if (!slugTouched && !isEdit) set('slug', slugify(fields.titleId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fields.titleId, slugTouched]);
+  }, [fields.titleId, slugTouched, isEdit]);
 
   // Cek keunikan slug (debounce).
   useEffect(() => {
@@ -931,6 +934,8 @@ export function BlogCreateForm({
             <p className="mt-1.5 text-xs text-slate-500">
               {checkingSlug ? (
                 'Mengecek slug…'
+              ) : isEdit && fields.slug && fields.slug === originalSlug ? (
+                <span className="text-amber-300">Slug file ini (mode update — menyimpan menimpa file yang sama).</span>
               ) : slugExists === true ? (
                 <span className="font-semibold text-red-300">Slug sudah dipakai file lain.</span>
               ) : slugExists === false && fields.slug ? (
