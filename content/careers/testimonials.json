@@ -1,0 +1,32 @@
+[
+  {
+    "id": "testi-01",
+    "name": "Nenden",
+    "role": "Project Manager",
+    "tenure": "3 tahun di Radya Labs",
+    "avatarInitial": "N",
+    "avatarColor": "from-[#1793E8] to-[#29B6F6]",
+    "quote": "Radya Labs bukan hanya tempat bekerja, tapi seperti kampus tempat terus bertumbuh. Kami mendapatkan pelatihan online, sesi berbagi internal, dan kesempatan belajar langsung dari proyek-proyek teknologi nyata.",
+    "isPublished": true
+  },
+  {
+    "id": "testi-02",
+    "name": "Nofri",
+    "role": "Finance",
+    "tenure": "2 tahun di Radya Labs",
+    "avatarInitial": "N",
+    "avatarColor": "from-[#29B6F6] to-[#43D3A4]",
+    "quote": "Lingkungan kerjanya nyaman, rekan kerja saling mendukung, dan ritme kerjanya terencana dengan baik. Para pimpinan selalu membimbing serta membuka ruang seluas-luasnya untuk pengembangan potensi setiap kru.",
+    "isPublished": true
+  },
+  {
+    "id": "testi-03",
+    "name": "Rian",
+    "role": "Senior Software Engineer",
+    "tenure": "4 tahun di Radya Labs",
+    "avatarInitial": "R",
+    "avatarColor": "from-[#0F172A] to-slate-700",
+    "quote": "Manajemennya jelas, koordinasi tim sangat terbuka, dan kultur saling menghargai terasa nyata setiap hari. Menyenangkan bisa mendiskusikan arsitektur sistem dan tantangan teknologi bersama orang-orang yang berdedikasi.",
+    "isPublished": true
+  }
+]

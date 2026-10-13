@@ -1,0 +1,128 @@
+[
+  {
+    "id": "pm-2026-01",
+    "slug": "project-manager",
+    "title": "Project Manager",
+    "division": "Product & Delivery",
+    "type": "Penuh waktu",
+    "workModel": "Hybrid",
+    "location": "Bandung",
+    "experienceLevel": "2-4 Tahun",
+    "isOpen": true,
+    "postedAt": "2026-02-15",
+    "summary": "Memimpin inisiasi, perencanaan, eksekusi, dan delivery proyek solusi digital enterprise berbasis cloud native dan AI bersama tim engineering.",
+    "responsibilities": [
+      "Mengelola timeline, alokasi kru, dan scope pengerjaan proyek enterprise dari awal hingga serah terima.",
+      "Menjadi jembatan komunikasi utama antara stakeholder klien dan tim teknis (Engineer, QA, UI/UX).",
+      "Memastikan implementasi metode Agile/Scrum berjalan disiplin dan efektif tanpa hambatan birokrasi.",
+      "Melakukan mitigasi risiko keterlambatan dan menjaga kepuasan klien sesuai SLA kualitas Radya Labs."
+    ],
+    "requirements": [
+      "Pengalaman minimal 2 tahun sebagai Project Manager / Product Owner di industri software agency atau tech company.",
+      "Memahami siklus Software Development Life Cycle (SDLC) dan framework Agile / Scrum.",
+      "Memiliki kemampuan komunikasi interpersonal, negosiasi, dan kepemimpinan tim yang matang.",
+      "Familiar dengan tools manajemen proyek seperti Jira, Trello, atau ClickUp.",
+      "Mampu bekerja efektif dengan sistem kerja kolaboratif Hybrid (Bandung)."
+    ],
+    "benefits": [
+      "Sistem kerja fleksibel (Hybrid Bandung)",
+      "BPJS Kesehatan & BPJS Ketenagakerjaan",
+      "Bonus performa dan penyelesaian proyek",
+      "Badminton rutin bersama kru"
+    ]
+  },
+  {
+    "id": "se-2026-02",
+    "slug": "sales-executive",
+    "title": "Sales Executive",
+    "division": "Sales & Marketing",
+    "type": "Freelance",
+    "workModel": "Remote",
+    "location": "Bandung / Remote",
+    "experienceLevel": "1-3 Tahun",
+    "isOpen": true,
+    "postedAt": "2026-02-10",
+    "summary": "Membuka peluang kemitraan solusi IT, Cloud, dan AI dengan berbagai perusahaan korporasi, BUMN, dan startup berkembang di Indonesia.",
+    "responsibilities": [
+      "Melakukan lead generation, prospecting, dan pendekatan ke calon klien korporat.",
+      "Menyusun proposal solusi teknologi bekerja sama dengan solution architect Radya Labs.",
+      "Membangun dan memelihara relasi jangka panjang dengan key decision maker (CTO, CIO, VP of IT).",
+      "Mencapai target pipeline dan kesepakatan kontrak proyek digital."
+    ],
+    "requirements": [
+      "Pengalaman di bidang B2B Sales, Account Executive, atau Business Development (diutamakan sektor IT/Software).",
+      "Kemampuan presentasi dan komunikasi persuasif yang sangat baik.",
+      "Memiliki pemahaman dasar mengenai solusi cloud, web application, dan arsitektur enterprise.",
+      "Berorientasi pada target, proaktif, dan memiliki jaringan korporat yang luas."
+    ],
+    "benefits": [
+      "Skema komisi menarik tanpa batasan",
+      "Waktu kerja fleksibel (Remote / Freelance)",
+      "Didukung langsung oleh tim Solution Architect & Engineer",
+      "Akses materi promosi & portofolio enterprise lengkap"
+    ]
+  },
+  {
+    "id": "smc-2026-03",
+    "slug": "social-media-content-creative",
+    "title": "Social Media & Content Creative",
+    "division": "Sales & Marketing",
+    "type": "Magang",
+    "workModel": "Hybrid",
+    "location": "Bandung",
+    "experienceLevel": "Fresh Graduate / Mahasiswa Tingkat Akhir",
+    "isOpen": true,
+    "postedAt": "2026-02-01",
+    "summary": "Menciptakan konten digital inspiratif, edukatif, dan menarik mengenai inovasi teknologi, budaya kru, dan insight industri Radya Labs.",
+    "responsibilities": [
+      "Membuat konten visual & video pendek (Reels, TikTok, LinkedIn) seputar AI, Cloud Native, dan kehidupan di balik layar Radya Labs.",
+      "Menyusun copywriting kreatif dan content calendar bulanan bersama tim marketing.",
+      "Menganalisis performa interaksi media sosial dan merumuskan strategi engagement baru.",
+      "Mendokumentasikan kegiatan kantor, sharing session kru, dan event teknologi internal."
+    ],
+    "requirements": [
+      "Mahasiswa tingkat akhir atau fresh graduate dari jurusan Komunikasi, DKV, Multimedia, atau bidang relevan.",
+      "Kreatif, update dengan tren media sosial terkini, dan antusias dengan dunia teknologi.",
+      "Mampu mengoperasikan tools desain/video seperti Canva, CapCut, Adobe Premiere, atau Figma.",
+      "Memiliki kemampuan menulis copywriting bahasa Indonesia & Inggris yang komunikatif.",
+      "Melampirkan portofolio karya konten media sosial."
+    ],
+    "benefits": [
+      "Uang saku magang kompetitif",
+      "Mentoring langsung dari tim Marketing & Creative senior",
+      "Peluang direkrut menjadi kru tetap setelah masa magang",
+      "Sertifikat magang resmi Radya Labs"
+    ]
+  },
+  {
+    "id": "fe-2026-04",
+    "slug": "frontend-engineer",
+    "title": "Frontend Engineer (React / Next.js)",
+    "division": "Engineering",
+    "type": "Penuh waktu",
+    "workModel": "Hybrid",
+    "location": "Bandung",
+    "experienceLevel": "2-3 Tahun",
+    "isOpen": true,
+    "postedAt": "2026-02-18",
+    "summary": "Membangun antarmuka aplikasi enterprise modern yang responsif, cepat, aksesibel, dan berstandar industri dengan teknologi React dan Next.js.",
+    "responsibilities": [
+      "Mengembangkan komponen web interaktif berperforma tinggi dengan React, Next.js, dan TypeScript.",
+      "Mengintegrasikan antarmuka dengan REST API dan GraphQL.",
+      "Bekerja sama dengan UI/UX Designer untuk menerjemahkan wireframe Figma ke kode pixel-perfect.",
+      "Melakukan testing dan optimalisasi performa web (Core Web Vitals)."
+    ],
+    "requirements": [
+      "Pengalaman minimal 2 tahun dalam pengembangan web frontend modern.",
+      "Mahir dalam JavaScript/TypeScript, React.js, Next.js, dan Tailwind CSS.",
+      "Memahami prinsip responsive design, accessibility, dan state management.",
+      "Terbiasa menggunakan Git, CI/CD, dan kolaborasi tim Agile."
+    ],
+    "benefits": [
+      "Sistem kerja fleksibel (Hybrid Bandung)",
+      "BPJS Kesehatan & Ketenagakerjaan",
+      "Bonus performa proyek",
+      "Badminton rutin kru"
+    ]
+  }
+]

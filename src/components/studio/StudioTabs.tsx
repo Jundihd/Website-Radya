@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FolderOpen, PenLine, LogOut } from 'lucide-react';
+import Link from 'next/link';
+import { FolderOpen, PenLine, LogOut, Briefcase } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { BlogCreateForm } from './BlogCreateForm';
 import { StudioDirectory } from './StudioDirectory';
@@ -89,6 +90,13 @@ export function StudioTabs() {
               <PenLine className="h-4 w-4" />
               ✍️ Tulis Artikel Baru
             </button>
+            <Link
+              href="/studio/career"
+              className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-bold text-slate-400 hover:text-white hover:bg-white/5 transition"
+            >
+              <Briefcase className="h-4 w-4 text-[#29B6F6]" />
+              💼 Karir &amp; Testimoni
+            </Link>
           </nav>
 
           {activeTab === 'write' && editingArticle && (

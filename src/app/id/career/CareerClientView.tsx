@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -27,37 +27,173 @@ import {
   Sparkles,
   ChevronRight,
   Info,
+  Laptop,
+  Flame,
+  Award,
 } from 'lucide-react';
+import { CareerApplyModal } from '@/components/career/CareerApplyModal';
+import { JobDetailModal } from '@/components/career/JobDetailModal';
+import type { JobListing, CareerTestimonial } from '@/lib/career-service';
 
-interface Job {
-  id: string;
-  title: string;
-  division: string;
-  type: string;
-  location: string;
-}
-
-const JOBS_DATA: Job[] = [
+const INITIAL_JOBS: JobListing[] = [
   {
     id: 'pm-2026-01',
+    slug: 'project-manager',
     title: 'Project Manager',
     division: 'Product & Delivery',
     type: 'Penuh waktu',
+    workModel: 'Hybrid',
     location: 'Bandung',
+    experienceLevel: '2-4 Tahun',
+    isOpen: true,
+    postedAt: '2026-02-15',
+    summary: 'Memimpin inisiasi, perencanaan, eksekusi, dan delivery proyek solusi digital enterprise berbasis cloud native dan AI bersama tim engineering.',
+    responsibilities: [
+      'Mengelola timeline, alokasi kru, dan scope pengerjaan proyek enterprise dari awal hingga serah terima.',
+      'Menjadi jembatan komunikasi utama antara stakeholder klien dan tim teknis (Engineer, QA, UI/UX).',
+      'Memastikan implementasi metode Agile/Scrum berjalan disiplin dan efektif tanpa hambatan birokrasi.',
+      'Melakukan mitigasi risiko keterlambatan dan menjaga kepuasan klien sesuai SLA kualitas Radya Labs.',
+    ],
+    requirements: [
+      'Pengalaman minimal 2 tahun sebagai Project Manager / Product Owner di industri software agency atau tech company.',
+      'Memahami siklus Software Development Life Cycle (SDLC) dan framework Agile / Scrum.',
+      'Memiliki kemampuan komunikasi interpersonal, negosiasi, dan kepemimpinan tim yang matang.',
+      'Familiar dengan tools manajemen proyek seperti Jira, Trello, atau ClickUp.',
+      'Mampu bekerja efektif dengan sistem kerja kolaboratif Hybrid (Bandung).',
+    ],
+    benefits: [
+      'Sistem kerja fleksibel (Hybrid Bandung)',
+      'BPJS Kesehatan & BPJS Ketenagakerjaan',
+      'Bonus performa dan penyelesaian proyek',
+      'Badminton rutin bersama kru',
+    ],
   },
   {
     id: 'se-2026-02',
+    slug: 'sales-executive',
     title: 'Sales Executive',
     division: 'Sales & Marketing',
     type: 'Freelance',
-    location: 'Bandung',
+    workModel: 'Remote',
+    location: 'Bandung / Remote',
+    experienceLevel: '1-3 Tahun',
+    isOpen: true,
+    postedAt: '2026-02-10',
+    summary: 'Membuka peluang kemitraan solusi IT, Cloud, dan AI dengan berbagai perusahaan korporasi, BUMN, dan startup berkembang di Indonesia.',
+    responsibilities: [
+      'Melakukan lead generation, prospecting, dan pendekatan ke calon klien korporat.',
+      'Menyusun proposal solusi teknologi bekerja sama dengan solution architect Radya Labs.',
+      'Membangun dan memelihara relasi jangka panjang dengan key decision maker (CTO, CIO, VP of IT).',
+      'Mencapai target pipeline dan kesepakatan kontrak proyek digital.',
+    ],
+    requirements: [
+      'Pengalaman di bidang B2B Sales, Account Executive, atau Business Development (diutamakan sektor IT/Software).',
+      'Kemampuan presentasi dan komunikasi persuasif yang sangat baik.',
+      'Memiliki pemahaman dasar mengenai solusi cloud, web application, dan arsitektur enterprise.',
+      'Berorientasi pada target, proaktif, dan memiliki jaringan korporat yang luas.',
+    ],
+    benefits: [
+      'Skema komisi menarik tanpa batasan',
+      'Waktu kerja fleksibel (Remote / Freelance)',
+      'Didukung langsung oleh tim Solution Architect & Engineer',
+      'Akses materi promosi & portofolio enterprise lengkap',
+    ],
   },
   {
     id: 'smc-2026-03',
+    slug: 'social-media-content-creative',
     title: 'Social Media & Content Creative',
     division: 'Sales & Marketing',
     type: 'Magang',
+    workModel: 'Hybrid',
     location: 'Bandung',
+    experienceLevel: 'Fresh Graduate / Mahasiswa Tingkat Akhir',
+    isOpen: true,
+    postedAt: '2026-02-01',
+    summary: 'Menciptakan konten digital inspiratif, edukatif, dan menarik mengenai inovasi teknologi, budaya kru, dan insight industri Radya Labs.',
+    responsibilities: [
+      'Membuat konten visual & video pendek (Reels, TikTok, LinkedIn) seputar AI, Cloud Native, dan kehidupan di balik layar Radya Labs.',
+      'Menyusun copywriting kreatif dan content calendar bulanan bersama tim marketing.',
+      'Menganalisis performa interaksi media sosial dan merumuskan strategi engagement baru.',
+      'Mendokumentasikan kegiatan kantor, sharing session kru, dan event teknologi internal.',
+    ],
+    requirements: [
+      'Mahasiswa tingkat akhir atau fresh graduate dari jurusan Komunikasi, DKV, Multimedia, atau bidang relevan.',
+      'Kreatif, update dengan tren media sosial terkini, dan antusias dengan dunia teknologi.',
+      'Mampu mengoperasikan tools desain/video seperti Canva, CapCut, Adobe Premiere, atau Figma.',
+      'Memiliki kemampuan menulis copywriting bahasa Indonesia & Inggris yang komunikatif.',
+      'Melampirkan portofolio karya konten media sosial.',
+    ],
+    benefits: [
+      'Uang saku magang kompetitif',
+      'Mentoring langsung dari tim Marketing & Creative senior',
+      'Peluang direkrut menjadi kru tetap setelah masa magang',
+      'Sertifikat magang resmi Radya Labs',
+    ],
+  },
+  {
+    id: 'fe-2026-04',
+    slug: 'frontend-engineer',
+    title: 'Frontend Engineer (React / Next.js)',
+    division: 'Engineering',
+    type: 'Penuh waktu',
+    workModel: 'Hybrid',
+    location: 'Bandung',
+    experienceLevel: '2-3 Tahun',
+    isOpen: true,
+    postedAt: '2026-02-18',
+    summary: 'Membangun antarmuka aplikasi enterprise modern yang responsif, cepat, aksesibel, dan berstandar industri dengan teknologi React dan Next.js.',
+    responsibilities: [
+      'Mengembangkan komponen web interaktif berperforma tinggi dengan React, Next.js, dan TypeScript.',
+      'Mengintegrasikan antarmuka dengan REST API dan GraphQL.',
+      'Bekerja sama dengan UI/UX Designer untuk menerjemahkan wireframe Figma ke kode pixel-perfect.',
+      'Melakukan testing dan optimalisasi performa web (Core Web Vitals).',
+    ],
+    requirements: [
+      'Pengalaman minimal 2 tahun dalam pengembangan web frontend modern.',
+      'Mahir dalam JavaScript/TypeScript, React.js, Next.js, dan Tailwind CSS.',
+      'Memahami prinsip responsive design, accessibility, dan state management.',
+      'Terbiasa menggunakan Git, CI/CD, dan kolaborasi tim Agile.',
+    ],
+    benefits: [
+      'Sistem kerja fleksibel (Hybrid Bandung)',
+      'BPJS Kesehatan & Ketenagakerjaan',
+      'Bonus performa proyek',
+      'Badminton rutin kru',
+    ],
+  },
+];
+
+const INITIAL_TESTIMONIALS: CareerTestimonial[] = [
+  {
+    id: 'testi-01',
+    name: 'Nenden',
+    role: 'Project Manager',
+    tenure: '3 tahun di Radya Labs',
+    avatarInitial: 'N',
+    avatarColor: 'from-[#1793E8] to-[#29B6F6]',
+    quote: 'Radya Labs bukan hanya tempat bekerja, tapi seperti kampus tempat terus bertumbuh. Kami mendapatkan pelatihan online, sesi berbagi internal, dan kesempatan belajar langsung dari proyek-proyek teknologi nyata.',
+    isPublished: true,
+  },
+  {
+    id: 'testi-02',
+    name: 'Nofri',
+    role: 'Finance',
+    tenure: '2 tahun di Radya Labs',
+    avatarInitial: 'N',
+    avatarColor: 'from-[#29B6F6] to-[#43D3A4]',
+    quote: 'Lingkungan kerjanya nyaman, rekan kerja saling mendukung, dan ritme kerjanya terencana dengan baik. Para pimpinan selalu membimbing serta membuka ruang seluas-luasnya untuk pengembangan potensi setiap kru.',
+    isPublished: true,
+  },
+  {
+    id: 'testi-03',
+    name: 'Rian',
+    role: 'Senior Software Engineer',
+    tenure: '4 tahun di Radya Labs',
+    avatarInitial: 'R',
+    avatarColor: 'from-[#0F172A] to-slate-700',
+    quote: 'Manajemennya jelas, koordinasi tim sangat terbuka, dan kultur saling menghargai terasa nyata setiap hari. Menyenangkan bisa mendiskusikan arsitektur sistem dan tantangan teknologi bersama orang-orang yang berdedikasi.',
+    isPublished: true,
   },
 ];
 
@@ -71,11 +207,59 @@ const DIVISIONS = [
 
 export const CareerClientView: React.FC = () => {
   const [activeDivision, setActiveDivision] = useState<string>('Semua');
-  const [showTodo, setShowTodo] = useState<boolean>(false);
   const [copiedEmail, setCopiedEmail] = useState<boolean>(false);
 
-  const filteredJobs = JOBS_DATA.filter(
-    (job) => activeDivision === 'Semua' || job.division === activeDivision
+  // Dynamic Data States
+  const [jobs, setJobs] = useState<JobListing[]>(INITIAL_JOBS);
+  const [testimonials, setTestimonials] = useState<CareerTestimonial[]>(INITIAL_TESTIMONIALS);
+
+  // Modals States
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState<boolean>(false);
+  const [applyPositionTitle, setApplyPositionTitle] = useState<string>('Talent Pool / General Application');
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
+  const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
+
+  // Fetch jobs & testimonials from API on mount
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [jobsRes, testiRes] = await Promise.all([
+          fetch('/api/career/jobs'),
+          fetch('/api/career/testimonials'),
+        ]);
+
+        if (jobsRes.ok) {
+          const jData = await jobsRes.json();
+          if (jData.jobs && Array.isArray(jData.jobs)) {
+            setJobs(jData.jobs);
+          }
+        }
+
+        if (testiRes.ok) {
+          const tData = await testiRes.json();
+          if (tData.testimonials && Array.isArray(tData.testimonials)) {
+            setTestimonials(tData.testimonials.filter((t: CareerTestimonial) => t.isPublished !== false));
+          }
+        }
+      } catch (err) {
+        console.warn('[Career View] Using initial dataset as fallback:', err);
+      }
+    }
+    loadData();
+  }, []);
+
+  const openApplyModal = (position = 'Talent Pool / General Application') => {
+    setApplyPositionTitle(position);
+    setIsApplyModalOpen(true);
+  };
+
+  const openJobDetail = (job: JobListing) => {
+    setSelectedJob(job);
+    setIsDetailModalOpen(true);
+  };
+
+  const filteredJobs = jobs.filter(
+    (job) => (activeDivision === 'Semua' || job.division === activeDivision) && job.isOpen !== false
   );
 
   const copyEmailToClipboard = () => {
@@ -84,58 +268,23 @@ export const CareerClientView: React.FC = () => {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const getApplyMailto = (position: string) => {
-    return `mailto:join@radyalabs.com?subject=${encodeURIComponent(
-      `Lamaran – ${position}`
-    )}`;
-  };
-
-  const getInterestMailto = (division: string) => {
-    return `mailto:join@radyalabs.com?subject=${encodeURIComponent(
-      `Daftar minat – ${division}`
-    )}`;
-  };
-
   return (
-    <div className={`min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans selection:bg-[#1793E8] selection:text-white ${showTodo ? 'show-todo-active' : ''}`}>
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans selection:bg-[#1793E8] selection:text-white">
       
-      {/* ======================================================== */}
-      {/* 0. QA & REVIEW BANNER: Toggle Penanda Konfirmasi        */}
-      {/* ======================================================== */}
-      <aside aria-label="Review Banner" className="bg-[#0F172A] text-slate-200 border-b border-slate-800 text-xs py-2 px-4 transition-colors">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2 text-center sm:text-left">
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#1793E8] text-white uppercase tracking-wider">
-              Career Preview
-            </span>
-            <span className="text-slate-300">
-              Halaman Karier Resmi Radya Labs. Konten bertanda <strong className="text-amber-400 font-semibold">[KONFIRMASI]</strong> wajib disetujui HR/Manajemen sebelum rilis final.
-            </span>
-          </div>
+      {/* Pop-up Modal Form Pendaftaran */}
+      <CareerApplyModal
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        initialPosition={applyPositionTitle}
+      />
 
-          <button
-            onClick={() => setShowTodo((prev) => !prev)}
-            aria-pressed={showTodo}
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
-              showTodo
-                ? 'bg-amber-400 text-slate-900 border-amber-300 shadow-sm font-bold'
-                : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white hover:border-slate-500'
-            }`}
-          >
-            {showTodo ? (
-              <>
-                <EyeOff className="w-3.5 h-3.5 text-slate-900" />
-                <span>Sembunyikan Label Konfirmasi</span>
-              </>
-            ) : (
-              <>
-                <Eye className="w-3.5 h-3.5 text-amber-400" />
-                <span>Tandai konten yang perlu konfirmasi</span>
-              </>
-            )}
-          </button>
-        </div>
-      </aside>
+      {/* Pop-up Modal Detail Pekerjaan (Job Description & Requirements) */}
+      <JobDetailModal
+        isOpen={isDetailModalOpen}
+        job={selectedJob}
+        onClose={() => setIsDetailModalOpen(false)}
+        onApply={(pos) => openApplyModal(pos)}
+      />
 
       <main>
         {/* ======================================================== */}
@@ -163,7 +312,7 @@ export const CareerClientView: React.FC = () => {
                     priority
                   />
                   <span className="text-xs font-semibold text-slate-400 pl-3 border-l border-slate-200">
-                    Karier &amp; Budaya Tim
+                    Karier &amp; Budaya Kru
                   </span>
                 </div>
 
@@ -188,17 +337,17 @@ export const CareerClientView: React.FC = () => {
                     <ArrowRight className="w-4 h-4" />
                   </a>
 
-                  <a
-                    href="#kontak"
-                    className="inline-flex items-center gap-2 bg-white text-slate-800 border-2 border-slate-200 hover:border-slate-400 font-bold text-sm sm:text-base px-6 py-3.5 rounded-full hover:-translate-y-0.5 transition-all shadow-xs"
+                  <button
+                    onClick={() => openApplyModal('Talent Pool / General Application')}
+                    className="inline-flex items-center gap-2 bg-white text-slate-800 border-2 border-slate-200 hover:border-slate-400 font-bold text-sm sm:text-base px-6 py-3.5 rounded-full hover:-translate-y-0.5 transition-all shadow-xs cursor-pointer"
                   >
-                    <span>Kirim CV spontan</span>
-                  </a>
+                    <span>Gabung Talent Pool</span>
+                  </button>
                 </div>
 
-                {/* Tiga Fakta Cepat */}
+                {/* Tiga Fakta Cepat: Diperbarui Sesuai PDF Masukan */}
                 <div className="pt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-600">
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
                     <div className="flex items-center gap-1.5 text-slate-900 font-bold text-sm mb-0.5">
                       <Clock className="w-4 h-4 text-[#1793E8]" />
                       <span>8 jam sehari</span>
@@ -206,32 +355,20 @@ export const CareerClientView: React.FC = () => {
                     <p className="text-slate-500">sebisa mungkin tanpa lembur</p>
                   </div>
 
-                  <div
-                    data-todo
-                    className={`p-3 rounded-xl transition-all ${
-                      showTodo
-                        ? 'bg-amber-50 border-2 border-dashed border-amber-400 text-amber-900'
-                        : 'bg-slate-50 border border-slate-100'
-                    }`}
-                  >
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
                     <div className="flex items-center gap-1.5 text-slate-900 font-bold text-sm mb-0.5">
                       <Users className="w-4 h-4 text-[#29B6F6]" />
-                      <span>51–200 kru</span>
-                      {showTodo && (
-                        <span className="text-[10px] bg-amber-400 text-slate-900 px-1 rounded font-extrabold ml-auto">
-                          [KONFIRMASI]
-                        </span>
-                      )}
+                      <span>50+ kru</span>
                     </div>
-                    <p className="text-slate-500">angka terbaru perlu konfirmasi (LinkedIn)</p>
+                    <p className="text-slate-500">bertumbuh bersama di berbagai disiplin</p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
                     <div className="flex items-center gap-1.5 text-slate-900 font-bold text-sm mb-0.5">
                       <MapPin className="w-4 h-4 text-[#43D3A4]" />
                       <span>Bandung</span>
                     </div>
-                    <p className="text-slate-500">Sukaluyu, Cibeunying Kaler</p>
+                    <p className="text-slate-500">Jl. Karawitan No.105a, Turangga</p>
                   </div>
                 </div>
 
@@ -315,7 +452,7 @@ export const CareerClientView: React.FC = () => {
         </section>
 
         {/* ======================================================== */}
-        {/* SECTION 2: #pilar (Pilar Budaya)                        */}
+        {/* SECTION 2: #pilar (Pilar Budaya - 4 Nilai Baru)          */}
         {/* ======================================================== */}
         <section id="pilar" className="py-20 sm:py-28 bg-[#F8FAFC]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -334,90 +471,78 @@ export const CareerClientView: React.FC = () => {
               </p>
             </div>
 
-            {/* Grid 2x2 Garis Tipis (Sesuai Spesifikasi Brief) */}
+            {/* Grid 2x2 Garis Tipis Sesuai Masukan PDF Page 4 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-200 border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
               
-              {/* Pilar 1: Belajar Terus */}
+              {/* Pilar 1: Ruang untuk bertumbuh */}
               <article className="bg-white p-8 sm:p-10 flex flex-col justify-between hover:bg-slate-50/80 transition-colors group">
                 <div>
                   <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#1793E8] border border-blue-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
                     <GraduationCap className="w-6 h-6" />
                   </div>
                   <h3 className="font-exo font-bold text-xl sm:text-2xl text-slate-900 mb-3">
-                    Belajar terus
+                    Ruang untuk bertumbuh
                   </h3>
                   <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    Kursus bahasa Inggris, pelatihan online, sesi berbagi internal, dan seminar dari pembicara luar. Banyak kru menyebut kantor ini <em className="font-semibold text-slate-800 not-italic">“seperti kampus tempat bertumbuh”</em>.
+                    Kami menyediakan kesempatan untuk belajar, mencoba hal baru, dan mengembangkan kemampuan melalui pengalaman nyata maupun berbagi pengetahuan.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-[#1793E8]">
-                  Kapasitas teknis & non-teknis diasah rutin
+                  Pelatihan online, sesi berbagi internal, dan eksplorasi teknologi
                 </div>
               </article>
 
-              {/* Pilar 2: Kerja Efektif, Bukan Lembur */}
-              <article
-                data-todo
-                className={`bg-white p-8 sm:p-10 flex flex-col justify-between transition-colors group ${
-                  showTodo ? 'bg-amber-50/70 border-2 border-dashed border-amber-400' : 'hover:bg-slate-50/80'
-                }`}
-              >
+              {/* Pilar 2: Mengutamakan efektivitas, bukan sekedar kesibukan */}
+              <article className="bg-white p-8 sm:p-10 flex flex-col justify-between hover:bg-slate-50/80 transition-colors group">
                 <div>
                   <div className="w-12 h-12 rounded-xl bg-sky-50 text-[#29B6F6] border border-sky-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
                     <Clock className="w-6 h-6" />
                   </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <h3 className="font-exo font-bold text-xl sm:text-2xl text-slate-900">
-                      Kerja efektif, bukan lembur
-                    </h3>
-                    {showTodo && (
-                      <span className="text-[10px] bg-amber-400 text-slate-900 font-extrabold px-1.5 py-0.5 rounded">
-                        [KONFIRMASI]
-                      </span>
-                    )}
-                  </div>
+                  <h3 className="font-exo font-bold text-xl sm:text-2xl text-slate-900 mb-3">
+                    Mengutamakan efektivitas, bukan sekedar kesibukan
+                  </h3>
                   <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    Jam kerja 8 jam sehari dan kami berusaha menghindari lembur. Kami percaya kerja yang fokus dan terencana jauh lebih bernilai dibanding kerja yang berlarut-larut.
+                    Kami percaya hasil kerja yang baik datang dari fokus, perencanaan, dan kolaborasi yang efektif. Ada kalanya deadline menuntut usaha ekstra, tetapi kami berupaya agar lembur bukan menjadi kebiasaan.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-[#29B6F6]">
-                  Work-life balance nyata untuk hidup di luar kantor
+                  Fokus pada hasil terencana tanpa lembur berlarut-larut
                 </div>
               </article>
 
-              {/* Pilar 3: Dipedulikan, Bukan Sekadar Digaji */}
+              {/* Pilar 3: Saling menghargai, tetap profesional */}
               <article className="bg-white p-8 sm:p-10 flex flex-col justify-between hover:bg-slate-50/80 transition-colors group">
                 <div>
                   <div className="w-12 h-12 rounded-xl bg-emerald-50 text-[#43D3A4] border border-emerald-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
                     <HeartHandshake className="w-6 h-6" />
                   </div>
                   <h3 className="font-exo font-bold text-xl sm:text-2xl text-slate-900 mb-3">
-                    Dipedulikan, bukan sekadar digaji
+                    Saling menghargai, tetap profesional
                   </h3>
                   <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    Dari BPJS lengkap sampai bonus proyek. Pimpinan kami menganggap kebahagiaan dan kenyamanan kru sebagai bagian dari pekerjaan, bukan sekadar bonus tambahan.
+                    Kami percaya kolaborasi yang baik dimulai dari rasa saling menghargai dan menghormati. Kami membangun lingkungan kerja yang terbuka terhadap perbedaan, menjunjung profesionalisme, dan menghargai kontribusi setiap individu. Kami percaya efektifitas kerja tumbuh dari komunikasi yang jujur, sikap saling menghormati, dan kesediaan untuk bertanggung jawab atas pekerjaan masing-masing.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-emerald-600">
-                  Kepedulian manusiawi dari para leader
+                  Komunikasi jujur, respek mutual, dan tanggung jawab pekerjaan
                 </div>
               </article>
 
-              {/* Pilar 4: Tim Hebat, Bukan Individu Hebat */}
+              {/* Pilar 4: Bertumbuh Bersama */}
               <article className="bg-white p-8 sm:p-10 flex flex-col justify-between hover:bg-slate-50/80 transition-colors group">
                 <div>
                   <div className="w-12 h-12 rounded-xl bg-slate-100 text-[#0F172A] border border-slate-200 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
                     <Users className="w-6 h-6" />
                   </div>
                   <h3 className="font-exo font-bold text-xl sm:text-2xl text-slate-900 mb-3">
-                    Tim hebat, bukan individu hebat
+                    Bertumbuh Bersama
                   </h3>
                   <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    Kami mencari pemain tim yang mau belajar hal baru, membuat aplikasi bernilai, dan saling membantu agar perusahaan ikut berkembang bersama-sama.
+                    Kami percaya hasil terbaik datang dari orang-orang yang terbuka untuk belajar, saling mendukung, dan berkolaborasi menyelesaikan tantangan.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-slate-800">
-                  Ego dikesampingkan demi solusi terbaik
+                  Kolaboratif, saling mendukung, dan sukses bersama
                 </div>
               </article>
 
@@ -427,7 +552,7 @@ export const CareerClientView: React.FC = () => {
         </section>
 
         {/* ======================================================== */}
-        {/* SECTION 3: #cerita (Cerita Founder: Happy Employee)       */}
+        {/* SECTION 3: #cerita (Cerita & Quotes Pak Puja Pramudya)   */}
         {/* ======================================================== */}
         <section id="cerita" className="py-20 sm:py-28 bg-[#0F172A] text-white relative overflow-hidden">
           {/* Ambient Radial Lights */}
@@ -437,88 +562,51 @@ export const CareerClientView: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               
-              {/* Kolom Kiri: Foto Asli di Kantor */}
+              {/* Kolom Kiri: Foto Pak Puja Pramudya */}
               <div className="lg:col-span-5">
-                <div
-                  data-todo
-                  className={`relative rounded-3xl overflow-hidden border transition-all ${
-                    showTodo
-                      ? 'border-2 border-dashed border-amber-400 bg-amber-950/40 p-1'
-                      : 'border-slate-800 bg-slate-900/60 shadow-2xl'
-                  }`}
-                >
+                <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900/60 shadow-2xl">
                   <div className="aspect-4/5 sm:aspect-1/1 lg:aspect-4/5 relative overflow-hidden rounded-2xl">
                     <Image
                       src="/images/satya-radya-discussion.png"
-                      alt="Pendiri & Kru Radya Labs saat sesi diskusi kerja"
+                      alt="Puja Pramudya, Co-Founder & CEO Radya Labs"
                       fill
                       className="object-cover object-center filter brightness-95 contrast-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-85" />
                     
-                    <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-slate-900/85 backdrop-blur-md border border-slate-700/60 text-xs text-slate-300">
+                    <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/60 text-xs text-slate-300">
                       <div className="flex items-center gap-2 font-bold text-white mb-0.5">
                         <Building className="w-3.5 h-3.5 text-[#29B6F6]" />
-                        <span>Kru & Pimpinan Radya Labs</span>
-                        {showTodo && (
-                          <span className="text-[10px] bg-amber-400 text-slate-900 px-1 rounded ml-auto">
-                            [KONFIRMASI FOTO]
-                          </span>
-                        )}
+                        <span>Puja Pramudya</span>
                       </div>
                       <p className="text-[11px] text-slate-400">
-                        Foto otentik tim saat mendiskusikan inovasi teknologi di Bandung.
+                        Co-Founder &amp; CEO Radya Labs
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Kolom Kanan: Kutipan Otentik dari Tulisan "Happy Employee" */}
+              {/* Kolom Kanan: Kutipan Baru Pak Puja (Sesuai Halaman 2 PDF) */}
               <div className="lg:col-span-7 space-y-6">
                 
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-bold text-[#29B6F6]">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Cerita dari Founder</span>
+                  <span>Prinsip Kepemimpinan Kami</span>
                 </div>
 
-                <div data-todo className={showTodo ? 'p-3 rounded-2xl border-2 border-dashed border-amber-400 bg-amber-950/20' : ''}>
+                <div>
                   <blockquote className="font-raleway font-bold text-xl sm:text-2xl md:text-3xl text-slate-100 leading-snug tracking-tight">
-                    “Waktu itu kami baru berdua. Kas kosong, yang ada hanya piutang yang jatuh tempo bulan depan. Gaji tetap harus dibayar, jadi saya pinjam uang ke CTO. Sejak hari itu pesan saya ke diri sendiri sederhana: <span className="text-[#29B6F6]">jaga kru supaya tetap happy.</span>”
+                    “Sebagai orang yang punya tanggung jawab dalam memimpin Radya Labs, saya selalu mempunyai keinginan untuk selalu mengutamakan kebahagiaan karyawan <span className="text-[#29B6F6]">(kita sebut kru)</span>.”
                   </blockquote>
                 </div>
 
-                {/* Attribution & Context */}
-                <div data-todo className={`pt-2 space-y-2 border-t border-slate-800 text-sm ${showTodo ? 'p-3 rounded-xl border border-dashed border-amber-400' : ''}`}>
-                  <p className="font-bold text-white flex items-center gap-2 flex-wrap">
+                {/* Attribution Resmi */}
+                <div className="pt-2 border-t border-slate-800 text-sm">
+                  <p className="font-bold text-white flex items-center gap-2">
                     <span>Puja Pramudya</span>
-                    <span className="text-slate-400 font-normal">· Co-Founder & CEO Radya Labs</span>
-                    {showTodo && (
-                      <span className="text-[10px] bg-amber-400 text-slate-900 font-extrabold px-1.5 py-0.5 rounded">
-                        [KONFIRMASI: KUTIPAN & JABATAN]
-                      </span>
-                    )}
+                    <span className="text-slate-400 font-normal">· Co-Founder &amp; CEO Radya Labs</span>
                   </p>
-                  
-                  <p className="text-slate-400 text-xs leading-relaxed">
-                    Ringkasan dari esai refleksi pendiri berjudul <a href="https://medium.com/blackdesk/happy-employee-3def89e8ac0e" target="_blank" rel="noopener noreferrer" className="text-[#29B6F6] underline hover:text-white transition-colors">“Happy Employee” di Medium</a>. Menjadi pedoman dasar kenapa kami selalu menempatkan keselamatan dan kesejahteraan kru di atas segalanya.
-                  </p>
-                </div>
-
-                {/* Wujud Nyata Sekarang */}
-                <div data-todo className={`p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300 ${showTodo ? 'border-amber-400 border-dashed' : ''}`}>
-                  <strong className="text-white block mb-1 font-semibold flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#43D3A4]" />
-                    <span>Wujud komitmen saat ini:</span>
-                    {showTodo && (
-                      <span className="text-[10px] bg-amber-400 text-slate-900 font-extrabold px-1 rounded ml-auto">
-                        [KONFIRMASI KEBIJAKAN]
-                      </span>
-                    )}
-                  </strong>
-                  <span>
-                    Bonus proyek, bonus makan siang, ruang bermain dengan PlayStation, serta alokasi anggaran buku tahunan untuk setiap kru.
-                  </span>
                 </div>
 
               </div>
@@ -528,7 +616,7 @@ export const CareerClientView: React.FC = () => {
         </section>
 
         {/* ======================================================== */}
-        {/* SECTION 4: #benefit (Yang Didapat Sebagai Kru)           */}
+        {/* SECTION 4: #benefit (Yang Didapat Sebagai Kru - Aktual)   */}
         {/* ======================================================== */}
         <section id="benefit" className="py-20 sm:py-28 bg-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -536,26 +624,27 @@ export const CareerClientView: React.FC = () => {
             <div className="max-w-3xl mb-12 sm:mb-16">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-600 mb-3">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Benefit & Fasilitas</span>
+                <span>Benefit &amp; Fasilitas Kru</span>
               </div>
               <h2 className="font-exo font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight leading-tight">
                 Yang kamu dapat sebagai kru
               </h2>
               <p className="text-slate-600 text-base sm:text-lg mt-3">
-                Dikelompokkan secara transparan tanpa klaim berlebihan. Hanya apa yang benar-benar ada untuk mendukungmu.
+                Dikelompokkan secara transparan dan akurat. Hanya fasilitas yang benar-benar ada untuk mendukung kenyamanan kerjamu.
               </p>
             </div>
 
-            {/* 5 Kategori Benefit Berbentuk Baris + Chip (Inspirasi Accenture) */}
+            {/* Kategori Benefit Relevan (Sesuai Masukan PDF Page 5) */}
             <div className="space-y-4">
               
               {/* Row 1: Kesehatan & Keamanan */}
               <div className="p-6 sm:p-7 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                 <div className="md:col-span-4">
-                  <h3 className="font-exo font-bold text-lg text-slate-900">
-                    Kesehatan &amp; Keamanan
+                  <h3 className="font-exo font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                    <span>Kesehatan &amp; Jaminan Resmi</span>
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Perlindungan jaminan sosial resmi</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Perlindungan jaminan sosial ketenagakerjaan</p>
                 </div>
                 <div className="md:col-span-8 flex flex-wrap gap-2.5">
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-emerald-100/70 text-emerald-900 border border-emerald-200">
@@ -569,128 +658,82 @@ export const CareerClientView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Row 2: Keseimbangan Kerja */}
+              {/* Row 2: Pola Kerja Fleksibel (Baru & Relevan) */}
               <div className="p-6 sm:p-7 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                 <div className="md:col-span-4">
-                  <h3 className="font-exo font-bold text-lg text-slate-900">
-                    Keseimbangan Kerja
+                  <h3 className="font-exo font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <Laptop className="w-5 h-5 text-[#1793E8]" />
+                    <span>Pola Kerja Fleksibel</span>
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Waktu istirahat dan penyegaran tim</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Keseimbangan dan fleksibilitas ritme kerja</p>
                 </div>
                 <div className="md:col-span-8 flex flex-wrap gap-2.5">
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-blue-100/70 text-blue-900 border border-blue-200">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Days out tiap bulan</span>
+                    <Sparkles className="w-3.5 h-3.5 text-[#1793E8]" />
+                    <span>Model Kerja Remote / Hybrid</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-blue-100/70 text-blue-900 border border-blue-200">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Outing tahunan</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                    <span>PlayStation di akhir hari</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                    <span>Ruang bermain &amp; sofa istirahat</span>
+                    <Clock className="w-3.5 h-3.5 text-[#1793E8]" />
+                    <span>Jam kerja efektif 8 jam sehari</span>
                   </span>
                 </div>
               </div>
 
-              {/* Row 3: Aktif & Sehat */}
+              {/* Row 3: Belajar & Berkembang Nyata */}
               <div className="p-6 sm:p-7 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                 <div className="md:col-span-4">
-                  <h3 className="font-exo font-bold text-lg text-slate-900">
-                    Aktif &amp; Sehat
+                  <h3 className="font-exo font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5 text-indigo-600" />
+                    <span>Pengembangan Kapasitas</span>
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Kebugaran fisik bersama rekan kerja</p>
-                </div>
-                <div className="md:col-span-8 flex flex-wrap gap-2.5">
-                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-sky-100/70 text-sky-900 border border-sky-200">
-                    <span>Futsal rutin</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-sky-100/70 text-sky-900 border border-sky-200">
-                    <span>Badminton rutin</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Row 4: Belajar & Berkembang */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                <div className="md:col-span-4">
-                  <h3 className="font-exo font-bold text-lg text-slate-900">
-                    Belajar &amp; Berkembang
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Akselerasi keahlian tanpa henti</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Tumbuh melalui praktik dan proyek riil</p>
                 </div>
                 <div className="md:col-span-8 flex flex-wrap gap-2.5">
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-indigo-100/70 text-indigo-900 border border-indigo-200">
-                    <span>Kursus bahasa Inggris</span>
+                    <span>Learning by Doing pada proyek nyata</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-indigo-100/70 text-indigo-900 border border-indigo-200">
-                    <span>Pelatihan online</span>
+                    <span>Pelatihan online &amp; sharing internal</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                    <span>Sharing session internal</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                    <span>Seminar eksternal</span>
-                  </span>
-                  <span
-                    data-todo
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                      showTodo
-                        ? 'bg-amber-100 text-amber-900 border-2 border-dashed border-amber-400'
-                        : 'bg-slate-100 text-slate-800 border border-slate-200'
-                    }`}
-                  >
-                    <span>Anggaran buku tahunan</span>
-                    {showTodo && <span className="text-[10px] bg-amber-400 text-slate-900 px-1 rounded font-bold">[KONFIRMASI]</span>}
+                    <span>Eksplorasi Cloud Native &amp; AI</span>
                   </span>
                 </div>
               </div>
 
-              {/* Row 5: Apresiasi */}
+              {/* Row 4: Aktif & Kebugaran */}
               <div className="p-6 sm:p-7 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                 <div className="md:col-span-4">
-                  <h3 className="font-exo font-bold text-lg text-slate-900">
-                    Apresiasi &amp; Kebersamaan
+                  <h3 className="font-exo font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <Flame className="w-5 h-5 text-sky-600" />
+                    <span>Kebugaran &amp; Komunitas</span>
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Penghargaan atas dedikasi proyek</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Kegiatan olahraga rutin bersama tim</p>
                 </div>
                 <div className="md:col-span-8 flex flex-wrap gap-2.5">
-                  <span
-                    data-todo
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                      showTodo
-                        ? 'bg-amber-100 text-amber-900 border-2 border-dashed border-amber-400'
-                        : 'bg-emerald-100/70 text-emerald-900 border border-emerald-200'
-                    }`}
-                  >
-                    <span>Bonus proyek</span>
-                    {showTodo && <span className="text-[10px] bg-amber-400 text-slate-900 px-1 rounded font-bold">[KONFIRMASI]</span>}
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-sky-100/70 text-sky-900 border border-sky-200">
+                    <Check className="w-3.5 h-3.5 text-sky-600" />
+                    <span>Badminton rutin kru</span>
                   </span>
-
-                  <span
-                    data-todo
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                      showTodo
-                        ? 'bg-amber-100 text-amber-900 border-2 border-dashed border-amber-400'
-                        : 'bg-emerald-100/70 text-emerald-900 border border-emerald-200'
-                    }`}
-                  >
-                    <span>Bonus makan siang</span>
-                    {showTodo && <span className="text-[10px] bg-amber-400 text-slate-900 px-1 rounded font-bold">[KONFIRMASI]</span>}
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+                    <span>Komunitas kerja saling suportif</span>
                   </span>
+                </div>
+              </div>
 
-                  <span
-                    data-todo
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                      showTodo
-                        ? 'bg-amber-100 text-amber-900 border-2 border-dashed border-amber-400'
-                        : 'bg-emerald-100/70 text-emerald-900 border border-emerald-200'
-                    }`}
-                  >
-                    <span>Makan siang bersama tiap Jumat</span>
-                    {showTodo && <span className="text-[10px] bg-amber-400 text-slate-900 px-1 rounded font-bold">[KONFIRMASI]</span>}
+              {/* Row 5: Apresiasi Performa */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <div className="md:col-span-4">
+                  <h3 className="font-exo font-bold text-lg text-slate-900 flex items-center gap-2">
+                    <Award className="w-5 h-5 text-amber-600" />
+                    <span>Apresiasi &amp; Rekognisi</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">Penghargaan atas kontribusi proyek</p>
+                </div>
+                <div className="md:col-span-8 flex flex-wrap gap-2.5">
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-amber-100/70 text-amber-900 border border-amber-200">
+                    <Check className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Bonus performa &amp; proyek</span>
                   </span>
                 </div>
               </div>
@@ -719,115 +762,41 @@ export const CareerClientView: React.FC = () => {
               </p>
             </div>
 
-            {/* 3 Kolom Desktop / 1 Kolom Mobile (Inspirasi Biznet & Liferay) */}
+            {/* Testimoni Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              
-              {/* Testimoni 1: Nenden (Project Manager) */}
-              <figure
-                data-todo
-                className={`bg-white rounded-2xl p-7 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col justify-between transition-all hover:shadow-md ${
-                  showTodo ? 'border-2 border-dashed border-amber-400 bg-amber-50/30' : 'hover:border-[#1793E8]/40'
-                }`}
-              >
-                <div>
-                  <div className="w-8 h-1 rounded-full bg-[#1793E8] mb-6" />
-                  <blockquote className="text-slate-700 text-sm sm:text-base leading-relaxed font-normal">
-                    “Radya Labs bukan hanya tempat bekerja, tapi seperti kampus tempat terus belajar. Kami dapat kursus bahasa Inggris, pelatihan online, dan sesi berbagi dari tim maupun pihak luar.”
-                  </blockquote>
-                </div>
-                <figcaption className="flex items-center gap-3.5 mt-8 pt-6 border-t border-slate-100">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#1793E8] to-[#29B6F6] text-white font-exo font-bold text-lg flex items-center justify-center shrink-0 shadow-xs">
-                    N
-                  </div>
+              {testimonials.map((testi) => (
+                <figure
+                  key={testi.id}
+                  className="bg-white rounded-2xl p-7 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col justify-between transition-all hover:shadow-md hover:border-[#1793E8]/40"
+                >
                   <div>
-                    <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                      <span>Nenden</span>
-                      {showTodo && (
-                        <span className="text-[9px] bg-amber-400 text-slate-900 px-1 rounded font-extrabold">
-                          [KONFIRMASI]
-                        </span>
-                      )}
+                    <div className="w-8 h-1 rounded-full bg-[#1793E8] mb-6" />
+                    <blockquote className="text-slate-700 text-sm sm:text-base leading-relaxed font-normal">
+                      “{testi.quote}”
+                    </blockquote>
+                  </div>
+                  <figcaption className="flex items-center gap-3.5 mt-8 pt-6 border-t border-slate-100">
+                    <div className={`w-11 h-11 rounded-full bg-gradient-to-tr ${testi.avatarColor || 'from-[#1793E8] to-[#29B6F6]'} text-white font-exo font-bold text-lg flex items-center justify-center shrink-0 shadow-xs`}>
+                      {testi.avatarInitial || testi.name.charAt(0)}
                     </div>
-                    <small className="text-slate-500 text-xs block">
-                      Project Manager · [lama bekerja]
-                    </small>
-                  </div>
-                </figcaption>
-              </figure>
-
-              {/* Testimoni 2: Nofri (Finance) */}
-              <figure
-                data-todo
-                className={`bg-white rounded-2xl p-7 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col justify-between transition-all hover:shadow-md ${
-                  showTodo ? 'border-2 border-dashed border-amber-400 bg-amber-50/30' : 'hover:border-[#29B6F6]/40'
-                }`}
-              >
-                <div>
-                  <div className="w-8 h-1 rounded-full bg-[#29B6F6] mb-6" />
-                  <blockquote className="text-slate-700 text-sm sm:text-base leading-relaxed font-normal">
-                    “Lingkungan kerjanya nyaman, rekan kerja saling mendukung, dan atasan selalu membimbing serta membangun potensi setiap kru.”
-                  </blockquote>
-                </div>
-                <figcaption className="flex items-center gap-3.5 mt-8 pt-6 border-t border-slate-100">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#29B6F6] to-[#43D3A4] text-white font-exo font-bold text-lg flex items-center justify-center shrink-0 shadow-xs">
-                    N
-                  </div>
-                  <div>
-                    <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                      <span>Nofri</span>
-                      {showTodo && (
-                        <span className="text-[9px] bg-amber-400 text-slate-900 px-1 rounded font-extrabold">
-                          [KONFIRMASI]
-                        </span>
-                      )}
+                    <div>
+                      <div className="font-bold text-slate-900 text-sm">
+                        {testi.name}
+                      </div>
+                      <small className="text-slate-500 text-xs block">
+                        {testi.role} · {testi.tenure}
+                      </small>
                     </div>
-                    <small className="text-slate-500 text-xs block">
-                      Finance · [lama bekerja]
-                    </small>
-                  </div>
-                </figcaption>
-              </figure>
-
-              {/* Testimoni 3: Mobile Developer */}
-              <figure
-                data-todo
-                className={`bg-white rounded-2xl p-7 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col justify-between transition-all hover:shadow-md ${
-                  showTodo ? 'border-2 border-dashed border-amber-400 bg-amber-50/30' : 'hover:border-[#43D3A4]/40'
-                }`}
-              >
-                <div>
-                  <div className="w-8 h-1 rounded-full bg-[#43D3A4] mb-6" />
-                  <blockquote className="text-slate-700 text-sm sm:text-base leading-relaxed font-normal">
-                    “Manajemennya jelas, koordinasi tim baik, dan CEO-nya peduli dengan kru. Saya senang bertukar pikiran dengan orang-orang yang ahli di bidangnya.”
-                  </blockquote>
-                </div>
-                <figcaption className="flex items-center gap-3.5 mt-8 pt-6 border-t border-slate-100">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#0F172A] to-slate-700 text-[#43D3A4] font-exo font-bold text-lg flex items-center justify-center shrink-0 shadow-xs">
-                    M
-                  </div>
-                  <div>
-                    <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                      <span>[Nama Kru]</span>
-                      {showTodo && (
-                        <span className="text-[9px] bg-amber-400 text-slate-900 px-1 rounded font-extrabold">
-                          [KONFIRMASI]
-                        </span>
-                      )}
-                    </div>
-                    <small className="text-slate-500 text-xs block">
-                      Mobile Developer · [lama bekerja]
-                    </small>
-                  </div>
-                </figcaption>
-              </figure>
-
+                  </figcaption>
+                </figure>
+              ))}
             </div>
 
           </div>
         </section>
 
         {/* ======================================================== */}
-        {/* SECTION 6: #lowongan (Filter Lowongan & Empty State)      */}
+        {/* SECTION 6: #lowongan (Filter Lowongan & Pop-up Modal)     */}
         {/* ======================================================== */}
         <section id="lowongan" className="py-20 sm:py-28 bg-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -841,11 +810,11 @@ export const CareerClientView: React.FC = () => {
                 Lowongan terbuka
               </h2>
               <p className="text-slate-600 text-base sm:text-lg mt-3">
-                Pilih divisi untuk menyaring. Kalau belum ada yang cocok, tinggalkan CV dan kami hubungi saat ada posisi yang pas untukmu.
+                Pilih divisi untuk menyaring. Klik pada lowongan untuk membaca detail persyaratan dan mengisi formulir pendaftaran.
               </p>
             </div>
 
-            {/* Filter Chips per Divisi (Inspirasi Mekari & Nodeflux) */}
+            {/* Filter Chips per Divisi */}
             <div
               role="group"
               aria-label="Filter divisi lowongan"
@@ -870,13 +839,8 @@ export const CareerClientView: React.FC = () => {
               })}
             </div>
 
-            {/* List Lowongan atau Empty State */}
-            <div
-              id="jobs-container"
-              aria-live="polite"
-              data-todo
-              className={showTodo ? 'p-2 rounded-2xl border-2 border-dashed border-amber-400' : ''}
-            >
+            {/* List Lowongan */}
+            <div id="jobs-container" aria-live="polite">
               {filteredJobs.length > 0 ? (
                 <div className="divide-y divide-slate-100 border-t border-b border-slate-100">
                   {filteredJobs.map((job) => (
@@ -889,11 +853,6 @@ export const CareerClientView: React.FC = () => {
                           <h3 className="font-exo font-bold text-lg sm:text-xl text-slate-900">
                             {job.title}
                           </h3>
-                          {showTodo && (
-                            <span className="text-[10px] bg-amber-400 text-slate-900 font-bold px-1.5 py-0.5 rounded">
-                              [KONFIRMASI DATA]
-                            </span>
-                          )}
                         </div>
 
                         <div className="flex items-center gap-2 flex-wrap text-xs font-semibold text-slate-600">
@@ -903,6 +862,9 @@ export const CareerClientView: React.FC = () => {
                           <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 text-[#1793E8]">
                             {job.type}
                           </span>
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-700">
+                            {job.workModel || 'Hybrid'}
+                          </span>
                           <span className="inline-flex items-center gap-1 text-slate-500">
                             <MapPin className="w-3.5 h-3.5" />
                             <span>{job.location}</span>
@@ -910,20 +872,29 @@ export const CareerClientView: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="shrink-0 pt-2 md:pt-0">
-                        <a
-                          href={getApplyMailto(job.title)}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-900 border-2 border-[#0F172A] hover:bg-[#0F172A] hover:text-white transition-all shadow-xs"
+                      <div className="shrink-0 flex items-center gap-2.5 pt-2 md:pt-0">
+                        {/* Tombol Lihat Detail */}
+                        <button
+                          onClick={() => openJobDetail(job)}
+                          className="px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition-all cursor-pointer"
+                        >
+                          Lihat Detail
+                        </button>
+
+                        {/* Tombol Lamar Posisi Ini (Membuka Modal Pop-up) */}
+                        <button
+                          onClick={() => openApplyModal(job.title)}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-[#0F172A] text-white hover:bg-[#1793E8] transition-all shadow-xs cursor-pointer"
                         >
                           <span>Lamar posisi ini</span>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                /* Empty State Wajib (Pelajaran dari GITS.ID: Jangan biarkan tanpa aksi) */
+                /* Empty State */
                 <div className="p-8 sm:p-12 rounded-3xl bg-amber-50/70 border border-amber-200/80 text-slate-900 my-4 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
                   <div className="space-y-2 max-w-xl">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mb-1">
@@ -939,13 +910,13 @@ export const CareerClientView: React.FC = () => {
                   </div>
 
                   <div className="shrink-0">
-                    <a
-                      href={getInterestMailto(activeDivision)}
-                      className="inline-flex items-center gap-2 bg-[#0F172A] text-white hover:bg-[#1793E8] font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-md hover:-translate-y-0.5 transition-all"
+                    <button
+                      onClick={() => openApplyModal(`Talent Pool - Divisi ${activeDivision}`)}
+                      className="inline-flex items-center gap-2 bg-[#0F172A] text-white hover:bg-[#1793E8] font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
                     >
                       <Mail className="w-4 h-4" />
                       <span>Masuk daftar minat</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               )}
@@ -973,13 +944,8 @@ export const CareerClientView: React.FC = () => {
               </p>
             </div>
 
-            {/* 4 Tahap dengan Penomoran Nyata (Inspirasi Mekari & BTS.id) */}
-            <ol
-              data-todo
-              className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none p-0 ${
-                showTodo ? 'p-3 rounded-2xl border-2 border-dashed border-amber-400 bg-amber-50/20' : ''
-              }`}
-            >
+            {/* 4 Tahap dengan Penomoran */}
+            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none p-0">
               {/* Step 1 */}
               <li className="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between relative hover:border-[#1793E8]/50 transition-colors">
                 <div>
@@ -987,10 +953,10 @@ export const CareerClientView: React.FC = () => {
                     01
                   </div>
                   <h3 className="font-exo font-bold text-lg text-slate-900 mb-2">
-                    Seleksi CV
+                    Seleksi CV &amp; Form
                   </h3>
                   <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                    Tim HR membaca CV dan portofolio karya secara teliti, lalu mengabari hasil evaluasinya.
+                    Tim People &amp; Culture meninjau formulir pendaftaran dan portofolio secara teliti.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-slate-100">
@@ -1010,7 +976,7 @@ export const CareerClientView: React.FC = () => {
                     Tes sesuai posisi
                   </h3>
                   <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                    Uji studi kasus teknis atau review portofolio mendalam, disesuaikan dengan peran yang dilamar.
+                    Uji studi kasus teknis atau review portofolio mendalam sesuai dengan peran yang dilamar.
                   </p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-slate-100">
@@ -1062,23 +1028,18 @@ export const CareerClientView: React.FC = () => {
             </ol>
 
             {/* Ringkasan Estimasi Total */}
-            <div data-todo className={`mt-8 p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between flex-wrap gap-3 ${showTodo ? 'border-amber-400 border-dashed bg-amber-50/50' : ''}`}>
+            <div className="mt-8 p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center gap-2 text-sm text-slate-700 font-semibold">
                 <CheckCircle2 className="w-4 h-4 text-[#1793E8]" />
-                <span>Rata-rata 2–3 minggu dari pengiriman lamaran sampai keputusan penawaran.</span>
+                <span>Rata-rata 2–3 minggu dari pengiriman formulir sampai keputusan penawaran.</span>
               </div>
-              {showTodo && (
-                <span className="text-[10px] bg-amber-400 text-slate-900 px-2 py-0.5 rounded font-extrabold">
-                  [KONFIRMASI: ESTIMASI HR]
-                </span>
-              )}
             </div>
 
           </div>
         </section>
 
         {/* ======================================================== */}
-        {/* SECTION 8: #kontak (CTA Penutup)                         */}
+        {/* SECTION 8: #kontak (CTA Penutup / Talent Pool)            */}
         {/* ======================================================== */}
         <section id="kontak" className="py-20 sm:py-28 bg-[#0F172A] relative overflow-hidden">
           {/* Radial Glows */}
@@ -1100,26 +1061,22 @@ export const CareerClientView: React.FC = () => {
                 </h2>
 
                 <p className="text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
-                  Kirimkan CV dan portofolio terbaikmu ke{' '}
+                  Kirimkan CV dan portofolio terbaikmu via formulir pendaftaran atau email ke{' '}
                   <code className="bg-slate-800 text-[#29B6F6] font-mono px-2 py-0.5 rounded border border-slate-700 text-sm">
                     join@radyalabs.com
                   </code>
-                  . Tulis subjek email:{' '}
-                  <code className="bg-slate-800 text-amber-300 font-mono px-2 py-0.5 rounded border border-slate-700 text-sm">
-                    Nama – Posisi yang diminati
-                  </code>
-                  . Tim kami akan menyimpannya dan segera menghubungimu saat ada posisi baru yang relevan.
+                  . Tim kami akan menyimpannya ke dalam <strong className="text-white">Talent Pool</strong> dan segera menghubungimu saat ada posisi baru yang relevan.
                 </p>
 
                 {/* Tombol Tindakan */}
                 <div className="pt-2 flex flex-wrap items-center gap-4">
-                  <a
-                    href="mailto:join@radyalabs.com?subject=Nama%20%E2%80%93%20Posisi%20yang%20diminati"
-                    className="inline-flex items-center gap-2 bg-gradient-radya text-white font-bold text-sm sm:text-base px-7 py-4 rounded-full shadow-lg hover:brightness-110 hover:-translate-y-0.5 transition-all"
+                  <button
+                    onClick={() => openApplyModal('Talent Pool / General Application')}
+                    className="inline-flex items-center gap-2 bg-gradient-radya text-white font-bold text-sm sm:text-base px-7 py-4 rounded-full shadow-lg hover:brightness-110 hover:-translate-y-0.5 transition-all cursor-pointer"
                   >
                     <Mail className="w-4 h-4" />
-                    <span>Kirim CV spontan</span>
-                  </a>
+                    <span>Gabung Talent Pool Sekarang</span>
+                  </button>
 
                   <button
                     onClick={copyEmailToClipboard}
@@ -1141,7 +1098,7 @@ export const CareerClientView: React.FC = () => {
 
                 <div className="pt-4 flex items-center gap-2 text-xs text-slate-400">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#43D3A4]" />
-                  <span>Setiap email yang masuk diperiksa langsung oleh tim People &amp; Culture Radya Labs.</span>
+                  <span>Setiap berkas yang masuk ditinjau langsung oleh tim People &amp; Culture Radya Labs.</span>
                 </div>
 
               </div>
@@ -1190,7 +1147,7 @@ export const CareerClientView: React.FC = () => {
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
             <div className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span>Jl. Sidomukti No.14 / Jl. Karawitan No.105A, Bandung · info@radyalabs.com</span>
+              <span>Jl. Karawitan No.105a, Turangga, Bandung · info@radyalabs.com</span>
             </div>
             <div>
               © {new Date().getFullYear()} Radya Labs (PT Radya Anugrah Digital). Hak cipta dilindungi undang-undang.
